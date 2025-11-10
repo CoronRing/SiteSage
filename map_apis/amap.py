@@ -4,7 +4,7 @@ import os
 import requests
 from typing import Any, Dict, Iterable, Mapping, Optional, Sequence
 
-from map_apis.map_api_base import MapAPI
+from map_apis.map_api import MapAPI
 
 class AMap(MapAPI):
     """Concrete MapAPI adapter backed by AMap (Gaode) REST services."""
@@ -269,27 +269,6 @@ class AMap(MapAPI):
             resolved = self.getPlaceInfo(str(place["address"]))
             return float(resolved["lat"]), float(resolved["lng"])
         raise ValueError("Place must include lat/lng or address for AMap operations.")
-
-    # def _match_code(self, code, candidates) -> Optional[str]:
-    #     # match code with one of the candidates
-    #     major, middle, minor = []
-    #     for c in candidates:
-    #         if code[:2] == c[:2]:
-    #             major.append(c)
-    #     if len(major) == 0:
-    #         return None
-    #     if len(major) == 1:
-    #         return major[0]
-        
-    #     for c in major:
-    #         if code[2:4] == c[2:4]:
-    #             middle.append(c)
-    #     if len(middle) == 1:
-    #         return middle[0]
-        
-    #     for c in middle:
-    #         if code[4:6]
-
 
     def _safe_float(self, value: Any) -> Optional[float]:
         try:

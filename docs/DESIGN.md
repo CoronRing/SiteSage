@@ -52,7 +52,7 @@ DAG (dependencies)
 
 ## 4) Shared Schemas
 
-LocationIntakeRequest
+LocationInformation
 ```
 {
   "location_id": "string",
