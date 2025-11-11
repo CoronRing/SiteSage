@@ -1,5 +1,6 @@
 AGENTS.md
-data/*
+data/*.zip
+data/crop.ipynb
 .env
 */__pycache__
 __pycache__

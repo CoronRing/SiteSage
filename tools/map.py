@@ -7,7 +7,25 @@ from map_apis.amap import AMap
 from map_apis.map_api import MapAPI
 from map_apis.type_projection import AMapTypeProjectionAdapter
 
-__all__ = ["MapTool"]
+LOCATION_SCHEMA: Mapping[str, Any] = {
+    "type": "object",
+    "description": "Location payload supporting lat/lng pairs or addresses.",
+    "properties": {
+        "lat": {"type": "number", "description": "Latitude in decimal degrees."},
+        "lng": {"type": "number", "description": "Longitude in decimal degrees."},
+        "address": {
+            "type": "string",
+            "description": "Optional textual description or street address.",
+        },
+        "label": {
+            "type": "string",
+            "description": "Optional text label rendered on map overlays.",
+        },
+    },
+    "additionalProperties": True,
+}
+
+__all__ = ["MapTool", "LOCATION_SCHEMA"]
 
 class MapTool:
     """
@@ -127,20 +145,6 @@ class MapTool:
         return provider_cls()
 
     def _build_tool_schemas(self) -> Sequence[Mapping[str, Any]]:
-        location_schema = {
-            "type": "object",
-            "description": "Location payload supporting lat/lng pairs or addresses.",
-            "properties": {
-                "lat": {"type": "number", "description": "Latitude in decimal degrees."},
-                "lng": {"type": "number", "description": "Longitude in decimal degrees."},
-                "address": {
-                    "type": "string",
-                    "description": "Optional textual description or street address.",
-                },
-            },
-            "additionalProperties": True,
-        }
-
         return [
             {
                 "type": "function",
@@ -179,11 +183,11 @@ class MapTool:
                 "parameters": {
                     "type": "object",
                     "properties": {
-                        "origin": {**location_schema, "description": "Origin to highlight."},
+                        "origin": {**LOCATION_SCHEMA, "description": "Origin to highlight."},
                         "overlays": {
                             "type": "array",
                             "description": "Additional markers or waypoints to overlay.",
-                            "items": location_schema,
+                            "items": LOCATION_SCHEMA,
                         },
                         "style": {
                             "type": "string",
@@ -203,7 +207,7 @@ class MapTool:
                 "parameters": {
                     "type": "object",
                     "properties": {
-                        "origin": {**location_schema, "description": "Reference location."},
+                        "origin": {**LOCATION_SCHEMA, "description": "Reference location."},
                         "descriptive_types": {
                             "type": "array",
                             "description": (
@@ -233,7 +237,7 @@ class MapTool:
                             "default": 5,
                         },
                     },
-                    "required": ["place", "descriptive_types"],
+                    "required": ["origin", "descriptive_types"],
                 },
             },
             {
@@ -243,11 +247,11 @@ class MapTool:
                 "parameters": {
                     "type": "object",
                     "properties": {
-                        "origin": {**location_schema, "description": "Starting location."},
+                        "origin": {**LOCATION_SCHEMA, "description": "Starting location."},
                         "destinations": {
                             "type": "array",
                             "description": "List of destinations to evaluate.",
-                            "items": location_schema,
+                            "items": LOCATION_SCHEMA,
                         },
                         "mode": {
                             "type": "string",
