@@ -1,10 +1,15 @@
 from __future__ import annotations
 
+import json
+import logging
 import os
-import requests
 from typing import Any, Dict, Iterable, Mapping, Optional, Sequence
 
+import requests
+
 from map_apis.map_api import MapAPI
+
+logger = logging.getLogger(__name__)
 
 class AMap(MapAPI):
     """Concrete MapAPI adapter backed by AMap (Gaode) REST services."""
@@ -194,6 +199,7 @@ class AMap(MapAPI):
         self,
         origin: Mapping[str, Any],
         *,
+        zoom: Optional[Any] = 15,
         overlays: Optional[Iterable[Mapping[str, Any]]] = None,
         style: Optional[str] = None,
     ) -> Mapping[str, Any]:
@@ -212,8 +218,8 @@ class AMap(MapAPI):
 
         params = {
             "location": f"{lng},{lat}",
-            "zoom": overlay_details and 14 or 13,
-            "size": "750*520",
+            "zoom": zoom,
+            "size": "512*512",
             "markers": "|".join(marker_parts),
             "key": self.api_key,
         }
@@ -243,14 +249,41 @@ class AMap(MapAPI):
 
     def _request(self, path: str, params: Dict[str, Any]) -> Dict[str, Any]:
         merged_params = {"key": self.api_key, **params}
-        response = self.session.get(
-            f"{self.BASE_URL}{path}", params=merged_params, timeout=self.timeout
-        )
-        response.raise_for_status()
-        payload = response.json()
+        safe_params = {k: v for k, v in merged_params.items() if k != "key"}
+        logger.info("AMap request path=%s params=%s", path, safe_params)
+        try:
+            response = self.session.get(
+                f"{self.BASE_URL}{path}", params=merged_params, timeout=self.timeout
+            )
+            response.raise_for_status()
+        except requests.RequestException as exc:
+            logger.error(
+                "AMap HTTP error path=%s params=%s error=%s", path, safe_params, exc
+            )
+            raise
+
+        try:
+            payload = response.json()
+        except ValueError as exc:
+            logger.error(
+                "AMap JSON decode error path=%s params=%s error=%s body=%s",
+                path,
+                safe_params,
+                exc,
+                response.text,
+            )
+            raise
+
         if payload.get("status") != "1":
             info = payload.get("info") or "unknown error"
-            raise RuntimeError(f"AMap API error: {info}")
+            logger.error(
+                "AMap API error path=%s params=%s info=%s payload=%s",
+                path,
+                safe_params,
+                info,
+                payload,
+            )
+            raise RuntimeError(f"AMap API error: {info}" + json.dumps(payload))
         return payload
 
     def _parse_location(self, location: Optional[str]) -> tuple[float, float]:
