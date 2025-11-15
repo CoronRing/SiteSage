@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SiteSage — Royal Edition</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Leaflet map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous"></script>
+  <!-- Markdown renderer -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    :root{
+      --bg-deep: #0b1220;
+      --bg-darker:#070c16;
+      --gold:    #d4af37;
+      --gold-2:  #f0d68a;
+      --ink:     #e8edf7;
+      --muted:   #b5c1d8;
+      --err:     #ff6b6b;
+      --shadow:  0 30px 80px rgba(0,0,0,.35);
+      --radius:  16px;
+    }
+    *{box-sizing:border-box}
+    html, body {height:100%}
+    body{
+      margin:0; min-height:100%;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 600px at 10% 0%, rgba(212,175,55,0.06), transparent 60%),
+        radial-gradient(1000px 600px at 90% 0%, rgba(34,48,85,0.35), transparent 60%),
+        linear-gradient(180deg, var(--bg-deep), var(--bg-darker));
+    }
+    .app{
+      display:grid;
+      grid-template-columns: 380px 1fr;
+      gap: 16px; height:100%;
+      align-items:stretch; padding: 18px;
+    }
+    @media (max-width: 1100px){ .app{ grid-template-columns: 1fr; } }
+
+    .panel{
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      display:flex; flex-direction:column;
+    }
+    .head{
+      padding: 16px 16px;
+      border-bottom:1px solid rgba(255,255,255,0.08);
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), transparent);
+    }
+    .head h2{
+      margin:0; font-family: Cinzel, serif; font-size: 18px; color: var(--gold-2);
+    }
+    .body{ padding: 16px; }
+
+    .titlebar{
+      display:flex; align-items:center; justify-content:space-between; gap:14px; margin-bottom:10px;
+    }
+    .brand{ display:flex; align-items:center; gap:10px; }
+    .logo{ width:36px; height:36px; border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, var(--gold-2), var(--gold));
+      box-shadow: 0 0 0 2px rgba(212,175,55,0.25), 0 8px 25px rgba(212,175,55,0.15) inset;
+    }
+    .brand h1{ margin:0; font-family: Cinzel, serif; font-size:20px; color: var(--gold-2); }
+
+    /* Controls */
+    .field{ display:flex; flex-direction:column; gap:8px; margin-bottom:12px; }
+    label{ font-size: 13px; color: var(--muted); }
+    textarea, select{
+      width:100%; padding:12px 14px; border-radius:12px;
+      border:1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+      color: var(--ink); outline:none;
+    }
+    textarea{ min-height:120px; resize: vertical; }
+    .btn{
+      appearance:none; border:none; outline:none;
+      border-radius: 12px; padding: 10px 16px; cursor:pointer; font-weight:600;
+      color:#1a1200; background: linear-gradient(180deg, var(--gold-2), var(--gold));
+      box-shadow: 0 10px 30px rgba(212,175,55,0.25);
+    }
+    .btn-ghost{
+      background: transparent; color: var(--gold-2); border:1px solid var(--gold);
+    }
+    .muted{ color: var(--muted); font-size: 13px; }
+    .divider{ height:1px; background: rgba(255,255,255,0.1); margin: 12px 0; }
+    .error{ color: var(--err); margin-top: 8px; }
+
+    /* Artifact list */
+    .list{ display:flex; flex-direction:column; gap:8px; }
+    .list a, .list button{
+      display:flex; align-items:center; gap:8px;
+      text-decoration:none; color: var(--ink); background: rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.12); border-radius:12px; padding:10px 12px;
+      cursor:pointer;
+    }
+    .list a:hover, .list button:hover{ background: rgba(255,255,255,0.08); }
+
+    /* Right viewer */
+    .viewer{ position:relative; display:flex; flex-direction:column; flex:1; min-height:340px; }
+    #map{ height: calc(100vh - 120px); min-height: 400px; border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); }
+    #doc{ height: calc(100vh - 120px); overflow:auto; padding: 14px; border:1px solid rgba(255,255,255,0.12); border-radius:12px; background: rgba(255,255,255,0.04); }
+    #doc h1, #doc h2, #doc h3{ color: var(--gold-2); font-family: Cinzel, serif; }
+    #doc pre{ background:#0f1725; padding:10px; border-radius:8px; overflow:auto; }
+    #doc code{ color:#f8f8f2; }
+
+    /* Summary chips */
+    .chips{ display:flex; gap:8px; flex-wrap:wrap; margin-top:6px; }
+    .chip{ background: rgba(255,255,255,0.06); padding:8px 10px; border-radius:999px; border:1px solid rgba(255,255,255,0.12); }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Left column -->
+    <div class="panel">
+      <div class="head">
+        <div class="titlebar">
+          <div class="brand">
+            <div class="logo"></div>
+            <h1>SiteSage</h1>
+          </div>
+        </div>
+      </div>
+      <div class="body">
+        <!-- Config & Input -->
+        <div class="field">
+          <label>Language</label>
+          <select id="language">
+            <option value="en">English</option>
+            <option value="zh" selected>中文 (Chinese)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Prompt</label>
+          <textarea id="prompt" placeholder="Describe your coffee shop concept and location..."></textarea>
+        </div>
+        <div class="row" style="display:flex; gap:10px; align-items:center;">
+          <button id="btnRun" class="btn">Run Analysis</button>
+          <span id="status" class="muted"></span>
+        </div>
+        <div id="errors" class="error"></div>
+
+        <div class="divider"></div>
+        <!-- Artifacts list -->
+        <div class="field">
+          <label>Artifacts</label>
+          <div class="list" id="artifactList">
+            <button id="btnShowMap" class="btn-ghost">🗺️ Map</button>
+            <!-- Files appear here -->
+          </div>
+        </div>
+
+        <!-- Summary chips -->
+        <div class="divider"></div>
+        <div class="field">
+          <label>Summary</label>
+          <div class="chips" id="summaryChips">
+            <!-- Final score and weights appear here -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right viewer -->
+    <div class="panel viewer">
+      <div class="head">
+        <h2 id="viewerTitle">Map</h2>
+      </div>
+      <div class="body">
+        <div id="map"></div>
+        <div id="doc" style="display:none;"></div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // Utility
+  const qs  = (sel, root=document)=> root.querySelector(sel);
+
+  function defaultSessionId(){
+    const d = new Date();
+    const pad = (n)=> (n<10? '0'+n : ''+n);
+    return `sess_${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
+  }
+
+  function savePathToUrl(path){
+    if (!path) return null;
+    const norm = String(path).replace(/\\/g,'/');
+    const idx = norm.toLowerCase().lastIndexOf('/save/');
+    if (idx >= 0){
+      const tail = norm.substring(idx + '/save'.length);
+      return '/save' + tail;
+    }
+    // Already a /save relative path?
+    if (norm.startsWith('/save/')) return norm;
+    return null;
+  }
+
+  // Map
+  let map = null;
+  let mapLayer = null;
+  let marker = null;
+
+  function initMap(lat=31.2304, lng=121.4737, zoom=14){
+    if (map){ map.remove(); map = null; }
+    map = L.map('map', { zoomControl: true });
+    addTileLayerWithFallback();
+    map.setView([lat, lng], zoom);
+    marker = L.marker([lat, lng]).addTo(map);
+    window.addEventListener('resize', ()=> map.invalidateSize(), { passive:true });
+  }
+
+  function addTileLayerWithFallback(){
+    const urls = [
+      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      'https://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png'
+    ];
+    let idx = 0;
+    function use(idx){
+      if (mapLayer){ map.removeLayer(mapLayer); }
+      mapLayer = L.tileLayer(urls[idx], {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(map);
+      mapLayer.on('tileerror', ()=>{
+        console.warn('Tile error, switching provider...');
+        idx = (idx + 1) % urls.length;
+        use(idx);
+      });
+    }
+    use(idx);
+  }
+
+  function showMap(){
+    qs('#viewerTitle').textContent = 'Map';
+    qs('#doc').style.display = 'none';
+    qs('#map').style.display = 'block';
+    setTimeout(()=> map && map.invalidateSize(), 50);
+  }
+
+  async function showMarkdownFromUrl(url, title='Document'){
+    qs('#viewerTitle').textContent = title;
+    qs('#map').style.display = 'none';
+    qs('#doc').style.display = 'block';
+    qs('#doc').innerHTML = '<div class="muted">Loading document...</div>';
+    try{
+      const r = await fetch(url, { cache: 'no-cache' });
+      if (!r.ok) throw new Error('HTTP '+r.status);
+      const text = await r.text();
+      const html = marked.parse(text);
+      qs('#doc').innerHTML = html;
+      // Scroll top
+      qs('#doc').scrollTop = 0;
+    }catch(e){
+      console.error('Failed to load doc:', e);
+      qs('#doc').innerHTML = '<div class="error">Failed to load document.</div>';
+    }
+  }
+
+  // Render artifacts & summary
+  function renderArtifactsAndSummary(res){
+    const list = qs('#artifactList');
+    // Clear file entries except Map button
+    list.querySelectorAll('a.artifact, button.artifact').forEach(el=> el.remove());
+
+    const reports = (res.assets && res.assets.reports) ? res.assets.reports : {};
+    const keys = Object.keys(reports).sort();
+    keys.forEach(k=>{
+      const url = savePathToUrl(reports[k]);
+      if (!url) return;
+      const a = document.createElement('a');
+      a.href = '#';
+      a.className = 'artifact';
+      a.textContent = k.replace(/^\d+_/, '').replace(/_/g, ' ');
+      a.addEventListener('click', (ev)=>{
+        ev.preventDefault();
+        showMarkdownFromUrl(url, a.textContent);
+      });
+      list.appendChild(a);
+    });
+
+    // Summary chips
+    const chips = qs('#summaryChips');
+    chips.innerHTML = '';
+    const addChip = (label, value)=> {
+      const c = document.createElement('div');
+      c.className = 'chip';
+      c.textContent = `${label}: ${value}`;
+      chips.appendChild(c);
+    };
+    const fs = res.final_score;
+    if (typeof fs === 'number') addChip('Final Score', fs.toFixed(2));
+    const w = res.weights || {};
+    if (typeof w.customer === 'number') addChip('W Customer', (w.customer*100).toFixed(0)+'%');
+    if (typeof w.traffic === 'number') addChip('W Traffic', (w.traffic*100).toFixed(0)+'%');
+    if (typeof w.competition === 'number') addChip('W Competition', (w.competition*100).toFixed(0)+'%');
+  }
+
+  // State: last result
+  let lastResult = null;
+
+  function updateMapFromResult(res){
+    const place = res.place || {};
+    const lat = Number(place.lat ?? (place.location && place.location.lat));
+    const lng = Number(place.lng ?? (place.location && place.location.lng));
+    if (!isNaN(lat) && !isNaN(lng)){
+      initMap(lat, lng, 15);
+    }else{
+      initMap();
+    }
+    showMap();
+  }
+
+  async function runAnalysis(){
+    const language = qs('#language').value;
+    const prompt = (qs('#prompt').value || '').trim();
+    if (!prompt){
+      alert('Please enter a prompt.');
+      return;
+    }
+    const session_id = defaultSessionId();
+    qs('#status').textContent = 'Running...';
+    qs('#errors').textContent = '';
+
+    console.log("Sending request:", {session_id, language, prompt_len: prompt.length});
+    let data = null;
+    try{
+      const resp = await fetch('/api/run', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ session_id, prompt, language })
+      });
+      console.log("Response in:", resp.status);
+      if (!resp.ok){
+        const t = await resp.text();
+        throw new Error(t || `HTTP ${resp.status}`);
+      }
+      data = await resp.json();
+      console.log("Returned data:", data);
+    }catch(err){
+      console.error("Request failed:", err);
+      qs('#errors').textContent = 'Request failed: ' + (err?.message || err);
+      qs('#status').textContent = '';
+      return;
+    }
+
+    lastResult = data;
+    // Map
+    updateMapFromResult(data);
+    // Artifacts and summary
+    renderArtifactsAndSummary(data);
+
+    qs('#status').textContent = 'Done.';
+  }
+
+  // Setup
+  document.addEventListener('DOMContentLoaded', ()=>{
+    // Demo fill
+    qs('#prompt').value =
+      "Open a boutique coffee shop with a cozy vibe targeting young professionals and students. " +
+      "Strong morning traffic is desired. The location is near 南京东路300号, 黄浦区, 上海.";
+
+    // Initial map
+    initMap();
+    showMap();
+
+    // Bind
+    qs('#btnRun').addEventListener('click', runAnalysis);
+    qs('#btnShowMap').addEventListener('click', (ev)=>{
+      ev.preventDefault();
+      showMap();
+    });
+  });
+</script>
+</body>
+</html>
