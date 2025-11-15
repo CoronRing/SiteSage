@@ -76,6 +76,7 @@ class MapAPI(ABC):
         self,
         origin: Mapping[str, Any],
         *,
+        zoom: Optional[int] = None,
         overlays: Optional[Iterable[Mapping[str, Any]]] = None,
         style: Optional[str] = None,
     ) -> Mapping[str, Any]:

@@ -50,6 +50,9 @@ Result schema (dict):
 
 from __future__ import annotations
 
+import dotenv
+dotenv.load_dotenv()
+
 import asyncio
 import json
 import logging
@@ -68,8 +71,6 @@ from tools.map_rt import (
     getDistances,
 )
 from tools.demographics_rt import getPopulationStats
-import dotenv
-dotenv.load_dotenv()
 
 
 # -----------------------------------------------------------------------------

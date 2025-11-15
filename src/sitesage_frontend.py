@@ -2,8 +2,8 @@
 from __future__ import annotations
 
 import logging
-import os
 import time
+from pathlib import Path
 from typing import Any, Dict
 
 from fastapi import FastAPI, HTTPException, Request
@@ -51,15 +51,18 @@ def create_app() -> FastAPI:
     - Static /frontend     -> serve static frontend assets
     """
     _configure_console_logging()
+    base_dir = Path(__file__).resolve().parent
     app = FastAPI(title="SiteSage Frontend", version="0.3.0")
 
     # Ensure folders exist
-    os.makedirs("save", exist_ok=True)
-    os.makedirs("frontend", exist_ok=True)
+    save_dir = base_dir / "save"
+    frontend_dir = base_dir / "frontend"
+    save_dir.mkdir(exist_ok=True)
+    frontend_dir.mkdir(exist_ok=True)
 
     # Static mounts
-    app.mount("/save", StaticFiles(directory="save"), name="save")
-    app.mount("/frontend", StaticFiles(directory="frontend"), name="frontend")
+    app.mount("/save", StaticFiles(directory=str(save_dir)), name="save")
+    app.mount("/frontend", StaticFiles(directory=str(frontend_dir)), name="frontend")
 
     @app.on_event("startup")
     async def _on_startup() -> None:
@@ -67,12 +70,12 @@ def create_app() -> FastAPI:
 
     @app.get("/", response_class=FileResponse)
     async def index() -> FileResponse:
-        index_path = os.path.join("src/frontend", "index.html")
-        if not os.path.isfile(index_path):
+        index_path = frontend_dir / "index.html"
+        if not index_path.is_file():
             logger.error("frontend/index.html not found.")
             raise HTTPException(status_code=404, detail="frontend/index.html not found")
         logger.info("GET / -> serving index.html")
-        return FileResponse(index_path)
+        return FileResponse(str(index_path))
 
     @app.post("/api/run", response_class=JSONResponse)
     async def api_run(req: Request) -> JSONResponse:

@@ -1,0 +1,3 @@
+[submodule "src/src/worldpop_apis/coordTransform"]
+	path = src/src/worldpop_apis/coordTransform
+	url = https://github.com/wandergis/coordTransform_py
