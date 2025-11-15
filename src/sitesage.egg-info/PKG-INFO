@@ -1,0 +1,14 @@
+Metadata-Version: 2.4
+Name: sitesage
+Version: 0.1.0
+Summary: Add your description here
+Requires-Python: >=3.12
+Description-Content-Type: text/markdown
+Requires-Dist: duckduckgo-search>=8.1.1
+Requires-Dist: numpy>=2.3.4
+Requires-Dist: railtracks>=1.1.16
+Requires-Dist: rasterio>=1.4.3
+Requires-Dist: slugify>=0.0.1
+
+# SiteSage
+SiteSage is a decision-support agent that takes a business description and candidate site as inputs and returns an overall feasibility assessment plus forecasted visitor traffic and potential revenue for that location.

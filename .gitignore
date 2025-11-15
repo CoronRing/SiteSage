@@ -4,3 +4,5 @@ data/crop.ipynb
 .env
 */__pycache__
 __pycache__
+.railtracks
+save/

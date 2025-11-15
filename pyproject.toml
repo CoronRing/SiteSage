@@ -1,0 +1,19 @@
+[project]
+name = "sitesage"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "ddgs>=9.9.1",
+    "duckduckgo-search>=8.1.1",
+    "fastapi>=0.121.1",
+    "numpy>=2.3.4",
+    "railtracks>=1.1.16",
+    "rasterio>=1.4.3",
+    "slugify>=0.0.1",
+    "uvicorn>=0.29.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
