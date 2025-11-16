@@ -1,8 +1,7 @@
 AGENTS.md
-data/*.zip
-data/crop.ipynb
-.env
+data
 */__pycache__
 __pycache__
 .railtracks
 save/
+src/.env
