@@ -2,13 +2,14 @@
 
 A prototype, agentic site-selection system that evaluates retail locations (initially coffee shops in Shanghai) with explainable, data-driven insights. It runs a staged analysis pipeline, saves step-by-step reports, and presents a modern golden/royal-styled frontend for exploration.
 
-- Agents (LLM + tools where applicable)
+- Agents (LLM + tools where applicable) with sequential data flow
   1) Understanding: parse prompt, geocode, static map
-  2) Customer: population and demographics
-  3) Traffic: transit/parking accessibility
-  4) Competition: competitor density/proximity
-  5) Weighting: derive weights for each area and compute the final score
-  6) Final Report: no tools; produce a polished, executive-friendly summary with a recommendation
+  2) Customer: population and demographics analysis → produces markdown report
+  3) Traffic: transit/parking accessibility → receives customer report
+  4) Competition: competitor density/proximity → receives customer + traffic reports
+  5) Weighting: derive weights for each domain
+  6) Evaluation: score all analyses objectively using rubrics (0-10 scale)
+  7) Final Report: synthesize all analyses with scores into executive summary
 
 - Tools
   - AMap wrapper (geocoding, nearby POIs, distance matrix) via `tools/map_rt.py`
@@ -66,13 +67,14 @@ Strong morning traffic is desired. The location is near 南京东路300号, 黄�
 
 ## Architecture
 
-- Orchestrated agentic pipeline (LLM + tools):
+- Orchestrated 7-step agentic pipeline with sequential data flow (LLM + tools):
   - UnderstandingAgent → tool_get_place_info, tool_build_static_map
-  - CustomerAgent → tool_get_population_stats
-  - TrafficAgent → tool_get_nearby_places, tool_get_distances
-  - CompetitionAgent → tool_get_nearby_places, tool_get_distances
-  - WeightingAgent → no tools; JSON weights
-  - FinalReportAgent → no tools; full markdown report
+  - CustomerAgent → tool_get_population_stats → markdown report
+  - TrafficAgent (receives customer report) → tool_get_nearby_places, tool_get_distances → markdown report
+  - CompetitionAgent (receives customer + traffic reports) → tool_get_nearby_places, tool_get_distances → markdown report
+  - WeightingAgent → no tools; determines domain weights
+  - EvaluationAgent → no tools; scores analyses using rubrics (customer_rubric.md, traffic_rubric.md, competition_rubric.md)
+  - FinalReportAgent → no tools; synthesizes with scores into polished markdown report
 
 - Data sources:
   - AMap (geocoding, POIs, distance)
@@ -80,6 +82,9 @@ Strong morning traffic is desired. The location is near 南京东路300号, 黄�
   - OpenStreetMap tiles (frontend map)
 
 - Design highlights:
+  - Sequential data flow: each analysis agent receives and considers previous reports
+  - Rubric-based evaluation: objective scoring (0-10) using detailed criteria
+  - Separation of analysis and scoring: analysis agents produce reports, evaluation agent scores them
   - Iterative tool-calling within each agent (LLM can adjust parameters like radius/pages)
   - Robust tool wrappers (accept flexible parameter names: types vs descriptive_types, pages vs num_pages, lat/lng vs lon)
   - Step artifacts saved as markdown under save/<session_id>/
@@ -211,7 +216,9 @@ The backend returns a dict with the following keys:
   - traffic (dict): {nearby_counts: object, distances: object, nearest_transit: object, notes: str|None}
   - competition (dict): {competitor_counts: object, nearest_competitor: object, notes: str|None}
 - scores (dict)
-  - customer/traffic/competition: {"score": float, "justification": str}
+  - customer (float): score 0-10 from evaluation agent
+  - traffic (float): score 0-10 from evaluation agent
+  - competition (float): score 0-10 from evaluation agent
 - weights (dict)
   - customer (float)
   - traffic (float)
@@ -244,9 +251,19 @@ Key files:
 
 Generated:
 - `save/<session_id>/`
-  - `01_understanding.md` … `05_weighting.md`
-  - `06_final_report.md` ← the final executive report
+  - `01_understanding.md` - Extracted store info and location
+  - `02_customer.md` - Customer analysis report
+  - `03_traffic.md` - Traffic & accessibility report
+  - `04_competition.md` - Competition analysis report
+  - `05_weighting.md` - Weight determination
+  - `05_evaluation.md` - Evaluation scores with justifications
+  - `07_final_report.md` ← the final executive report with all scores
   - (other files or logs as your tools may create)
+
+Rubric files (project root):
+- `rubrics/customer_rubric.md` - Customer analysis scoring criteria
+- `rubrics/traffic_rubric.md` - Traffic analysis scoring criteria
+- `rubrics/competition_rubric.md` - Competition analysis scoring criteria
 
 ---
 

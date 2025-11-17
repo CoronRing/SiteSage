@@ -1,52 +1,4 @@
 # sitesage_backend.py
-"""
-SiteSage Agentic Prototype Backend (Single File, Robust Tools + Final Report)
-==============================================================================
-
-Implements the 5+1 step agentic pipeline with tools the LLM can call iteratively:
-1) Understanding (extract store info, geocode, static map)
-2) Customer (population metrics)
-3) Traffic (transit/parking accessibility)
-4) Competition (competitor density)
-5) Weighting (derive weights and final score)
-6) Final Report (LLM, no tools): human-readable markdown, rationale, and recommendation
-
-Logging:
-- Console of the backend can be quiet; detailed per-session logs are handled by the frontend.
-- This module focuses on the agent pipeline and report generation.
-
-Main API:
-- run_sitesage_session_async(session_id: str, prompt: str, *, language: str = "en") -> dict
-- run_sitesage_session(session_id: str, prompt: str, *, language: str = "en") -> dict
-
-Result schema (dict):
-- session_id (str)
-- input (dict): {prompt: str, language: str}
-- store_info (dict): fields include
-    - store_type (str)
-    - business_description (str)
-    - service_mode (str)
-    - target_customers (List[str])
-    - price_level (str)
-    - time_window (str)
-    - location_query (str)
-- place (dict): provider place payload with normalized lat/lng/lon when available
-- features (dict):
-    - customer (dict): {radius_m: float, population_total: float|None, age_buckets: Mapping|None, notes: str|None}
-    - traffic (dict): {nearby_counts: Mapping, distances: Mapping, nearest_transit: Mapping, notes: str|None}
-    - competition (dict): {competitor_counts: Mapping, nearest_competitor: Mapping, notes: str|None}
-- scores (dict): per area -> {score: float, justification: str}
-- weights (dict): {customer: float, traffic: float, competition: float, justification: str}
-- final_score (float)
-- final_report (dict):
-    - title (str): Title of the final report
-    - recommendation (str): Concise recommendation statement
-    - highlights (List[str]): Key bullet points
-    - report_path (str): Path to saved markdown
-- assets (dict): {reports: Mapping[str, str], map_image_url: str}
-- errors (List[str])
-- timestamps (dict): {started_at: str, ended_at: str}
-"""
 
 from __future__ import annotations
 
@@ -71,6 +23,24 @@ from tools.map_rt import (
     getDistances,
 )
 from tools.demographics_rt import getPopulationStats
+
+# Prompts
+from prompts.agent_prompts import (
+    UNDERSTANDING_AGENT_SYSTEM,
+    CUSTOMER_AGENT_SYSTEM,
+    TRAFFIC_AGENT_SYSTEM,
+    COMPETITION_AGENT_SYSTEM,
+    WEIGHTING_AGENT_SYSTEM,
+    EVALUATION_AGENT_SYSTEM,
+    FINAL_REPORT_AGENT_SYSTEM,
+    get_understanding_prompt,
+    get_customer_prompt,
+    get_traffic_prompt,
+    get_competition_prompt,
+    get_weighting_prompt,
+    get_evaluation_prompt,
+    get_final_report_prompt,
+)
 
 
 # -----------------------------------------------------------------------------
@@ -343,25 +313,10 @@ def tool_web_search(query: str, max_results: int = 5, region: str = "wt-wt") -> 
 
 
 # -----------------------------------------------------------------------------
-# Agents (with tool usage guides)
+# Agents (with prompts from prompts.py)
 # -----------------------------------------------------------------------------
 def make_understanding_agent() -> Any:
-    guide = """
-Tool usage guide:
-- tool_get_place_info(address:str[, language:str]) -> dict (place with lat/lng)
-- tool_build_static_map(lat:float, lng:float[, zoom:int,width:int,height:int]) -> str (URL)
-Return ONLY JSON:
-{
-  "store_info": {...},
-  "place": {...},
-  "map_image_url": "https://...",
-  "report_md": "markdown"
-}
-"""
-    system = rt.llm.SystemMessage(
-        "You extract structured store info and resolve the place. "
-        "Use the tools iteratively if needed. " + guide
-    )
+    system = rt.llm.SystemMessage(UNDERSTANDING_AGENT_SYSTEM)
     return rt.agent_node(
         name="UnderstandingAgent",
         tool_nodes=(tool_get_place_info, tool_build_static_map),
@@ -372,22 +327,7 @@ Return ONLY JSON:
 
 
 def make_customer_agent() -> Any:
-    guide = """
-Tool usage guide:
-- tool_get_population_stats(location: {lat,lng}[, radius_m:float, coord_ref:str]) -> {
-    provider, origin, radius_m, coordinate_reference, population_total, age_buckets, notes
-  }
-You may try multiple radius_m values (e.g., 300, 500, 1000, 1500).
-Return ONLY JSON:
-{
-  "features": {"radius_m": float, "population_total": float|null, "age_buckets": object|null, "notes": str|null},
-  "score": float, "justification": "string", "report_md": "markdown"
-}
-"""
-    system = rt.llm.SystemMessage(
-        "You analyze nearby customers using population rasters. "
-        "Iterate calls if necessary for better radius." + guide
-    )
+    system = rt.llm.SystemMessage(CUSTOMER_AGENT_SYSTEM)
     return rt.agent_node(
         name="CustomerAgent",
         tool_nodes=(tool_get_population_stats,),
@@ -398,27 +338,7 @@ Return ONLY JSON:
 
 
 def make_traffic_agent() -> Any:
-    guide = """
-Tool usage guide:
-- tool_get_nearby_places(origin:{lat,lng}, descriptive_types:List[str], radius:int[, rank:str, include_details:bool, num_pages:int]) -> List[dict]
-  Aliases: you can also pass 'types' instead of 'descriptive_types'; 'pages' instead of 'num_pages'.
-- tool_get_distances(origin:{lat,lng}, destinations:[{lat,lng}], mode:str="walk", units:str="metric") -> List[dict]
-Suggested categories: ["subway_station","metro_station","bus_station","bus_stop","parking","parking_lot"].
-Try different radius and num_pages if initial results are sparse.
-Return ONLY JSON:
-{
-  "features": {
-    "nearby_counts": {...},
-    "distances": {"nearest_transit_m": float|null},
-    "nearest_transit": {"lat": float, "lon": float, "distance_m": float} | {},
-    "notes": str|null
-  },
-  "score": float, "justification": "string", "report_md": "markdown"
-}
-"""
-    system = rt.llm.SystemMessage(
-        "You analyze access and traffic using POIs and distances. " + guide
-    )
+    system = rt.llm.SystemMessage(TRAFFIC_AGENT_SYSTEM)
     return rt.agent_node(
         name="TrafficAgent",
         tool_nodes=(tool_get_nearby_places, tool_get_distances),
@@ -429,24 +349,7 @@ Return ONLY JSON:
 
 
 def make_competition_agent() -> Any:
-    guide = """
-Tool usage guide:
-- tool_get_nearby_places(origin:{lat,lng}, descriptive_types:List[str], radius:int[, num_pages:int]) -> List[dict]
-- tool_get_distances(origin:{lat,lng}, destinations:[{lat,lng}]) -> List[dict]
-Use categories: ["coffee_shop","cafe"]. Adjust radius/pages to differentiate counts (e.g., 500/1000/1500m).
-Return ONLY JSON:
-{
-  "features": {
-    "competitor_counts": {"r500": int, "r1000": int, "r1500": int},
-    "nearest_competitor": {"lat": float, "lon": float, "distance_m": float} | {},
-    "notes": str|null
-  },
-  "score": float, "justification": "string", "report_md": "markdown"
-}
-"""
-    system = rt.llm.SystemMessage(
-        "You analyze competition density and proximity. " + guide
-    )
+    system = rt.llm.SystemMessage(COMPETITION_AGENT_SYSTEM)
     return rt.agent_node(
         name="CompetitionAgent",
         tool_nodes=(tool_get_nearby_places, tool_get_distances),
@@ -457,18 +360,7 @@ Return ONLY JSON:
 
 
 def make_weighting_agent() -> Any:
-    guide = """
-Return ONLY JSON:
-{
-  "weights": {"customer": float, "traffic": float, "competition": float},
-  "justification": "string",
-  "report_md": "markdown"
-}
-Weights must be non-negative and sum to ~1. Adjust based on store concept.
-"""
-    system = rt.llm.SystemMessage(
-        "You derive weights for customer, traffic, competition from store description and area scores. " + guide
-    )
+    system = rt.llm.SystemMessage(WEIGHTING_AGENT_SYSTEM)
     return rt.agent_node(
         name="WeightingAgent",
         tool_nodes=(),
@@ -477,35 +369,26 @@ Weights must be non-negative and sum to ~1. Adjust based on store concept.
     )
 
 
+def make_evaluation_agent() -> Any:
+    """
+    Evaluation agent that scores the three analysis reports using rubrics.
+    Returns JSON with scores for customer, traffic, and competition.
+    """
+    system = rt.llm.SystemMessage(EVALUATION_AGENT_SYSTEM)
+    return rt.agent_node(
+        name="EvaluationAgent",
+        tool_nodes=(),  # no tools
+        system_message=system,
+        llm=rt.llm.OpenAILLM("gpt-4o"),
+    )
+
+
 def make_final_report_agent() -> Any:
     """
     Final narrative report agent (no tools).
-    Produces a polished markdown report with executive summary, key findings,
-    weight rationale, recommendation, and appendix of key metrics.
+    Synthesizes the three analysis reports into a polished final report.
     """
-    guide = """
-Return ONLY JSON:
-{
-  "title": "string",
-  "recommendation": "string",
-  "highlights": ["string", "..."],
-  "report_md": "markdown"
-}
-The report_md must be comprehensive and readable:
-- Executive Summary (final score, verdict)
-- Site Overview (address/area context; include a short description)
-- Customer Insights (population, age buckets; link to business goals)
-- Traffic & Accessibility (transit proximity; access modes)
-- Competition Landscape (density counts, nearest competitor; positioning)
-- Weighting Rationale (why these weights for this concept)
-- Recommendation (actionable next steps and risks)
-- Appendix (key numbers; reference to saved step reports if helpful)
-Keep it concise but informative; use bullet lists and short paragraphs.
-"""
-    system = rt.llm.SystemMessage(
-        "You are a business location analyst writing a final report for a coffee shop site selection. "
-        "Use the provided structured data to produce a polished markdown report. " + guide
-    )
+    system = rt.llm.SystemMessage(FINAL_REPORT_AGENT_SYSTEM)
     return rt.agent_node(
         name="FinalReportAgent",
         tool_nodes=(),  # no tools
@@ -530,10 +413,7 @@ async def run_sitesage_session_async(
 
     # 1) Understanding
     understanding_agent = make_understanding_agent()
-    understanding_prompt = (
-        "Extract store info and resolve the place. Use tools as needed and return the required JSON.\n"
-        f"User request:\n{prompt}"
-    )
+    understanding_prompt = get_understanding_prompt(prompt)
     with rt.Session(logging_setting="NONE"):
         resp = await rt.call(understanding_agent, user_input=understanding_prompt)
     
@@ -558,85 +438,55 @@ async def run_sitesage_session_async(
 
     # 2) Customer
     customer_agent = make_customer_agent()
-    c_input = {
-        "store_info": store_info,
-        "place": place,
-        "hint": "Try 300m/500m/1000m if needed. End with the JSON schema."
-    }
+    customer_prompt = get_customer_prompt(store_info, place)
     with rt.Session(logging_setting="NONE"):
-        cresp = await rt.call(customer_agent, user_input=json.dumps(c_input, ensure_ascii=False))
+        cresp = await rt.call(customer_agent, user_input=customer_prompt)
     
-    try:
-        cjson = parse_json_from_text(cresp.text)
-    except Exception as e:
-        logger.error("Failed to parse customer agent response as JSON: %s", e)
-        cjson = {}
-    
+    # Extract the markdown report (the entire response is the report)
+    customer_report = cresp.text.strip()
     assets["reports"]["02_customer"] = write_markdown(
-        session_dir, "02_customer", cjson.get("report_md", "# Customer")
+        session_dir, "02_customer", customer_report
     )
-    customer_features = dict(cjson.get("features", {}))
-    customer_score = float(cjson.get("score", 0.0))
-    customer_just = str(cjson.get("justification", ""))
 
-    # 3) Traffic
+    # 3) Traffic - receives Customer report
     traffic_agent = make_traffic_agent()
-    t_input = {
-        "store_info": store_info,
-        "place": place,
-        "suggested_types": ["subway_station", "metro_station", "bus_station", "bus_stop", "parking", "parking_lot"],
-    }
+    traffic_prompt = get_traffic_prompt(store_info, place, customer_report)
     with rt.Session(logging_setting="NONE"):
-        tresp = await rt.call(traffic_agent, user_input=json.dumps(t_input, ensure_ascii=False))
+        tresp = await rt.call(traffic_agent, user_input=traffic_prompt)
     
-    try:
-        tjson = parse_json_from_text(tresp.text)
-    except Exception as e:
-        logger.error("Failed to parse traffic agent response as JSON: %s", e)
-        tjson = {}
-    
+    # Extract the markdown report
+    traffic_report = tresp.text.strip()
     assets["reports"]["03_traffic"] = write_markdown(
-        session_dir, "03_traffic", tjson.get("report_md", "# Traffic")
+        session_dir, "03_traffic", traffic_report
     )
-    traffic_features = dict(tjson.get("features", {}))
-    traffic_score = float(tjson.get("score", 0.0))
-    traffic_just = str(tjson.get("justification", ""))
 
-    # 4) Competition
+    # 4) Competition - receives Customer and Traffic reports
     competition_agent = make_competition_agent()
-    k_input = {
-        "store_info": store_info,
-        "place": place,
-        "suggested_types": ["coffee_shop", "cafe"],
-    }
+    competition_prompt = get_competition_prompt(store_info, place, customer_report, traffic_report)
     with rt.Session(logging_setting="NONE"):
-        kresp = await rt.call(competition_agent, user_input=json.dumps(k_input, ensure_ascii=False))
+        kresp = await rt.call(competition_agent, user_input=competition_prompt)
     
-    try:
-        kjson = parse_json_from_text(kresp.text)
-    except Exception as e:
-        logger.error("Failed to parse competition agent response as JSON: %s", e)
-        kjson = {}
-    
+    # Extract the markdown report
+    competition_report = kresp.text.strip()
     assets["reports"]["04_competition"] = write_markdown(
-        session_dir, "04_competition", kjson.get("report_md", "# Competition")
+        session_dir, "04_competition", competition_report
     )
-    competition_features = dict(kjson.get("features", {}))
-    competition_score = float(kjson.get("score", 0.0))
-    competition_just = str(kjson.get("justification", ""))
 
-    # 5) Weighting
+    # 5) Weighting (logically parallel to evaluation - does NOT receive scores)
     weighting_agent = make_weighting_agent()
-    w_input = {
-        "store_info": store_info,
-        "area_scores": {
-            "customer": {"score": customer_score, "justification": customer_just},
-            "traffic": {"score": traffic_score, "justification": traffic_just},
-            "competition": {"score": competition_score, "justification": competition_just},
-        },
-    }
+    
+    # Load weighting rubric
+    rubric_dir = os.path.abspath("rubrics")
+    try:
+        with open(os.path.join(rubric_dir, "weighting_rubric.md"), "r", encoding="utf-8") as f:
+            weighting_rubric = f.read()
+    except Exception as e:
+        logger.error("Failed to load weighting_rubric.md: %s", e)
+        weighting_rubric = ""
+    
+    weighting_prompt = get_weighting_prompt(store_info, weighting_rubric)
     with rt.Session(logging_setting="NONE"):
-        wresp = await rt.call(weighting_agent, user_input=json.dumps(w_input, ensure_ascii=False))
+        wresp = await rt.call(weighting_agent, user_input=weighting_prompt)
     
     try:
         wjson = parse_json_from_text(wresp.text)
@@ -656,33 +506,95 @@ async def run_sitesage_session_async(
         wc, wt, wk = wc / total, wt / total, wk / total
     weights = {"customer": wc, "traffic": wt, "competition": wk, "justification": wjson.get("justification", "")}
 
-    final_score = customer_score * wc + traffic_score * wt + competition_score * wk
-
-    # 6) Final Report (no tools)
-    final_agent = make_final_report_agent()
-    final_payload = {
-        "session_id": session_id,
-        "input": {"prompt": prompt, "language": language},
-        "store_info": store_info,
-        "place": place,
-        "features": {
-            "customer": customer_features,
-            "traffic": traffic_features,
-            "competition": competition_features,
-        },
-        "scores": {
-            "customer": {"score": customer_score, "justification": customer_just},
-            "traffic": {"score": traffic_score, "justification": traffic_just},
-            "competition": {"score": competition_score, "justification": competition_just},
-        },
-        "weights": weights,
-        "final_score": final_score,
-        "assets": {"map_image_url": map_image_url},
-        "reports": assets["reports"],
-        "guidance": "Write a polished, executive-friendly final report."
-    }
+    # 6) Evaluation - score the three analysis reports using rubrics
+    # NOTE: Evaluation is logically parallel to Weighting:
+    #   - Weighting (Step 5) determines importance based on BUSINESS CONTEXT (store type, model)
+    #   - Evaluation (Step 6) determines quality based on ANALYSIS RUBRICS (how well analysis was done)
+    #   - Weighting does NOT receive evaluation scores to avoid bias
+    #   - This ensures weights reflect business priorities, not analysis quality
+    evaluation_agent = make_evaluation_agent()
+    
+    # Load rubric files
+    rubric_dir = os.path.abspath("rubrics")
+    try:
+        with open(os.path.join(rubric_dir, "customer_rubric.md"), "r", encoding="utf-8") as f:
+            customer_rubric = f.read()
+    except Exception as e:
+        logger.error("Failed to load customer_rubric.md: %s", e)
+        customer_rubric = "# Customer Rubric\nNo rubric available."
+    
+    try:
+        with open(os.path.join(rubric_dir, "traffic_rubric.md"), "r", encoding="utf-8") as f:
+            traffic_rubric = f.read()
+    except Exception as e:
+        logger.error("Failed to load traffic_rubric.md: %s", e)
+        traffic_rubric = "# Traffic Rubric\nNo rubric available."
+    
+    try:
+        with open(os.path.join(rubric_dir, "competition_rubric.md"), "r", encoding="utf-8") as f:
+            competition_rubric = f.read()
+    except Exception as e:
+        logger.error("Failed to load competition_rubric.md: %s", e)
+        competition_rubric = "# Competition Rubric\nNo rubric available."
+    
+    evaluation_prompt = get_evaluation_prompt(
+        customer_report=customer_report,
+        traffic_report=traffic_report,
+        competition_report=competition_report,
+        customer_rubric=customer_rubric,
+        traffic_rubric=traffic_rubric,
+        competition_rubric=competition_rubric,
+    )
+    
     with rt.Session(logging_setting="NONE"):
-        fresp = await rt.call(final_agent, user_input=json.dumps(final_payload, ensure_ascii=False))
+        eresp = await rt.call(evaluation_agent, user_input=evaluation_prompt)
+    
+    try:
+        ejson = parse_json_from_text(eresp.text)
+    except Exception as e:
+        logger.error("Failed to parse evaluation agent response as JSON: %s", e)
+        ejson = {}
+    
+    # Extract scores
+    evaluation_scores = {
+        "customer": ejson.get("customer", {"score": 0.0, "justification": ""}),
+        "traffic": ejson.get("traffic", {"score": 0.0, "justification": ""}),
+        "competition": ejson.get("competition", {"score": 0.0, "justification": ""}),
+    }
+    
+    # Calculate final weighted score
+    customer_score = float(evaluation_scores["customer"].get("score", 0.0))
+    traffic_score = float(evaluation_scores["traffic"].get("score", 0.0))
+    competition_score = float(evaluation_scores["competition"].get("score", 0.0))
+    final_score = (wc * customer_score) + (wt * traffic_score) + (wk * competition_score)
+    
+    assets["reports"]["05_evaluation"] = write_markdown(
+        session_dir, "05_evaluation", 
+        f"# Evaluation Scores\n\n"
+        f"## Customer Analysis: {customer_score:.1f}/10\n{evaluation_scores['customer'].get('justification', '')}\n\n"
+        f"## Traffic & Accessibility: {traffic_score:.1f}/10\n{evaluation_scores['traffic'].get('justification', '')}\n\n"
+        f"## Competition Analysis: {competition_score:.1f}/10\n{evaluation_scores['competition'].get('justification', '')}\n\n"
+        f"## Final Weighted Score: {final_score:.1f}/10\n"
+        f"Weights: Customer={wc:.2f}, Traffic={wt:.2f}, Competition={wk:.2f}"
+    )
+
+    # 7) Final Report (no tools) - synthesizes the three analysis reports with scores
+    final_agent = make_final_report_agent()
+    final_prompt = get_final_report_prompt(
+        session_id=session_id,
+        prompt=prompt,
+        language=language,
+        store_info=store_info,
+        place=place,
+        customer_report=customer_report,
+        traffic_report=traffic_report,
+        competition_report=competition_report,
+        evaluation_scores=evaluation_scores,
+        weights=weights,
+        final_score=final_score,
+    )
+    with rt.Session(logging_setting="NONE"):
+        fresp = await rt.call(final_agent, user_input=final_prompt)
     
     try:
         fjson = parse_json_from_text(fresp.text)
@@ -691,8 +603,8 @@ async def run_sitesage_session_async(
         fjson = {}
     
     final_report_md = fjson.get("report_md", "# Final Report\n\nNo content.")
-    final_report_path = write_markdown(session_dir, "06_final_report", final_report_md)
-    assets["reports"]["06_final_report"] = final_report_path
+    final_report_path = write_markdown(session_dir, "07_final_report", final_report_md)
+    assets["reports"]["07_final_report"] = final_report_path
     final_report = {
         "title": fjson.get("title", "SiteSage Final Report"),
         "recommendation": fjson.get("recommendation", ""),
@@ -706,18 +618,18 @@ async def run_sitesage_session_async(
         "input": {"prompt": prompt, "language": language},
         "store_info": store_info,
         "place": place,
-        "features": {
-            "customer": customer_features,
-            "traffic": traffic_features,
-            "competition": competition_features,
+        "reports": {
+            "customer": customer_report,
+            "traffic": traffic_report,
+            "competition": competition_report,
         },
         "scores": {
-            "customer": {"score": customer_score, "justification": customer_just},
-            "traffic": {"score": traffic_score, "justification": traffic_just},
-            "competition": {"score": competition_score, "justification": competition_just},
+            "customer": customer_score,
+            "traffic": traffic_score,
+            "competition": competition_score,
         },
         "weights": weights,
-        "final_score": float(final_score),
+        "final_score": final_score,
         "final_report": final_report,
         "assets": {"reports": assets["reports"], "map_image_url": map_image_url},
         "errors": errors,
@@ -741,12 +653,15 @@ def main() -> None:
 
     print("\n=== SiteSage Agentic Summary ===")
     print(f"Session: {res['session_id']}")
-    print(f"Final Score: {res['final_score']:.2f} / 10")
+    print(f"Final Score: {res['final_score']:.2f} (computed by final agent)")
     print("Weights:", {k: round(v, 2) for k, v in res["weights"].items() if isinstance(v, float)})
-    print("Area Scores:", {k: round(v['score'], 2) for k, v in res["scores"].items()})
     print("Map:", res["assets"].get("map_image_url", ""))
     print("Final Report:", res["final_report"].get("report_path", ""))
     print("Reports saved under:", os.path.abspath(os.path.join("save", res['session_id'])))
+    print("\nAnalysis Reports:")
+    print("  - Customer:", res["assets"]["reports"].get("02_customer", ""))
+    print("  - Traffic:", res["assets"]["reports"].get("03_traffic", ""))
+    print("  - Competition:", res["assets"]["reports"].get("04_competition", ""))
     if res["errors"]:
         print("Errors:", res["errors"])
     else:
