@@ -46,8 +46,15 @@ from prompts.agent_prompts import (
 # -----------------------------------------------------------------------------
 # Logging (module logger; frontend config controls console/file)
 # -----------------------------------------------------------------------------
+def _configure_logging(filename='logger') -> None:
+    logging.basicConfig(level=logging.INFO,
+                        format="%(asctime)s [%(processName)s] %(message)s",
+                        datefmt="%H:%M:%S",
+                        force=True,
+                        filename='logs/' + filename + '.log')
+    rt.set_config(log_file='logs/' + filename + '.log')
+_configure_logging("sitesage")
 logger = logging.getLogger("sitesage")
-
 
 # -----------------------------------------------------------------------------
 # Utilities
@@ -414,7 +421,7 @@ async def run_sitesage_session_async(
     # 1) Understanding
     understanding_agent = make_understanding_agent()
     understanding_prompt = get_understanding_prompt(prompt)
-    with rt.Session(logging_setting="NONE"):
+    with rt.Session(logging_setting="VERBOSE"):
         resp = await rt.call(understanding_agent, user_input=understanding_prompt)
     
     try:
@@ -439,7 +446,7 @@ async def run_sitesage_session_async(
     # 2) Customer
     customer_agent = make_customer_agent()
     customer_prompt = get_customer_prompt(store_info, place)
-    with rt.Session(logging_setting="NONE"):
+    with rt.Session(logging_setting="VERBOSE"):
         cresp = await rt.call(customer_agent, user_input=customer_prompt)
     
     # Extract the markdown report (the entire response is the report)
@@ -451,7 +458,7 @@ async def run_sitesage_session_async(
     # 3) Traffic - receives Customer report
     traffic_agent = make_traffic_agent()
     traffic_prompt = get_traffic_prompt(store_info, place, customer_report)
-    with rt.Session(logging_setting="NONE"):
+    with rt.Session(logging_setting="VERBOSE"):
         tresp = await rt.call(traffic_agent, user_input=traffic_prompt)
     
     # Extract the markdown report
@@ -463,7 +470,7 @@ async def run_sitesage_session_async(
     # 4) Competition - receives Customer and Traffic reports
     competition_agent = make_competition_agent()
     competition_prompt = get_competition_prompt(store_info, place, customer_report, traffic_report)
-    with rt.Session(logging_setting="NONE"):
+    with rt.Session(logging_setting="VERBOSE"):
         kresp = await rt.call(competition_agent, user_input=competition_prompt)
     
     # Extract the markdown report
@@ -485,7 +492,7 @@ async def run_sitesage_session_async(
         weighting_rubric = ""
     
     weighting_prompt = get_weighting_prompt(store_info, weighting_rubric)
-    with rt.Session(logging_setting="NONE"):
+    with rt.Session(logging_setting="VERBOSE"):
         wresp = await rt.call(weighting_agent, user_input=weighting_prompt)
     
     try:
@@ -546,7 +553,7 @@ async def run_sitesage_session_async(
         competition_rubric=competition_rubric,
     )
     
-    with rt.Session(logging_setting="NONE"):
+    with rt.Session(logging_setting="VERBOSE"):
         eresp = await rt.call(evaluation_agent, user_input=evaluation_prompt)
     
     try:
@@ -593,7 +600,7 @@ async def run_sitesage_session_async(
         weights=weights,
         final_score=final_score,
     )
-    with rt.Session(logging_setting="NONE"):
+    with rt.Session(logging_setting="VERBOSE"):
         fresp = await rt.call(final_agent, user_input=final_prompt)
     
     try:
