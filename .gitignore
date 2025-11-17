@@ -5,3 +5,6 @@ __pycache__
 .railtracks
 save/
 src/.env
+.python-version
+pytest.ini
+src/logs/*
