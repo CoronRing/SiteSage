@@ -7,4 +7,9 @@
 - `cat1` -> nearby search for more surroundings, such as residential buildings, office buildings, schools, shopping malls, show the data and analyze -> `data3`
 
 ## Traffic
-- `data1`
+- `data1` -> 
+- 
+
+## rubrics
+- weighting rubrics
+- evaluating rubrics
