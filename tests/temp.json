@@ -1,0 +1,1307 @@
+[
+    {
+        "parent": [],
+        "distance": [],
+        "pcode": "310000",
+        "importance": [],
+        "biz_ext": {
+            "cost": [],
+            "rating": []
+        },
+        "recommend": "0",
+        "type": "商务住宅;楼宇;商务写字楼",
+        "photos": [
+            {
+                "title": [],
+                "url": "https://store.is.autonavi.com/showpic/16815004b4caaee72a9078b186964a37"
+            },
+            {
+                "title": [],
+                "url": "http://store.is.autonavi.com/showpic/cf8becefb26caa9f138bc4186cc964ce"
+            },
+            {
+                "title": [],
+                "url": "https://aos-comment.amap.com/B001550C3S/comment/C04A752A_9304_4C27_A1F6_CF487E1ADC66_L0_001_1284_1686_1730292637135_07200806.jpg"
+            }
+        ],
+        "discount_num": "0",
+        "gridcode": "4621638802",
+        "typecode": "120201",
+        "shopinfo": "0",
+        "poiweight": [],
+        "citycode": "021",
+        "adname": "黄浦区",
+        "children": [],
+        "alias": [],
+        "tel": [],
+        "id": "B001550C3S",
+        "tag": [],
+        "event": [],
+        "entr_location": "121.484484,31.235719",
+        "indoor_map": "0",
+        "email": [],
+        "timestamp": "2025-11-20 10:41:19",
+        "website": [],
+        "address": "汉口路300号(南京东路地铁站3号口步行130米)",
+        "adcode": "310101",
+        "pname": "上海市",
+        "biz_type": [],
+        "cityname": "上海市",
+        "postcode": [],
+        "match": "0",
+        "business_area": "北京路",
+        "indoor_data": {
+            "cmsid": [],
+            "truefloor": [],
+            "cpid": [],
+            "floor": []
+        },
+        "childtype": [],
+        "exit_location": [],
+        "name": "解放大厦",
+        "location": "121.484495,31.236026",
+        "shopid": [],
+        "navi_poiid": "H51F010012_30901",
+        "groupbuy_num": "0"
+    },
+    {
+        "parent": [],
+        "distance": [],
+        "pcode": "310000",
+        "importance": [],
+        "biz_ext": {
+            "cost": [],
+            "rating": "4.7"
+        },
+        "recommend": "0",
+        "type": "购物服务;商场;购物中心",
+        "photos": [
+            {
+                "title": [],
+                "url": "https://aos-comment.amap.com/B00156GMJN/comment/35C10BCB_CCFA_4A5F_B8AD_2F12E1B9B84F_L0_001_1512_201_1748434740115_48809467.jpg"
+            },
+            {
+                "title": [],
+                "url": "https://aos-comment.amap.com/B00156GMJN/comment/99AE5023_39E7_43AE_A769_564383F263A6_L0_001_1512_201_1748434740115_75379967.jpg"
+            },
+            {
+                "title": [],
+                "url": "https://aos-comment.amap.com/B00156GMJN/comment/83735deaaf684ca4c025759d03d24d19_2048_2048_80.jpg"
+            }
+        ],
+        "discount_num": "0",
+        "gridcode": "4621638812",
+        "typecode": "060101",
+        "shopinfo": "0",
+        "poiweight": [],
+        "citycode": "021",
+        "adname": "黄浦区",
+        "children": [],
+        "alias": [],
+        "tel": "021-33302099",
+        "id": "B00156GMJN",
+        "tag": "寿喜锅",
+        "event": [],
+        "entr_location": "121.483848,31.238415",
+        "indoor_map": "1",
+        "email": [],
+        "timestamp": "2025-11-27 02:41:44",
+        "website": [],
+        "address": "南京东路300号(南京东路地铁站2号口旁)",
+        "adcode": "310101",
+        "pname": "上海市",
+        "biz_type": [],
+        "cityname": "上海市",
+        "postcode": [],
+        "match": "0",
+        "business_area": "北京路",
+        "indoor_data": {
+            "cmsid": "16243_B00156GMJN",
+            "truefloor": [],
+            "cpid": "B00156GMJN",
+            "floor": []
+        },
+        "childtype": [],
+        "exit_location": [],
+        "name": "恒基名人购物中心",
+        "location": "121.484090,31.237870",
+        "shopid": [],
+        "navi_poiid": "H51F010012_516349",
+        "groupbuy_num": "0"
+    },
+    {
+        "parent": "B0FFF5VNSV",
+        "distance": [],
+        "pcode": "310000",
+        "importance": [],
+        "biz_ext": {
+            "cost": [],
+            "star": [],
+            "rating": "4.2",
+            "lowest_price": [],
+            "hotel_ordering": "1"
+        },
+        "recommend": "0",
+        "type": "住宿服务;宾馆酒店;经济型连锁酒店",
+        "photos": [
+            {
+                "provider": [],
+                "title": [],
+                "url": "http://store.is.autonavi.com/showpic/d69864528f98d399fc34a02a9915dc29"
+            },
+            {
+                "provider": [],
+                "title": "封面图",
+                "url": "https://store.is.autonavi.com/showpic/8a2ac10a51c5c9affb8fa5a33fc3bcfa"
+            },
+            {
+                "provider": [],
+                "title": "高级大床房",
+                "url": "https://store.is.autonavi.com/showpic/1699624f196ce9d37365b1013f5abee2"
+            }
+        ],
+        "discount_num": "0",
+        "gridcode": "4621638802",
+        "typecode": "100105",
+        "shopinfo": "0",
+        "poiweight": [],
+        "citycode": "021",
+        "adname": "黄浦区",
+        "children": [],
+        "alias": [],
+        "tel": "021-63217999",
+        "id": "B0FFKNKASS",
+        "tag": "凉拌菜,一条龙,面点,卤蛋",
+        "event": [],
+        "entr_location": "121.484297,31.236044",
+        "indoor_map": "0",
+        "email": [],
+        "timestamp": "2025-11-27 03:54:46",
+        "website": [],
+        "address": "山东中路300号(南京东路地铁站3号口步行120米)",
+        "adcode": "310101",
+        "pname": "上海市",
+        "biz_type": "hotel",
+        "cityname": "上海市",
+        "postcode": [],
+        "match": "0",
+        "business_area": "北京路",
+        "indoor_data": {
+            "cmsid": [],
+            "truefloor": [],
+            "cpid": [],
+            "floor": []
+        },
+        "childtype": "324",
+        "exit_location": [],
+        "name": "全季酒店(山东中路店)",
+        "location": "121.484502,31.236044",
+        "shopid": [],
+        "navi_poiid": [],
+        "groupbuy_num": "0"
+    },
+    {
+        "parent": "B00156GMJN",
+        "distance": [],
+        "pcode": "310000",
+        "importance": [],
+        "biz_ext": {
+            "cost": "28.00",
+            "rating": "4.6",
+            "meal_ordering": "0"
+        },
+        "recommend": "0",
+        "type": "餐饮服务;咖啡厅;咖啡厅",
+        "photos": [
+            {
+                "title": [],
+                "url": "http://store.is.autonavi.com/query_pic?id=st1a318338-7770-4717-a3c2-d24271293e86&user=search&operate=original"
+            },
+            {
+                "title": [],
+                "url": "http://store.is.autonavi.com/showpic/e6221ca53a7b91c9b7c620ded2dc3515"
+            },
+            {
+                "title": [],
+                "url": "http://store.is.autonavi.com/showpic/00e72015b69aa094bd7afc842068e04d"
+            }
+        ],
+        "discount_num": "0",
+        "gridcode": "4621638812",
+        "typecode": "050500",
+        "shopinfo": "0",
+        "poiweight": [],
+        "citycode": "021",
+        "adname": "黄浦区",
+        "children": [],
+        "alias": [],
+        "tel": "021-63526693",
+        "id": "B0G0TNDJXU",
+        "tag": "不止拿铁,农夫卷,美式,无肉也欢火腿蛋贝果三明治,牛油果生椰冷萃,全麦贝果,柠檬气泡饮,鲜萃奶咖,拿铁,巴旦木炼乳拿铁,巴旦木炼乳澳白,牛肉",
+        "event": [],
+        "entr_location": [],
+        "indoor_map": "1",
+        "email": [],
+        "timestamp": "2025-11-27 04:19:03",
+        "website": [],
+        "address": "南京东路300号一层(南京东路地铁站5号口旁)",
+        "adcode": "310101",
+        "pname": "上海市",
+        "biz_type": "diner",
+        "cityname": "上海市",
+        "postcode": [],
+        "match": "0",
+        "business_area": "北京路",
+        "indoor_data": {
+            "cmsid": "162430210100653",
+            "truefloor": "L1",
+            "cpid": "B00156GMJN",
+            "floor": "1"
+        },
+        "childtype": "201",
+        "exit_location": [],
+        "name": "Tims咖啡(恒基名人店)",
+        "location": "121.484158,31.238276",
+        "shopid": [],
+        "navi_poiid": [],
+        "groupbuy_num": "0"
+    },
+    {
+        "parent": "B00156GMJN",
+        "distance": [],
+        "pcode": "310000",
+        "importance": [],
+        "biz_ext": {
+            "cost": [],
+            "rating": "4.5",
+            "meal_ordering": "0"
+        },
+        "recommend": "0",
+        "type": "餐饮服务;快餐厅;麦当劳",
+        "photos": [
+            {
+                "title": [],
+                "url": "http://store.is.autonavi.com/showpic/bc560e9770a90b569387b4d5f73c7ea3"
+            },
+            {
+                "title": [],
+                "url": "https://aos-comment.amap.com/B0I1UHVPIM/comment/20FD13C2_9A8D_4FE2_85A6_326B683F35D4_L0_001_1126_200_1760281687565_10807297.jpg"
+            },
+            {
+                "title": [],
+                "url": "https://aos-comment.amap.com/B0I1UHVPIM/comment/88f040b5903f2e4552b32032d143fdf6_2048_2048_80.jpg"
+            }
+        ],
+        "discount_num": "0",
+        "gridcode": "4621638812",
+        "typecode": "050302",
+        "shopinfo": "0",
+        "poiweight": [],
+        "citycode": "021",
+        "adname": "黄浦区",
+        "children": [],
+        "alias": [],
+        "tel": "021-63120023;4009200205",
+        "id": "B0I1UHVPIM",
+        "tag": "薯条,汉堡",
+        "event": [],
+        "entr_location": [],
+        "indoor_map": "1",
+        "email": [],
+        "timestamp": "2025-11-27 11:09:22",
+        "website": [],
+        "address": "南京东路300号恒基名人购物中心B2层B203",
+        "adcode": "310101",
+        "pname": "上海市",
+        "biz_type": "diner",
+        "cityname": "上海市",
+        "postcode": [],
+        "match": "0",
+        "business_area": "北京路",
+        "indoor_data": {
+            "cmsid": "162430200200644",
+            "truefloor": "B2",
+            "cpid": "B00156GMJN",
+            "floor": "-2"
+        },
+        "childtype": "201",
+        "exit_location": [],
+        "name": "麦当劳(恒基名人购物中心店)",
+        "location": "121.483760,31.237843",
+        "shopid": [],
+        "navi_poiid": [],
+        "groupbuy_num": "0"
+    },
+    {
+        "parent": "B00156GMJN",
+        "distance": [],
+        "pcode": "310000",
+        "importance": [],
+        "biz_ext": {
+            "cost": [],
+            "rating": []
+        },
+        "recommend": "0",
+        "type": "交通设施服务;停车场;公共停车场",
+        "parking_type": "地下",
+        "photos": [
+            {
+                "title": [],
+                "url": "http://store.is.autonavi.com/showpic/1651181eaad5c892f627b21c539cb7d1"
+            },
+            {
+                "title": [],
+                "url": "https://aos-comment.amap.com/B0FFGC3J08/comment/a391011588093c7e7c1f12d27367c214_2048_2048_80.jpg"
+            },
+            {
+                "title": [],
+                "url": "http://store.is.autonavi.com/showpic/f9f1aeec139680f1a23c1be3801735c3"
+            }
+        ],
+        "discount_num": "0",
+        "gridcode": "4621638812",
+        "typecode": "150904",
+        "shopinfo": "2",
+        "poiweight": [],
+        "citycode": "021",
+        "adname": "黄浦区",
+        "children": [],
+        "alias": [],
+        "tel": [],
+        "id": "B0FFGC3J08",
+        "tag": [],
+        "event": [],
+        "entr_location": "121.484175,31.238369",
+        "indoor_map": "0",
+        "email": [],
+        "timestamp": "2025-11-24 00:29:02",
+        "website": [],
+        "address": "南京东路300号恒基名人购物中心B2",
+        "adcode": "310101",
+        "pname": "上海市",
+        "biz_type": [],
+        "cityname": "上海市",
+        "postcode": [],
+        "match": "0",
+        "business_area": "北京路",
+        "indoor_data": {
+            "cmsid": [],
+            "truefloor": [],
+            "cpid": [],
+            "floor": []
+        },
+        "childtype": "305",
+        "exit_location": [],
+        "name": "恒基名人购物中心地下停车场",
+        "location": "121.484241,31.238027",
+        "shopid": [],
+        "navi_poiid": "H51F010012_479871",
+        "groupbuy_num": "0"
+    },
+    {
+        "parent": "B00156GMJN",
+        "distance": [],
+        "pcode": "310000",
+        "importance": [],
+        "biz_ext": {
+            "cost": "20.00",
+            "rating": "4.4",
+            "meal_ordering": "0"
+        },
+        "recommend": "0",
+        "type": "购物服务;服装鞋帽皮具店;品牌服装店|餐饮服务;冷饮店;冷饮店",
+        "photos": [
+            {
+                "title": [],
+                "url": "https://store.is.autonavi.com/showpic/7b9b34ddd29547f190a579bcc9173f38?operate=original?operate=original"
+            },
+            {
+                "title": [],
+                "url": "https://aos-comment.amap.com/B0FFIP6YK5/comment/B34BD05E_B736_4B32_A4A7_8EA959947C36_L0_001_1126_200_1758088529284_42010916.jpg"
+            },
+            {
+                "title": [],
+                "url": "http://store.is.autonavi.com/showpic/cfed556e69461e98ed0f21fd8439eab5"
+            }
+        ],
+        "discount_num": "0",
+        "gridcode": "4621638812",
+        "typecode": "061101|050700",
+        "shopinfo": "0",
+        "poiweight": [],
+        "citycode": "021",
+        "adname": "黄浦区",
+        "children": [],
+        "alias": [],
+        "tel": "021-63150507",
+        "id": "B0FFIP6YK5",
+        "tag": "粉盐金凤梨果茶,金凤梨芒果果茶,金凤梨百香果茶,红叶,点心,芋圆,果茶,芋泥,三道菜",
+        "event": [],
+        "entr_location": [],
+        "indoor_map": "1",
+        "email": [],
+        "timestamp": "2025-11-26 13:31:02",
+        "website": [],
+        "address": "南京东路300号恒基名人商业大厦L316室",
+        "adcode": "310101",
+        "pname": "上海市",
+        "biz_type": [],
+        "cityname": "上海市",
+        "postcode": [],
+        "match": "0",
+        "business_area": "北京路",
+        "indoor_data": {
+            "cmsid": "162430210300691",
+            "truefloor": "L3",
+            "cpid": "B00156GMJN",
+            "floor": "3"
+        },
+        "childtype": "201",
+        "exit_location": [],
+        "name": "KOIThe(恒基名人购物中心店)",
+        "location": "121.484385,31.238040",
+        "shopid": [],
+        "navi_poiid": [],
+        "groupbuy_num": "0"
+    },
+    {
+        "parent": "B00156GMJN",
+        "distance": [],
+        "pcode": "310000",
+        "importance": [],
+        "biz_ext": {
+            "cost": "85.00",
+            "rating": "4.3",
+            "meal_ordering": "0"
+        },
+        "recommend": "0",
+        "type": "餐饮服务;冷饮店;冷饮店|餐饮服务;中餐厅;中餐厅",
+        "photos": [
+            {
+                "title": [],
+                "url": "http://store.is.autonavi.com/showpic/96be7e0861a9efd341c71d3e57e01488"
+            },
+            {
+                "title": [],
+                "url": "http://store.is.autonavi.com/showpic/9166ad020b6cd34271e0f8aa96eb4871"
+            },
+            {
+                "title": [],
+                "url": "http://store.is.autonavi.com/showpic/778d86c635a5d307d2360627ded859c5"
+            }
+        ],
+        "discount_num": "0",
+        "gridcode": "4621638812",
+        "typecode": "050700|050100",
+        "shopinfo": "0",
+        "poiweight": [],
+        "citycode": "021",
+        "adname": "黄浦区",
+        "children": [],
+        "alias": [],
+        "tel": "021-63550117",
+        "id": "B0HDUAI7AZ",
+        "tag": "烧腊双拼,冰淇淋漏奶华,玫瑰鼓油鸡,猪排菠萝包,网红熊仔柠檬茶,烧味双拼煎蛋饭,烧味双拼,桂花玫瑰豉油鸡,猪油渣捞饭,啫啫牛蛙煲,老广味牛杂煲,發记清汤牛腩面,熊仔菠萝冰治,金牌乳鸽,合顺发,玫瑰豉油鸡,虾仁滑蛋饭,避风塘牛蛙,菠萝包,招牌鲍鱼鲜虾粥,星爷黯然销魂饭,双人餐,鸡肉,干炒牛河,玫瑰豉油鸡,大排档,老广州黑叉烧,柠檬茶",
+        "event": [],
+        "entr_location": "121.484603,31.238066",
+        "indoor_map": "1",
+        "email": [],
+        "timestamp": "2025-11-27 04:12:18",
+        "website": [],
+        "address": "南京东路300号·恒基名人购物中心4楼",
+        "adcode": "310101",
+        "pname": "上海市",
+        "biz_type": "diner",
+        "cityname": "上海市",
+        "postcode": [],
+        "match": "0",
+        "business_area": "北京路",
+        "indoor_data": {
+            "cmsid": "162430210400725",
+            "truefloor": "L4",
+            "cpid": "B00156GMJN",
+            "floor": "4"
+        },
+        "childtype": "202",
+        "exit_location": [],
+        "name": "合顺發茶冰室(恒基名人购物中心店)",
+        "location": "121.484449,31.237689",
+        "shopid": [],
+        "navi_poiid": [],
+        "groupbuy_num": "0"
+    },
+    {
+        "parent": "B00156GMJN",
+        "distance": [],
+        "pcode": "310000",
+        "importance": [],
+        "biz_ext": {
+            "cost": [],
+            "rating": "4.6"
+        },
+        "recommend": "0",
+        "type": "购物服务;体育用品店;彪马专卖店",
+        "photos": [
+            {
+                "title": [],
+                "url": "http://store.is.autonavi.com/showpic/a90c3357a3a917e30e1ec8370033ac7a"
+            },
+            {
+                "title": [],
+                "url": "http://store.is.autonavi.com/showpic/5698a4f8a3fef2b9746d8fcc189c04d8"
+            },
+            {
+                "title": [],
+                "url": "https://aos-comment.amap.com/B0FFIP73V2/comment/ac14b08a13cf80d3eeb7650e1a91611a_2048_2048_80.jpg"
+            }
+        ],
+        "discount_num": "0",
+        "gridcode": "4621638812",
+        "typecode": "060905",
+        "shopinfo": "0",
+        "poiweight": [],
+        "citycode": "021",
+        "adname": "黄浦区",
+        "children": [],
+        "alias": [],
+        "tel": "021-61212812",
+        "id": "B0FFIP73V2",
+        "tag": [],
+        "event": [],
+        "entr_location": "121.484613,31.238059",
+        "indoor_map": "1",
+        "email": [],
+        "timestamp": "2025-11-19 20:48:23",
+        "website": [],
+        "address": "南京东路300号恒基名人商业大厦1楼",
+        "adcode": "310101",
+        "pname": "上海市",
+        "biz_type": [],
+        "cityname": "上海市",
+        "postcode": [],
+        "match": "0",
+        "business_area": "北京路",
+        "indoor_data": {
+            "cmsid": "162430210100636",
+            "truefloor": "L2",
+            "cpid": "B00156GMJN",
+            "floor": "2"
+        },
+        "childtype": "201",
+        "exit_location": [],
+        "name": "PUMA彪马(恒基名人购物中心店)",
+        "location": "121.484397,31.237904",
+        "shopid": [],
+        "navi_poiid": "H51F010012_1205639;1319581",
+        "groupbuy_num": "0"
+    },
+    {
+        "parent": "B00156GMJN",
+        "distance": [],
+        "pcode": "310000",
+        "importance": [],
+        "biz_ext": {
+            "cost": "159.00",
+            "rating": "4.6",
+            "meal_ordering": "0"
+        },
+        "recommend": "0",
+        "type": "餐饮服务;中餐厅;上海菜",
+        "photos": [
+            {
+                "title": [],
+                "url": "https://aos-comment.amap.com/B0J3YSCQIK/comment/9418ad8b4e38635fddeb62552c868ad3_2048_2048_80.jpg"
+            },
+            {
+                "title": [],
+                "url": "https://aos-comment.amap.com/B0J3YSCQIK/comment/9887b4883b7f5f4abf4863e7df7d892a_2048_2048_80.jpg"
+            },
+            {
+                "title": [],
+                "url": "https://aos-comment.amap.com/B0J3YSCQIK/comment/173546404254_1735464046418_64811115.jpg"
+            }
+        ],
+        "discount_num": "0",
+        "gridcode": "4621638812",
+        "typecode": "050107",
+        "shopinfo": "0",
+        "poiweight": [],
+        "citycode": "021",
+        "adname": "黄浦区",
+        "children": [],
+        "alias": [],
+        "tel": "021-53099539",
+        "id": "B0J3YSCQIK",
+        "tag": "红烧肉,鸡肉,虾仁,生煎包,上海红烧肉,蟹粉豆腐,本帮熏鱼,豆腐,五花肉",
+        "event": [],
+        "entr_location": [],
+        "indoor_map": "0",
+        "email": [],
+        "timestamp": "2025-11-27 04:23:58",
+        "website": [],
+        "address": "南京东路300号恒基名人购物中心L3层",
+        "adcode": "310101",
+        "pname": "上海市",
+        "biz_type": "diner",
+        "cityname": "上海市",
+        "postcode": [],
+        "match": "0",
+        "business_area": "北京路",
+        "indoor_data": {
+            "cmsid": [],
+            "truefloor": [],
+            "cpid": [],
+            "floor": []
+        },
+        "childtype": "202",
+        "exit_location": [],
+        "name": "权茂上海菜(恒基名人购物中心店)",
+        "location": "121.484375,31.237775",
+        "shopid": [],
+        "navi_poiid": [],
+        "groupbuy_num": "0"
+    },
+    {
+        "parent": "B00156GMJN",
+        "distance": [],
+        "pcode": "310000",
+        "importance": [],
+        "biz_ext": {
+            "cost": "22.00",
+            "rating": "4.3",
+            "meal_ordering": "0"
+        },
+        "recommend": "0",
+        "type": "餐饮服务;冷饮店;冷饮店",
+        "photos": [
+            {
+                "title": [],
+                "url": "https://aos-comment.amap.com/B0GRGOSQ56/comment/836e7bc93b1978f4756705661ba79b0f_2048_2048_80.jpg"
+            },
+            {
+                "title": [],
+                "url": "https://aos-comment.amap.com/B0GRGOSQ56/comment/6aee3e0b01fb3e35aa55361ace1e11a8_2048_2048_80.jpg"
+            },
+            {
+                "title": [],
+                "url": "https://aos-comment.amap.com/B0GRGOSQ56/comment/46ac627ff8e4aa68fb1347a7bb934718_2048_2048_80.jpg"
+            }
+        ],
+        "discount_num": "0",
+        "gridcode": "4621638812",
+        "typecode": "050700",
+        "shopinfo": "0",
+        "poiweight": [],
+        "citycode": "021",
+        "adname": "黄浦区",
+        "children": [],
+        "alias": [],
+        "tel": "18717968716",
+        "id": "B0GRGOSQ56",
+        "tag": "茶茶杨枝甘露,蜜桃系列,莓莓酸奶捞,奇异果甘露茶,蜜桃甘露冰冰茶,芝芝牛油果,芒芒生椰冻,酸奶杨枝甘露,牛油果系列,杨枝甘露,草莓甘露,草莓系列,摩摩喳喳,奇异果酸奶捞,酸奶系列,芒果酸奶捞,甘露茶系列,芒椰芒果爽,芒椰小丸子,芒果白桃乌龙奶茶",
+        "event": [],
+        "entr_location": [],
+        "indoor_map": "1",
+        "email": [],
+        "timestamp": "2025-11-27 13:21:40",
+        "website": [],
+        "address": "南京东路300号恒基名人购物中心B1层",
+        "adcode": "310101",
+        "pname": "上海市",
+        "biz_type": "diner",
+        "cityname": "上海市",
+        "postcode": [],
+        "match": "0",
+        "business_area": "北京路",
+        "indoor_data": {
+            "cmsid": "162430200100640",
+            "truefloor": "B1",
+            "cpid": "B00156GMJN",
+            "floor": "-1"
+        },
+        "childtype": "201",
+        "exit_location": [],
+        "name": "7分甜(恒基名人购物中心店)",
+        "location": "121.483873,31.237628",
+        "shopid": [],
+        "navi_poiid": [],
+        "groupbuy_num": "0"
+    },
+    {
+        "parent": "B00156GMJN",
+        "distance": [],
+        "pcode": "310000",
+        "importance": [],
+        "biz_ext": {
+            "cost": [],
+            "rating": "4.6"
+        },
+        "recommend": "0",
+        "type": "购物服务;购物相关场所;购物相关场所",
+        "photos": [
+            {
+                "title": [],
+                "url": "https://aos-comment.amap.com/B0LGYH3DC2/comment/content_media_external_file_185581_ss__1760603274026_21315544.jpg"
+            }
+        ],
+        "discount_num": "0",
+        "gridcode": "4621638812",
+        "typecode": "060000",
+        "shopinfo": "0",
+        "poiweight": [],
+        "citycode": "021",
+        "adname": "黄浦区",
+        "children": [],
+        "alias": [],
+        "tel": [],
+        "id": "B0LGYH3DC2",
+        "tag": [],
+        "event": [],
+        "entr_location": [],
+        "indoor_map": "0",
+        "email": [],
+        "timestamp": "2025-11-19 16:38:26",
+        "website": [],
+        "address": "南京东路300号恒基名人购物中心L4层",
+        "adcode": "310101",
+        "pname": "上海市",
+        "biz_type": [],
+        "cityname": "上海市",
+        "postcode": [],
+        "match": "0",
+        "business_area": "北京路",
+        "indoor_data": {
+            "cmsid": [],
+            "truefloor": [],
+            "cpid": [],
+            "floor": []
+        },
+        "childtype": "202",
+        "exit_location": [],
+        "name": "三万院长SWDOLL(上海恒基名人购物中心店)",
+        "location": "121.484152,31.237819",
+        "shopid": [],
+        "navi_poiid": [],
+        "groupbuy_num": "0"
+    },
+    {
+        "parent": "B00156GMJN",
+        "distance": [],
+        "pcode": "310000",
+        "importance": [],
+        "biz_ext": {
+            "cost": [],
+            "rating": "4.4"
+        },
+        "recommend": "0",
+        "type": "购物服务;便民商店/便利店;7-ELEVEn便利店",
+        "photos": [
+            {
+                "title": [],
+                "url": "http://store.is.autonavi.com/showpic/18f444b7f71c1ed5bf23b420d308e881"
+            },
+            {
+                "title": [],
+                "url": "https://aos-comment.amap.com/B0G0OATYQX/comment/DE9864E5_3177_43B6_9118_1C27C319FCE2_L0_001_2000_1500_1726113043649_03840203.jpg"
+            },
+            {
+                "title": [],
+                "url": "https://aos-comment.amap.com/B0G0OATYQX/comment/b8a21fe0e98a50bbfdaf684de4721e6e_2048_2048_80.jpg"
+            }
+        ],
+        "discount_num": "0",
+        "gridcode": "4621638812",
+        "typecode": "060201",
+        "shopinfo": "1",
+        "poiweight": [],
+        "citycode": "021",
+        "adname": "黄浦区",
+        "children": [],
+        "alias": [],
+        "tel": "021-63330035;13671833819",
+        "id": "B0G0OATYQX",
+        "tag": "便当",
+        "event": [],
+        "entr_location": [],
+        "indoor_map": "1",
+        "email": [],
+        "timestamp": "2025-11-26 05:07:01",
+        "website": [],
+        "address": "南京东路300号恒基名人购物中心B1层B121-23",
+        "adcode": "310101",
+        "pname": "上海市",
+        "biz_type": [],
+        "cityname": "上海市",
+        "postcode": [],
+        "match": "0",
+        "business_area": "北京路",
+        "indoor_data": {
+            "cmsid": "162430200100641",
+            "truefloor": "B1",
+            "cpid": "B00156GMJN",
+            "floor": "-1"
+        },
+        "childtype": "201",
+        "exit_location": [],
+        "name": "7-ELEVEn(恒基名人购物中心店)",
+        "location": "121.483995,31.237924",
+        "shopid": [],
+        "navi_poiid": [],
+        "groupbuy_num": "0"
+    },
+    {
+        "parent": "B00156GMJN",
+        "distance": [],
+        "pcode": "310000",
+        "importance": [],
+        "biz_ext": {
+            "cost": "37.00",
+            "rating": "4.2",
+            "meal_ordering": "0"
+        },
+        "recommend": "0",
+        "type": "餐饮服务;甜品店;甜品店",
+        "photos": [
+            {
+                "title": [],
+                "url": "http://store.is.autonavi.com/showpic/c936d6d24fcde4a790ecaa977ea8e84d"
+            },
+            {
+                "title": [],
+                "url": "http://store.is.autonavi.com/showpic/3da8255bf68d7a85f7cb8b05451dc564"
+            },
+            {
+                "title": [],
+                "url": "http://store.is.autonavi.com/showpic/739d0ccc6f180dc743fae3a1aaa4fda1"
+            }
+        ],
+        "discount_num": "0",
+        "gridcode": "4621638812",
+        "typecode": "050900",
+        "shopinfo": "0",
+        "poiweight": [],
+        "citycode": "021",
+        "adname": "黄浦区",
+        "children": [],
+        "alias": [],
+        "tel": "021-63232103",
+        "id": "B0FFFHB1KI",
+        "tag": "榴莲糯糯果优酪,一整颗牛油果优酪,白雪黑珍珠果优酪,巴旦木芒果优酪,琥珀果仁双皮奶,下午茶,杨枝甘露",
+        "event": [],
+        "entr_location": "121.484611,31.238063",
+        "indoor_map": "1",
+        "email": [],
+        "timestamp": "2025-11-25 09:35:49",
+        "website": [],
+        "address": "南京东路300号恒基广场三楼(南京东路地铁站2号口旁)",
+        "adcode": "310101",
+        "pname": "上海市",
+        "biz_type": "diner",
+        "cityname": "上海市",
+        "postcode": [],
+        "match": "0",
+        "business_area": "北京路",
+        "indoor_data": {
+            "cmsid": "162430210300675",
+            "truefloor": "L3",
+            "cpid": "B00156GMJN",
+            "floor": "3"
+        },
+        "childtype": "202",
+        "exit_location": [],
+        "name": "满记甜品(恒基名人购物中心店)",
+        "location": "121.484133,31.237811",
+        "shopid": [],
+        "navi_poiid": "H51F010012_1053234",
+        "groupbuy_num": "0"
+    },
+    {
+        "parent": "B00155NMKM",
+        "distance": [],
+        "pcode": "310000",
+        "importance": [],
+        "biz_ext": {
+            "cost": "33.00",
+            "rating": "4.5",
+            "meal_ordering": "0"
+        },
+        "recommend": "0",
+        "type": "餐饮服务;中餐厅;清真菜馆",
+        "photos": [
+            {
+                "title": [],
+                "url": "https://store.is.autonavi.com/showpic/98bf0077b4683d0e4017bff73def1c16?operate=original"
+            },
+            {
+                "title": [],
+                "url": "https://aos-comment.amap.com/B0HR39GBJ4/comment/38585bff18cef17235a8c0807628ca78_2048_2048_80.jpg"
+            },
+            {
+                "title": [],
+                "url": "https://aos-comment.amap.com/B0HR39GBJ4/comment/24b9cb2495b00cf26bbaee1347199072_2048_2048_80.jpg"
+            }
+        ],
+        "discount_num": "0",
+        "gridcode": "4621638812",
+        "typecode": "050121",
+        "shopinfo": "0",
+        "poiweight": [],
+        "citycode": "021",
+        "adname": "黄浦区",
+        "children": [],
+        "alias": [],
+        "tel": "18916037379",
+        "id": "B0HR39GBJ4",
+        "tag": "羊肉串,牛肉,牛骨清汤兰州牛肉面,牛肉面,羊肉,面食,双人餐,单人餐,牛肉拉面",
+        "event": [],
+        "entr_location": [],
+        "indoor_map": "1",
+        "email": [],
+        "timestamp": "2025-11-27 13:25:48",
+        "website": [],
+        "address": "南京东路300号恒基名人购物中心B1层",
+        "adcode": "310101",
+        "pname": "上海市",
+        "biz_type": "diner",
+        "cityname": "上海市",
+        "postcode": [],
+        "match": "0",
+        "business_area": "北京路",
+        "indoor_data": {
+            "cmsid": "162430200100658",
+            "truefloor": "B1",
+            "cpid": "B00156GMJN",
+            "floor": "-1"
+        },
+        "childtype": "202",
+        "exit_location": [],
+        "name": "陈香贵·兰州牛肉面(上海黄浦恒基名人店)",
+        "location": "121.484107,31.237818",
+        "shopid": [],
+        "navi_poiid": [],
+        "groupbuy_num": "0"
+    },
+    {
+        "parent": "B00156GMJN",
+        "distance": [],
+        "pcode": "310000",
+        "importance": [],
+        "biz_ext": {
+            "cost": [],
+            "rating": "4.5"
+        },
+        "recommend": "0",
+        "type": "生活服务;维修站点;维修站点",
+        "photos": [
+            {
+                "title": [],
+                "url": "http://store.is.autonavi.com/showpic/1fc9ae04821a1468a0fdcb5d766928ed"
+            },
+            {
+                "title": [],
+                "url": "http://store.is.autonavi.com/showpic/9cefd71849036b8762aa3e17c7383082"
+            },
+            {
+                "title": [],
+                "url": "http://store.is.autonavi.com/showpic/99f26be88408a0978779397c34e9b99c"
+            }
+        ],
+        "discount_num": "0",
+        "gridcode": "4621638812",
+        "typecode": "071200",
+        "shopinfo": "0",
+        "poiweight": [],
+        "citycode": "021",
+        "adname": "黄浦区",
+        "children": [],
+        "alias": [],
+        "tel": [],
+        "id": "B0FFK87R0T",
+        "tag": [],
+        "event": [],
+        "entr_location": [],
+        "indoor_map": "1",
+        "email": [],
+        "timestamp": "2025-11-20 13:19:13",
+        "website": [],
+        "address": "南京东路300号地上2层L201室",
+        "adcode": "310101",
+        "pname": "上海市",
+        "biz_type": [],
+        "cityname": "上海市",
+        "postcode": [],
+        "match": "0",
+        "business_area": "北京路",
+        "indoor_data": {
+            "cmsid": "162430210200658",
+            "truefloor": "L2",
+            "cpid": "B00156GMJN",
+            "floor": "2"
+        },
+        "childtype": "201",
+        "exit_location": [],
+        "name": "爱回收(恒基名人店)·手机数码奢侈品黄金回收",
+        "location": "121.484351,31.237629",
+        "shopid": [],
+        "navi_poiid": [],
+        "groupbuy_num": "0"
+    },
+    {
+        "parent": [],
+        "distance": [],
+        "pcode": "310000",
+        "importance": [],
+        "biz_ext": {
+            "cost": [],
+            "rating": "4.3"
+        },
+        "recommend": "0",
+        "type": "科教文化服务;科教文化场所;科教文化场所",
+        "photos": [
+            {
+                "title": [],
+                "url": "http://store.is.autonavi.com/showpic/a27b296a1697bb81aabea57e7a883563"
+            },
+            {
+                "title": [],
+                "url": "http://store.is.autonavi.com/showpic/1d63da5b644845b619987e1d171943f9"
+            }
+        ],
+        "discount_num": "0",
+        "gridcode": "4621638802",
+        "typecode": "140000",
+        "shopinfo": "0",
+        "poiweight": [],
+        "citycode": "021",
+        "adname": "黄浦区",
+        "children": [],
+        "alias": [],
+        "tel": [],
+        "id": "B0K155YQVT",
+        "tag": [],
+        "event": [],
+        "entr_location": "121.484301,31.236011",
+        "indoor_map": "0",
+        "email": [],
+        "timestamp": "2025-11-26 09:28:09",
+        "website": [],
+        "address": "汉口路300号5楼(南京东路地铁站3号口步行120米)",
+        "adcode": "310101",
+        "pname": "上海市",
+        "biz_type": [],
+        "cityname": "上海市",
+        "postcode": [],
+        "match": "0",
+        "business_area": "北京路",
+        "indoor_data": {
+            "cmsid": [],
+            "truefloor": [],
+            "cpid": [],
+            "floor": []
+        },
+        "childtype": [],
+        "exit_location": [],
+        "name": "济才小语种出国(人广校区)",
+        "location": "121.484491,31.236037",
+        "shopid": [],
+        "navi_poiid": [],
+        "groupbuy_num": "0"
+    },
+    {
+        "parent": "B00151277F",
+        "distance": [],
+        "pcode": "310000",
+        "importance": [],
+        "biz_ext": {
+            "cost": "17.00",
+            "rating": "4.0",
+            "meal_ordering": "0"
+        },
+        "recommend": "0",
+        "type": "餐饮服务;冷饮店;冷饮店",
+        "photos": [
+            {
+                "title": [],
+                "url": "http://store.is.autonavi.com/query_pic?id=st990fdb40-8f78-42d4-81bd-602e319b8e3a&user=search&operate=original"
+            },
+            {
+                "title": [],
+                "url": "https://store.is.autonavi.com/showpic/51c783bde4e83031225a9c1dc489b73c"
+            },
+            {
+                "title": [],
+                "url": "https://aos-comment.amap.com/B0KRCD802K/comment/7D55688D_7908_4F70_B6BD_ADBE4E42A0B2_L0_001_1500_200_1748681381907_62962977.jpg"
+            }
+        ],
+        "discount_num": "0",
+        "gridcode": "4621637801",
+        "typecode": "050700",
+        "shopinfo": "0",
+        "poiweight": [],
+        "citycode": "021",
+        "adname": "黄浦区",
+        "children": [],
+        "alias": [],
+        "tel": "18901705130",
+        "id": "B0KRCD802K",
+        "tag": "杨枝甘露",
+        "event": [],
+        "entr_location": "121.479461,31.225666",
+        "indoor_map": "0",
+        "email": [],
+        "timestamp": "2025-11-25 11:07:14",
+        "website": [],
+        "address": "外滩街道南京东路300号恒基名人购物中心B108号铺位",
+        "adcode": "310101",
+        "pname": "上海市",
+        "biz_type": "diner",
+        "cityname": "上海市",
+        "postcode": [],
+        "match": "0",
+        "business_area": "淮海路",
+        "indoor_data": {
+            "cmsid": [],
+            "truefloor": [],
+            "cpid": [],
+            "floor": []
+        },
+        "childtype": "202",
+        "exit_location": [],
+        "name": "7分甜(上海黄浦恒基名人店)",
+        "location": "121.479394,31.225645",
+        "shopid": [],
+        "navi_poiid": [],
+        "groupbuy_num": "0"
+    },
+    {
+        "parent": "B00156GMJN",
+        "distance": [],
+        "pcode": "310000",
+        "importance": [],
+        "biz_ext": {
+            "cost": "89.00",
+            "rating": "4.6"
+        },
+        "recommend": "0",
+        "type": "购物服务;服装鞋帽皮具店;品牌服装店",
+        "photos": [
+            {
+                "title": [],
+                "url": "https://aos-comment.amap.com/B0FFIKIJ3Q/comment/f4df4478f86a3f6c8ee3046304f5b491_2048_2048_80.jpg"
+            },
+            {
+                "title": [],
+                "url": "http://store.is.autonavi.com/showpic/0dc7dd52e7ef1d7d83a55b4419cb620a"
+            },
+            {
+                "title": [],
+                "url": "https://store.is.autonavi.com/showpic/0825fc5baa9332b77b0cca1129d858e5"
+            }
+        ],
+        "discount_num": "0",
+        "gridcode": "4621638812",
+        "typecode": "061101",
+        "shopinfo": "0",
+        "poiweight": [],
+        "citycode": "021",
+        "adname": "黄浦区",
+        "children": [],
+        "alias": [],
+        "tel": "17596111894",
+        "id": "B0FFIKIJ3Q",
+        "tag": "罗布泊烤鱼,红柳羊肉串,维秘元气鸽子汤,热气豪情手抓肉,香辣手撕羊拐,大盘鸡,莓果椰香酸奶碗,新疆拌面,炭烤羊法排,新疆奶茶,大泽牧民烤羊腿,风味炒馕,温辣羊小排,烤馕,酸菜爆羊杂,牧民烤羊腿,酸辣土豆丝,牧民烤羊排,山羊奶冰淇淋,沙湾大盘鸡,石河子凉皮,羊肉串,手抓羊排,羊肉,烤肉,鸡肉",
+        "event": [],
+        "entr_location": "121.484610,31.238065",
+        "indoor_map": "1",
+        "email": [],
+        "timestamp": "2025-11-27 04:04:52",
+        "website": [],
+        "address": "南京东路300号恒基名人购物中心3层312号",
+        "adcode": "310101",
+        "pname": "上海市",
+        "biz_type": [],
+        "cityname": "上海市",
+        "postcode": [],
+        "match": "0",
+        "business_area": "北京路",
+        "indoor_data": {
+            "cmsid": "162430210300673",
+            "truefloor": "L3",
+            "cpid": "B00156GMJN",
+            "floor": "3"
+        },
+        "childtype": "201",
+        "exit_location": [],
+        "name": "耶里夏丽(恒基名人购物中心店)",
+        "location": "121.484234,31.238288",
+        "shopid": [],
+        "navi_poiid": "H51F010012_1319582",
+        "groupbuy_num": "0"
+    },
+    {
+        "parent": "B00156GMJN",
+        "distance": [],
+        "pcode": "310000",
+        "importance": [],
+        "biz_ext": {
+            "cost": "32.00",
+            "rating": "4.5",
+            "meal_ordering": "0"
+        },
+        "recommend": "0",
+        "type": "餐饮服务;外国餐厅;日本料理",
+        "photos": [
+            {
+                "title": [],
+                "url": "http://store.is.autonavi.com/showpic/4d346c63a1ce7f04002295f6c6853ff3"
+            },
+            {
+                "title": [],
+                "url": "http://store.is.autonavi.com/showpic/10928a784dd1020e852ef11c8d75b728"
+            },
+            {
+                "title": [],
+                "url": "http://store.is.autonavi.com/showpic/6d1bc59b85613682f1149005d89b1caf"
+            }
+        ],
+        "discount_num": "0",
+        "gridcode": "4621638812",
+        "typecode": "050202",
+        "shopinfo": "1",
+        "poiweight": [],
+        "citycode": "021",
+        "adname": "黄浦区",
+        "children": [],
+        "alias": [],
+        "tel": "18201727139",
+        "id": "B0FFKEGFPO",
+        "tag": "侏罗纪香肠2根,鲜蔬煎鸡饭套餐,牛肉料理包（5包装）,关东煮物,黄金猪排,鲜蔬煎鸡饭（大碗）,黄金猪排咖喱饭套餐,牛肉饭,日式泡菜,招牌牛肉饭（大碗）,牛肉鳗鱼双拼饭套餐,鸡肉,牛肉",
+        "event": [],
+        "entr_location": [],
+        "indoor_map": "1",
+        "email": [],
+        "timestamp": "2025-11-25 14:49:04",
+        "website": [],
+        "address": "南京东路300号名人广场B118号(南京东路地铁站5号口旁)",
+        "adcode": "310101",
+        "pname": "上海市",
+        "biz_type": "diner",
+        "cityname": "上海市",
+        "postcode": [],
+        "match": "0",
+        "business_area": "北京路",
+        "indoor_data": {
+            "cmsid": "162430200100647",
+            "truefloor": "B1",
+            "cpid": "B00156GMJN",
+            "floor": "-1"
+        },
+        "childtype": "201",
+        "exit_location": [],
+        "name": "吉野家(上海河南路店)",
+        "location": "121.483973,31.238243",
+        "shopid": [],
+        "navi_poiid": [],
+        "groupbuy_num": "0"
+    }
+]

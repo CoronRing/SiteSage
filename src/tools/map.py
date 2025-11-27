@@ -27,6 +27,18 @@ LOCATION_SCHEMA: Mapping[str, Any] = {
 
 __all__ = ["MapTool", "LOCATION_SCHEMA"]
 
+def process_amap_place(place: Mapping[str, Any]) -> Mapping[str, Any]:
+    new_place = {
+        "provider": place["provider"], 
+        "name": place["name"],
+        "lat": place["lat"],
+        "lng": place["lng"],
+        "address": place["address"],
+        "distance": place["raw"]["distance"],
+        "type": place["raw"]["type"] 
+    }
+    return new_place
+
 class MapTool:
     """
     Map Tool implementation.
@@ -109,7 +121,7 @@ class MapTool:
     ) -> Sequence[Mapping[str, Any]]:
         
         projected_types = self.type_projector.project_types(descriptive_types)
-        return self.map_api.getNearbyPlaces(
+        nearby_places = self.map_api.getNearbyPlaces(
             origin,
             projected_types,
             radius=radius,
@@ -117,6 +129,8 @@ class MapTool:
             include_details=include_details,
             num_pages=num_pages,
         )
+        nearby_places = [process_amap_place(p) for p in nearby_places]
+        return nearby_places
 
     def getDistances(
         self,

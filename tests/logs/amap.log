@@ -1,0 +1,125 @@
+2025-11-26 00:58:12,180 [INFO] AMap.getPlaceInfo input={"address": "南京东路300号, 黄浦区, 上海", "language": null, "extra_params": null}
+2025-11-26 00:58:12,181 [INFO] AMap request path=/v3/geocode/geo params={'address': '南京东路300号, 黄浦区, 上海', 'output': 'JSON', 'extensions': 'all'}
+2025-11-26 00:58:12,185 [INFO] AMap.getMapVisuailization input={"origin": {"address": "南京东路300号, 黄浦区, 上海"}, "zoom": 14, "overlays": null, "style": null}
+2025-11-26 00:58:12,186 [INFO] AMap.getPlaceInfo input={"address": "南京东路300号, 黄浦区, 上海", "language": null, "extra_params": null}
+2025-11-26 00:58:12,186 [INFO] AMap request path=/v3/geocode/geo params={'address': '南京东路300号, 黄浦区, 上海', 'output': 'JSON', 'extensions': 'all'}
+2025-11-26 01:05:08,942 [INFO] AMap.getPlaceInfo input={"address": "南京东路300号, 黄浦区, 上海", "language": null, "extra_params": null}
+2025-11-26 01:05:08,942 [INFO] AMap request path=/v3/geocode/geo params={'address': '南京东路300号, 黄浦区, 上海', 'output': 'JSON', 'extensions': 'all'}
+2025-11-26 01:05:08,947 [INFO] AMap.getMapVisuailization input={"origin": {"address": "南京东路300号, 黄浦区, 上海"}, "zoom": 14, "overlays": null, "style": null}
+2025-11-26 01:05:08,947 [INFO] AMap.getPlaceInfo input={"address": "南京东路300号, 黄浦区, 上海", "language": null, "extra_params": null}
+2025-11-26 01:05:08,947 [INFO] AMap request path=/v3/geocode/geo params={'address': '南京东路300号, 黄浦区, 上海', 'output': 'JSON', 'extensions': 'all'}
+2025-11-26 01:06:41,597 [INFO] AMap.getPlaceInfo input={"address": "南京东路300号, 黄浦区, 上海", "language": null, "extra_params": null}
+2025-11-26 01:06:41,597 [INFO] AMap request path=/v3/geocode/geo params={'address': '南京东路300号, 黄浦区, 上海', 'output': 'JSON', 'extensions': 'all'}
+2025-11-26 01:06:41,602 [INFO] AMap.getMapVisuailization input={"origin": {"address": "南京东路300号, 黄浦区, 上海"}, "zoom": 14, "overlays": null, "style": null}
+2025-11-26 01:06:41,602 [INFO] AMap.getPlaceInfo input={"address": "南京东路300号, 黄浦区, 上海", "language": null, "extra_params": null}
+2025-11-26 01:06:41,602 [INFO] AMap request path=/v3/geocode/geo params={'address': '南京东路300号, 黄浦区, 上海', 'output': 'JSON', 'extensions': 'all'}
+2025-11-26 13:43:44,737 [INFO] AMap.getPlaceInfo input={"address": "南京东路300号, 黄浦区, 上海", "language": null, "extra_params": null}
+2025-11-26 13:43:44,737 [INFO] AMap request path=/v3/geocode/geo params={'address': '南京东路300号, 黄浦区, 上海', 'output': 'JSON', 'extensions': 'all'}
+2025-11-26 13:43:44,741 [INFO] AMap.getMapVisuailization input={"origin": {"address": "南京东路300号, 黄浦区, 上海"}, "zoom": 14, "overlays": null, "style": null}
+2025-11-26 13:43:44,742 [INFO] AMap.getPlaceInfo input={"address": "南京东路300号, 黄浦区, 上海", "language": null, "extra_params": null}
+2025-11-26 13:43:44,742 [INFO] AMap request path=/v3/geocode/geo params={'address': '南京东路300号, 黄浦区, 上海', 'output': 'JSON', 'extensions': 'all'}
+2025-11-26 13:48:19,943 [INFO] AMap.getNearbyPlaces input={"place": {"lat": 31.233942, "lng": 121.479245}, "types": ["141200", "060100", "150500", "120200", "120300", "141201"], "radius": 1500, "rank": "DISTANCE", "include_details": false, "num_pages": 2}
+2025-11-26 13:48:19,945 [INFO] AMap request path=/v5/place/around params={'location': '121.479245,31.233942', 'radius': 1500, 'sortrule': 'distance', 'page_size': 25, 'output': 'JSON', 'types': '141200|060100|150500|120200|120300|141201', 'page_num': 1}
+2025-11-26 13:48:21,228 [INFO] AMap request path=/v5/place/around params={'location': '121.479245,31.233942', 'radius': 1500, 'sortrule': 'distance', 'page_size': 25, 'output': 'JSON', 'types': '141200|060100|150500|120200|120300|141201', 'page_num': 2}
+2025-11-26 19:45:46,381 [INFO] AMap.getPlaceInfo input={"address": "南京东路300号, 黄浦区, 上海", "language": "zh-CN", "extra_params": null}
+2025-11-26 19:45:46,381 [INFO] AMap request path=/v3/geocode/geo params={'address': '南京东路300号, 黄浦区, 上海', 'output': 'JSON', 'extensions': 'all', 'language': 'zh-CN'}
+2025-11-26 19:45:50,331 [INFO] AMap.getMapVisuailization input={"origin": {"lat": 31.233942, "lng": 121.479245, "label": "Target area near 南京东路300号, 黄浦区, 上海"}, "zoom": 14, "overlays": null, "style": {"provider": "amap", "layer": "base"}}
+2025-11-26 20:00:11,512 [INFO] AMap.getMapVisuailization input={"origin": {"lat": 31.233942, "lng": 121.479245}, "zoom": 15, "overlays": null, "style": null}
+2025-11-26 20:00:32,645 [INFO] AMap.getNearbyPlaces input={"place": {"lat": 31.233942, "lng": 121.479245}, "types": ["100100", "150500", "120200", "141201", "110000", "141202", "120202", "060100", "141203"], "radius": 1000, "rank": "DISTANCE", "include_details": false, "num_pages": 2}
+2025-11-26 20:00:32,645 [INFO] AMap request path=/v5/place/around params={'location': '121.479245,31.233942', 'radius': 1000, 'sortrule': 'distance', 'page_size': 25, 'output': 'JSON', 'types': '100100|150500|120200|141201|110000|141202|120202|060100|141203', 'page_num': 1}
+2025-11-26 20:00:34,068 [INFO] AMap request path=/v5/place/around params={'location': '121.479245,31.233942', 'radius': 1000, 'sortrule': 'distance', 'page_size': 25, 'output': 'JSON', 'types': '100100|150500|120200|141201|110000|141202|120202|060100|141203', 'page_num': 2}
+2025-11-26 20:15:34,419 [INFO] AMap.getMapVisuailization input={"origin": {"lat": 31.233942, "lng": 121.479245}, "zoom": 15, "overlays": null, "style": null}
+2025-11-26 20:15:51,506 [INFO] AMap.getNearbyPlaces input={"place": {"lat": 31.233942, "lng": 121.479245}, "types": ["141202", "141203", "120202", "150500", "060100", "110000", "141201"], "radius": 1200, "rank": "DISTANCE", "include_details": false, "num_pages": 2}
+2025-11-26 20:15:51,508 [INFO] AMap request path=/v5/place/around params={'location': '121.479245,31.233942', 'radius': 1200, 'sortrule': 'distance', 'page_size': 25, 'output': 'JSON', 'types': '141202|141203|120202|150500|060100|110000|141201', 'page_num': 1}
+2025-11-26 20:15:53,207 [INFO] AMap request path=/v5/place/around params={'location': '121.479245,31.233942', 'radius': 1200, 'sortrule': 'distance', 'page_size': 25, 'output': 'JSON', 'types': '141202|141203|120202|150500|060100|110000|141201', 'page_num': 2}
+2025-11-26 23:09:04,659 [INFO] AMap.getPlaceInfo input={"address": {"full_address": "南京东路300号, 黄浦区, 上海", "country": "China"}, "language": {"code": "zh-CN"}, "extra_params": {}}
+2025-11-26 23:09:04,660 [INFO] AMap request path=/v3/geocode/geo params={'address': {'full_address': '南京东路300号, 黄浦区, 上海', 'country': 'China'}, 'output': 'JSON', 'extensions': 'all', 'language': {'code': 'zh-CN'}}
+2025-11-26 23:09:05,874 [ERROR] AMap API error path=/v3/geocode/geo params={'address': {'full_address': '南京东路300号, 黄浦区, 上海', 'country': 'China'}, 'output': 'JSON', 'extensions': 'all', 'language': {'code': 'zh-CN'}} info=ENGINE_RESPONSE_DATA_ERROR payload={'status': '0', 'info': 'ENGINE_RESPONSE_DATA_ERROR', 'infocode': '30001'}
+2025-11-26 23:09:07,704 [INFO] AMap.getPlaceInfo input={"address": {"full_address": "上海市 黄浦区 南京东路300号", "country": "China"}, "language": {"code": "zh-CN"}, "extra_params": {}}
+2025-11-26 23:09:07,705 [INFO] AMap request path=/v3/geocode/geo params={'address': {'full_address': '上海市 黄浦区 南京东路300号', 'country': 'China'}, 'output': 'JSON', 'extensions': 'all', 'language': {'code': 'zh-CN'}}
+2025-11-26 23:09:08,819 [ERROR] AMap API error path=/v3/geocode/geo params={'address': {'full_address': '上海市 黄浦区 南京东路300号', 'country': 'China'}, 'output': 'JSON', 'extensions': 'all', 'language': {'code': 'zh-CN'}} info=ENGINE_RESPONSE_DATA_ERROR payload={'status': '0', 'info': 'ENGINE_RESPONSE_DATA_ERROR', 'infocode': '30001'}
+2025-11-26 23:09:10,449 [INFO] AMap.getPlaceInfo input={"address": {"full_address": "Nanjing East Road 300, Huangpu, Shanghai", "country": "China"}, "language": {"code": "en"}, "extra_params": {}}
+2025-11-26 23:09:10,449 [INFO] AMap request path=/v3/geocode/geo params={'address': {'full_address': 'Nanjing East Road 300, Huangpu, Shanghai', 'country': 'China'}, 'output': 'JSON', 'extensions': 'all', 'language': {'code': 'en'}}
+2025-11-26 23:09:11,480 [ERROR] AMap API error path=/v3/geocode/geo params={'address': {'full_address': 'Nanjing East Road 300, Huangpu, Shanghai', 'country': 'China'}, 'output': 'JSON', 'extensions': 'all', 'language': {'code': 'en'}} info=ENGINE_RESPONSE_DATA_ERROR payload={'status': '0', 'info': 'ENGINE_RESPONSE_DATA_ERROR', 'infocode': '30001'}
+2025-11-26 23:09:12,924 [INFO] AMap.getPlaceInfo input={"address": {"full_address": "南京东路, 黄浦区, 上海", "country": "China"}, "language": {"code": "zh-CN"}, "extra_params": {}}
+2025-11-26 23:09:12,925 [INFO] AMap request path=/v3/geocode/geo params={'address': {'full_address': '南京东路, 黄浦区, 上海', 'country': 'China'}, 'output': 'JSON', 'extensions': 'all', 'language': {'code': 'zh-CN'}}
+2025-11-26 23:09:13,942 [ERROR] AMap API error path=/v3/geocode/geo params={'address': {'full_address': '南京东路, 黄浦区, 上海', 'country': 'China'}, 'output': 'JSON', 'extensions': 'all', 'language': {'code': 'zh-CN'}} info=ENGINE_RESPONSE_DATA_ERROR payload={'status': '0', 'info': 'ENGINE_RESPONSE_DATA_ERROR', 'infocode': '30001'}
+2025-11-26 23:09:15,565 [INFO] AMap.getPlaceInfo input={"address": {"full_address": "南京东路步行街, 黄浦区, 上海", "country": "China"}, "language": {"code": "zh-CN"}, "extra_params": {}}
+2025-11-26 23:09:15,565 [INFO] AMap request path=/v3/geocode/geo params={'address': {'full_address': '南京东路步行街, 黄浦区, 上海', 'country': 'China'}, 'output': 'JSON', 'extensions': 'all', 'language': {'code': 'zh-CN'}}
+2025-11-26 23:09:16,706 [ERROR] AMap API error path=/v3/geocode/geo params={'address': {'full_address': '南京东路步行街, 黄浦区, 上海', 'country': 'China'}, 'output': 'JSON', 'extensions': 'all', 'language': {'code': 'zh-CN'}} info=ENGINE_RESPONSE_DATA_ERROR payload={'status': '0', 'info': 'ENGINE_RESPONSE_DATA_ERROR', 'infocode': '30001'}
+2025-11-26 23:09:18,657 [INFO] AMap.getPlaceInfo input={"address": {"full_address": "People's Square, Huangpu, Shanghai", "country": "China"}, "language": {"code": "en"}, "extra_params": {}}
+2025-11-26 23:09:18,657 [INFO] AMap request path=/v3/geocode/geo params={'address': {'full_address': "People's Square, Huangpu, Shanghai", 'country': 'China'}, 'output': 'JSON', 'extensions': 'all', 'language': {'code': 'en'}}
+2025-11-26 23:09:19,702 [ERROR] AMap API error path=/v3/geocode/geo params={'address': {'full_address': "People's Square, Huangpu, Shanghai", 'country': 'China'}, 'output': 'JSON', 'extensions': 'all', 'language': {'code': 'en'}} info=ENGINE_RESPONSE_DATA_ERROR payload={'status': '0', 'info': 'ENGINE_RESPONSE_DATA_ERROR', 'infocode': '30001'}
+2025-11-26 23:09:22,931 [INFO] AMap.getMapVisuailization input={"origin": {"address": {"full_address": "南京东路, 黄浦区, 上海", "country": "China"}}, "zoom": 14, "overlays": null, "style": {"basic_style": "light"}}
+2025-11-26 23:09:22,931 [INFO] AMap.getPlaceInfo input={"address": "{'full_address': '南京东路, 黄浦区, 上海', 'country': 'China'}", "language": null, "extra_params": null}
+2025-11-26 23:09:22,931 [INFO] AMap request path=/v3/geocode/geo params={'address': "{'full_address': '南京东路, 黄浦区, 上海', 'country': 'China'}", 'output': 'JSON', 'extensions': 'all'}
+2025-11-26 23:09:23,849 [ERROR] AMap API error path=/v3/geocode/geo params={'address': "{'full_address': '南京东路, 黄浦区, 上海', 'country': 'China'}", 'output': 'JSON', 'extensions': 'all'} info=ENGINE_RESPONSE_DATA_ERROR payload={'status': '0', 'info': 'ENGINE_RESPONSE_DATA_ERROR', 'infocode': '30001'}
+2025-11-26 23:12:41,566 [INFO] AMap.getPlaceInfo input={"address": {"full": "南京东路300号, 黄浦区, 上海"}, "language": null, "extra_params": null}
+2025-11-26 23:12:41,566 [INFO] AMap request path=/v3/geocode/geo params={'address': {'full': '南京东路300号, 黄浦区, 上海'}, 'output': 'JSON', 'extensions': 'all'}
+2025-11-26 23:12:42,613 [ERROR] AMap API error path=/v3/geocode/geo params={'address': {'full': '南京东路300号, 黄浦区, 上海'}, 'output': 'JSON', 'extensions': 'all'} info=ENGINE_RESPONSE_DATA_ERROR payload={'status': '0', 'info': 'ENGINE_RESPONSE_DATA_ERROR', 'infocode': '30001'}
+2025-11-26 23:12:44,847 [INFO] AMap.getPlaceInfo input={"address": {"full": "上海市黄浦区南京东路300号"}, "language": null, "extra_params": null}
+2025-11-26 23:12:44,848 [INFO] AMap request path=/v3/geocode/geo params={'address': {'full': '上海市黄浦区南京东路300号'}, 'output': 'JSON', 'extensions': 'all'}
+2025-11-26 23:12:45,812 [ERROR] AMap API error path=/v3/geocode/geo params={'address': {'full': '上海市黄浦区南京东路300号'}, 'output': 'JSON', 'extensions': 'all'} info=ENGINE_RESPONSE_DATA_ERROR payload={'status': '0', 'info': 'ENGINE_RESPONSE_DATA_ERROR', 'infocode': '30001'}
+2025-11-26 23:12:47,361 [INFO] AMap.getPlaceInfo input={"address": {"full": "南京东路, 黄浦区, 上海"}, "language": null, "extra_params": null}
+2025-11-26 23:12:47,362 [INFO] AMap request path=/v3/geocode/geo params={'address': {'full': '南京东路, 黄浦区, 上海'}, 'output': 'JSON', 'extensions': 'all'}
+2025-11-26 23:12:48,521 [ERROR] AMap API error path=/v3/geocode/geo params={'address': {'full': '南京东路, 黄浦区, 上海'}, 'output': 'JSON', 'extensions': 'all'} info=ENGINE_RESPONSE_DATA_ERROR payload={'status': '0', 'info': 'ENGINE_RESPONSE_DATA_ERROR', 'infocode': '30001'}
+2025-11-26 23:12:49,481 [INFO] AMap.getPlaceInfo input={"address": {"city": "上海市", "district": "黄浦区", "street": "南京东路", "number": "300号"}, "language": null, "extra_params": null}
+2025-11-26 23:12:49,481 [INFO] AMap request path=/v3/geocode/geo params={'address': {'city': '上海市', 'district': '黄浦区', 'street': '南京东路', 'number': '300号'}, 'output': 'JSON', 'extensions': 'all'}
+2025-11-26 23:12:51,136 [ERROR] AMap API error path=/v3/geocode/geo params={'address': {'city': '上海市', 'district': '黄浦区', 'street': '南京东路', 'number': '300号'}, 'output': 'JSON', 'extensions': 'all'} info=ENGINE_RESPONSE_DATA_ERROR payload={'status': '0', 'info': 'ENGINE_RESPONSE_DATA_ERROR', 'infocode': '30001'}
+2025-11-26 23:12:52,217 [INFO] AMap.getPlaceInfo input={"address": {"full": "People's Square, Huangpu, Shanghai"}, "language": null, "extra_params": null}
+2025-11-26 23:12:52,217 [INFO] AMap request path=/v3/geocode/geo params={'address': {'full': "People's Square, Huangpu, Shanghai"}, 'output': 'JSON', 'extensions': 'all'}
+2025-11-26 23:12:53,207 [ERROR] AMap API error path=/v3/geocode/geo params={'address': {'full': "People's Square, Huangpu, Shanghai"}, 'output': 'JSON', 'extensions': 'all'} info=ENGINE_RESPONSE_DATA_ERROR payload={'status': '0', 'info': 'ENGINE_RESPONSE_DATA_ERROR', 'infocode': '30001'}
+2025-11-26 23:12:54,219 [INFO] AMap.getPlaceInfo input={"address": {"full": "Nanjing East Road, Huangpu, Shanghai"}, "language": null, "extra_params": null}
+2025-11-26 23:12:54,220 [INFO] AMap request path=/v3/geocode/geo params={'address': {'full': 'Nanjing East Road, Huangpu, Shanghai'}, 'output': 'JSON', 'extensions': 'all'}
+2025-11-26 23:12:55,249 [ERROR] AMap API error path=/v3/geocode/geo params={'address': {'full': 'Nanjing East Road, Huangpu, Shanghai'}, 'output': 'JSON', 'extensions': 'all'} info=ENGINE_RESPONSE_DATA_ERROR payload={'status': '0', 'info': 'ENGINE_RESPONSE_DATA_ERROR', 'infocode': '30001'}
+2025-11-26 23:14:49,208 [INFO] AMap.getPlaceInfo input={"address": {"freeform": "南京东路300号 黄浦区 上海"}, "language": null, "extra_params": null}
+2025-11-26 23:14:49,208 [INFO] AMap request path=/v3/geocode/geo params={'address': {'freeform': '南京东路300号 黄浦区 上海'}, 'output': 'JSON', 'extensions': 'all'}
+2025-11-26 23:14:50,535 [ERROR] AMap API error path=/v3/geocode/geo params={'address': {'freeform': '南京东路300号 黄浦区 上海'}, 'output': 'JSON', 'extensions': 'all'} info=ENGINE_RESPONSE_DATA_ERROR payload={'status': '0', 'info': 'ENGINE_RESPONSE_DATA_ERROR', 'infocode': '30001'}
+2025-11-26 23:14:53,213 [INFO] AMap.getPlaceInfo input={"address": {"freeform": "上海市黄浦区南京东路300号"}, "language": null, "extra_params": null}
+2025-11-26 23:14:53,214 [INFO] AMap request path=/v3/geocode/geo params={'address': {'freeform': '上海市黄浦区南京东路300号'}, 'output': 'JSON', 'extensions': 'all'}
+2025-11-26 23:14:54,324 [ERROR] AMap API error path=/v3/geocode/geo params={'address': {'freeform': '上海市黄浦区南京东路300号'}, 'output': 'JSON', 'extensions': 'all'} info=ENGINE_RESPONSE_DATA_ERROR payload={'status': '0', 'info': 'ENGINE_RESPONSE_DATA_ERROR', 'infocode': '30001'}
+2025-11-26 23:14:55,663 [INFO] AMap.getPlaceInfo input={"address": {"freeform": "Shanghai Huangpu District Nanjing East Road 300"}, "language": null, "extra_params": null}
+2025-11-26 23:14:55,663 [INFO] AMap request path=/v3/geocode/geo params={'address': {'freeform': 'Shanghai Huangpu District Nanjing East Road 300'}, 'output': 'JSON', 'extensions': 'all'}
+2025-11-26 23:14:56,807 [ERROR] AMap API error path=/v3/geocode/geo params={'address': {'freeform': 'Shanghai Huangpu District Nanjing East Road 300'}, 'output': 'JSON', 'extensions': 'all'} info=ENGINE_RESPONSE_DATA_ERROR payload={'status': '0', 'info': 'ENGINE_RESPONSE_DATA_ERROR', 'infocode': '30001'}
+2025-11-26 23:14:58,116 [INFO] AMap.getPlaceInfo input={"address": {"freeform": "Nanjing East Road, Huangpu, Shanghai"}, "language": null, "extra_params": null}
+2025-11-26 23:14:58,116 [INFO] AMap request path=/v3/geocode/geo params={'address': {'freeform': 'Nanjing East Road, Huangpu, Shanghai'}, 'output': 'JSON', 'extensions': 'all'}
+2025-11-26 23:14:59,136 [ERROR] AMap API error path=/v3/geocode/geo params={'address': {'freeform': 'Nanjing East Road, Huangpu, Shanghai'}, 'output': 'JSON', 'extensions': 'all'} info=ENGINE_RESPONSE_DATA_ERROR payload={'status': '0', 'info': 'ENGINE_RESPONSE_DATA_ERROR', 'infocode': '30001'}
+2025-11-26 23:15:00,075 [INFO] AMap.getPlaceInfo input={"address": {"freeform": "南京东路, 黄浦区, 上海市"}, "language": null, "extra_params": null}
+2025-11-26 23:15:00,075 [INFO] AMap request path=/v3/geocode/geo params={'address': {'freeform': '南京东路, 黄浦区, 上海市'}, 'output': 'JSON', 'extensions': 'all'}
+2025-11-26 23:15:00,997 [ERROR] AMap API error path=/v3/geocode/geo params={'address': {'freeform': '南京东路, 黄浦区, 上海市'}, 'output': 'JSON', 'extensions': 'all'} info=ENGINE_RESPONSE_DATA_ERROR payload={'status': '0', 'info': 'ENGINE_RESPONSE_DATA_ERROR', 'infocode': '30001'}
+2025-11-26 23:15:01,911 [INFO] AMap.getPlaceInfo input={"address": {"freeform": "南京东路 外滩 上海"}, "language": null, "extra_params": null}
+2025-11-26 23:15:01,911 [INFO] AMap request path=/v3/geocode/geo params={'address': {'freeform': '南京东路 外滩 上海'}, 'output': 'JSON', 'extensions': 'all'}
+2025-11-26 23:15:03,439 [ERROR] AMap API error path=/v3/geocode/geo params={'address': {'freeform': '南京东路 外滩 上海'}, 'output': 'JSON', 'extensions': 'all'} info=ENGINE_RESPONSE_DATA_ERROR payload={'status': '0', 'info': 'ENGINE_RESPONSE_DATA_ERROR', 'infocode': '30001'}
+2025-11-26 23:18:20,610 [INFO] AMap.getPlaceInfo input={"address": "南京东路300号 黄浦区 上海", "language": null, "extra_params": null}
+2025-11-26 23:18:20,611 [INFO] AMap request path=/v3/geocode/geo params={'address': '南京东路300号 黄浦区 上海', 'output': 'JSON', 'extensions': 'all'}
+2025-11-26 23:18:23,124 [INFO] AMap.getMapVisuailization input={"origin": {"lat": 31.233942, "lng": 121.479245, "label": "Nanjing East Rd 300, Huangpu, Shanghai"}, "zoom": 16, "overlays": null, "style": {"provider": "amap", "theme": "light"}}
+2025-11-26 23:24:41,882 [INFO] AMap.getMapVisuailization input={"origin": {"lat": 31.233942, "lon": 121.479245}, "zoom": 14, "overlays": null, "style": null}
+2025-11-26 23:24:59,833 [INFO] AMap.getMapVisuailization input={"origin": {"lat": 31.233942, "lng": 121.479245}, "zoom": 14, "overlays": null, "style": null}
+2025-11-26 23:26:20,453 [INFO] AMap.getMapVisuailization input={"origin": {"lat": 31.235898040745084, "lng": 121.47474007623427}, "zoom": 14, "overlays": null, "style": null}
+2025-11-26 23:40:33,565 [INFO] AMap.getPlaceInfo input={"address": "南京东路300号, 黄浦区", "language": null, "extra_params": {"city": "上海"}}
+2025-11-26 23:40:33,565 [INFO] AMap request path=/v3/geocode/geo params={'address': '南京东路300号, 黄浦区', 'output': 'JSON', 'extensions': 'all', 'city': '上海'}
+2025-11-26 23:40:34,749 [ERROR] AMap API error path=/v3/geocode/geo params={'address': '南京东路300号, 黄浦区', 'output': 'JSON', 'extensions': 'all', 'city': '上海'} info=ENGINE_RESPONSE_DATA_ERROR payload={'status': '0', 'info': 'ENGINE_RESPONSE_DATA_ERROR', 'infocode': '30001'}
+2025-11-26 23:40:36,087 [INFO] AMap.getPlaceInfo input={"address": "南京东路300号", "language": null, "extra_params": {"city": "上海"}}
+2025-11-26 23:40:36,087 [INFO] AMap request path=/v3/geocode/geo params={'address': '南京东路300号', 'output': 'JSON', 'extensions': 'all', 'city': '上海'}
+2025-11-26 23:40:38,444 [INFO] AMap.getMapVisuailization input={"origin": {"lat": 31.234663, "lng": 121.477072, "label": "Origin"}, "zoom": 14, "overlays": null, "style": {"provider": "amap", "theme": "light"}}
+2025-11-26 23:47:59,257 [INFO] AMap.getPlaceInfo input={"address": "南京东路300号", "language": null, "extra_params": {"city": "上海"}}
+2025-11-26 23:47:59,257 [INFO] AMap request path=/v3/geocode/geo params={'address': '南京东路300号', 'output': 'JSON', 'extensions': 'all', 'city': '上海'}
+2025-11-26 23:48:51,731 [INFO] AMap.getPlaceInfo input={"address": "南京东路20号", "language": null, "extra_params": {"city": "上海"}}
+2025-11-26 23:48:51,732 [INFO] AMap request path=/v3/geocode/geo params={'address': '南京东路20号', 'output': 'JSON', 'extensions': 'all', 'city': '上海'}
+2025-11-26 23:54:12,962 [INFO] AMap.getPlaceInfo input={"address": "南京东路300号", "language": null, "extra_params": {"city": "上海"}}
+2025-11-26 23:54:12,962 [INFO] AMap request path=/v3/place/text params={'address': '南京东路300号', 'output': 'JSON', 'extensions': 'all', 'city': '上海'}
+2025-11-26 23:54:15,353 [ERROR] AMap API error path=/v3/place/text params={'address': '南京东路300号', 'output': 'JSON', 'extensions': 'all', 'city': '上海'} info=MISSING_REQUIRED_PARAMS payload={'status': '0', 'info': 'MISSING_REQUIRED_PARAMS', 'infocode': '20001'}
+2025-11-26 23:56:11,014 [INFO] AMap.getPlaceInfo input={"address": "南京东路300号", "language": null, "extra_params": {"city": "上海"}}
+2025-11-26 23:56:11,015 [INFO] AMap request path=/v3/place/text params={'keywords': '南京东路300号', 'output': 'JSON', 'extensions': 'all', 'city': '上海'}
+2025-11-27 00:09:09,959 [INFO] AMap.getPlaceInfo input={"address": "南京东路300号", "language": null, "extra_params": {"city": "上海"}}
+2025-11-27 00:09:09,960 [INFO] AMap request path=/v3/place/text params={'address': '南京东路300号', 'output': 'JSON', 'extensions': 'all', 'city': '上海'}
+2025-11-27 00:09:10,923 [ERROR] AMap API error path=/v3/place/text params={'address': '南京东路300号', 'output': 'JSON', 'extensions': 'all', 'city': '上海'} info=MISSING_REQUIRED_PARAMS payload={'status': '0', 'info': 'MISSING_REQUIRED_PARAMS', 'infocode': '20001'}
+2025-11-27 00:10:16,275 [INFO] AMap.getPlaceInfo input={"address": "南京东路300号", "language": null, "extra_params": {"city": "上海"}}
+2025-11-27 00:10:16,276 [INFO] AMap request path=/v3/place/text params={'keywords': '南京东路300号', 'output': 'JSON', 'extensions': 'all', 'city': '上海'}
+2025-11-27 00:15:23,561 [INFO] AMap.getPlaceInfo input={"address": "南京东路300号", "language": null, "extra_params": {"city": "上海"}}
+2025-11-27 00:15:23,561 [INFO] AMap request path=/v3/place/text params={'keywords': '南京东路300号', 'output': 'JSON', 'extensions': 'all', 'city': '上海'}
+2025-11-27 00:36:47,285 [INFO] AMap.getPlaceInfo input={"address": "南京东路300号", "language": null, "extra_params": {"city": "上海"}}
+2025-11-27 00:36:47,286 [INFO] AMap request path=/v3/place/text params={'keywords': '南京东路300号', 'output': 'JSON', 'extensions': 'all', 'city': '上海'}
+2025-11-27 00:37:06,077 [INFO] AMap.getPlaceInfo input={"address": "南京东路300号", "language": null, "extra_params": {"city": "上海市"}}
+2025-11-27 00:37:06,077 [INFO] AMap request path=/v3/place/text params={'keywords': '南京东路300号', 'output': 'JSON', 'extensions': 'all', 'city': '上海市'}
+2025-11-27 00:37:13,154 [INFO] AMap.getMapVisuailization input={"origin": {"lat": 31.238276, "lng": 121.484158, "label": "Target area near 南京东路300号"}, "zoom": 15, "overlays": null, "style": "standard"}

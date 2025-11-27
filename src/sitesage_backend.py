@@ -12,17 +12,25 @@ import os
 import re
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple
-
+from openai import OpenAI
 import railtracks as rt
 from ddgs import DDGS  # pip install ddgs
+# from worldpop_apis.coordTransform.coordTransform_utils import gcj02_to_wgs84
+
+rt.set_config(save_state=True)
 
 # Project-provided wrappers
 from tools.map_rt import (
-    getPlaceInfo,
-    getNearbyPlaces,
-    getDistances,
+    tool_get_distances,
+    tool_get_map_visualization,
+    tool_get_nearby_places,
+    tool_get_place_info,
+    map_nearby_places_cache,
+    clean_map_cache
 )
-from tools.demographics_rt import getPopulationStats
+
+from tools.demographics_rt import tool_get_population_stats
+from tools.vlm_rt import tool_static_map_image_understand
 
 # Prompts
 from prompts.agent_prompts import (
@@ -192,120 +200,133 @@ def osm_static_map_url(lat: float, lng: float, zoom: int = 16, width: int = 600,
 # -----------------------------------------------------------------------------
 # Tools exposed to the agents (robust signatures and normalization)
 # -----------------------------------------------------------------------------
-@rt.function_node
-def tool_get_place_info(
-    address: Optional[str] = None,
-    *,
-    query: Optional[str] = None,
-    language: Optional[str] = None,
-    extra_params: Optional[Dict[str, Any]] = None,
-) -> Dict[str, Any]:
-    addr = address or query
-    if not addr:
-        raise ValueError("address or query is required")
-    place = getPlaceInfo(addr, language=language, extra_params=extra_params)
-    lat, lng = extract_lat_lng(place)
-    if lat is not None and lng is not None:
-        place["lat"], place["lng"], place["lon"] = lat, lng, lng
-    return place
+# @rt.function_node
+# def tool_get_place_info(
+#     address: Optional[str] = None,
+#     *,
+#     query: Optional[str] = None,
+#     language: Optional[str] = None,
+#     extra_params: Optional[Dict[str, Any]] = None,
+# ) -> Dict[str, Any]:
+#     addr = address or query
+#     if not addr:
+#         raise ValueError("address or query is required")
+#     place = getPlaceInfo(addr, language=language, extra_params=extra_params)
+#     lat, lng = extract_lat_lng(place)
+#     if lat is not None and lng is not None:
+#         place["lat"], place["lng"], place["lon"] = lat, lng, lng
+#     return place
 
 
-@rt.function_node
-def tool_get_nearby_places(
-    origin: Optional[Dict[str, Any]] = None,
-    *,
-    location: Optional[Dict[str, Any]] = None,
-    descriptive_types: Optional[Sequence[str]] = None,
-    types: Optional[Sequence[str]] = None,
-    radius: int = 500,
-    rank: str = "DISTANCE",
-    include_details: bool = False,
-    num_pages: int = 2,
-    pages: Optional[int] = None,
-) -> List[Dict[str, Any]]:
-    ori = normalize_geo(origin or location or {})
-    if "lat" not in ori or "lng" not in ori:
-        raise ValueError("origin/location must include lat and lng/lon")
+# @rt.function_node
+# def tool_get_nearby_places(
+#     origin: Optional[Dict[str, Any]] = None,
+#     *,
+#     location: Optional[Dict[str, Any]] = None,
+#     descriptive_types: Optional[Sequence[str]] = None,
+#     types: Optional[Sequence[str]] = None,
+#     radius: int = 500,
+#     rank: str = "DISTANCE",
+#     include_details: bool = False,
+#     num_pages: int = 2,
+#     pages: Optional[int] = None,
+# ) -> List[Dict[str, Any]]:
+#     ori = normalize_geo(origin or location or {})
+#     if "lat" not in ori or "lng" not in ori:
+#         raise ValueError("origin/location must include lat and lng/lon")
 
-    dt = normalize_types(descriptive_types) or normalize_types(types)
-    if not dt:
-        logger.warning("tool_get_nearby_places: empty descriptive types; returning empty list")
-        return []
+#     dt = normalize_types(descriptive_types) or normalize_types(types)
+#     if not dt:
+#         logger.warning("tool_get_nearby_places: empty descriptive types; returning empty list")
+#         return []
 
-    n_pages = int(pages or num_pages or 1)
-    return list(
-        getNearbyPlaces(
-            ori,
-            dt,
-            radius=radius,
-            rank=rank,
-            include_details=include_details,
-            num_pages=n_pages,
-        )
-    )
-
-
-@rt.function_node
-def tool_get_distances(
-    origin: Optional[Dict[str, Any]] = None,
-    *,
-    location: Optional[Dict[str, Any]] = None,
-    destinations: Sequence[Dict[str, Any]] = (),
-    mode: str = "walk",
-    units: str = "metric",
-) -> List[Dict[str, Any]]:
-    ori = normalize_geo(origin or location or {})
-    dests = [normalize_geo(d) for d in list(destinations)]
-    if "lat" not in ori or "lng" not in ori:
-        raise ValueError("origin/location must include lat and lng/lon")
-    if not dests:
-        return []
-    return list(getDistances(ori, dests, mode=mode, units=units))
+#     n_pages = int(pages or num_pages or 1)
+#     return list(
+#         getNearbyPlaces(
+#             ori,
+#             dt,
+#             radius=radius,
+#             rank=rank,
+#             include_details=include_details,
+#             num_pages=n_pages,
+#         )
+#     )
 
 
-@rt.function_node
-def tool_get_population_stats(
-    location: Optional[Dict[str, Any]] = None,
-    *,
-    lat: Optional[float] = None,
-    lng: Optional[float] = None,
-    lon: Optional[float] = None,
-    radius_m: float = 500.0,
-    coord_ref: str = "GCJ-02",
-) -> Dict[str, Any]:
-    loc = normalize_geo(location or {"lat": lat, "lng": lng or lon, "lon": lng or lon})
-    if "lat" not in loc or "lng" not in loc:
-        raise ValueError("location must include numeric 'lat' and 'lng' (or 'lon') fields")
-
-    raw = getPopulationStats(loc, radius_m=radius_m, coord_ref=coord_ref)
-    return {
-        "provider": raw.get("provider", "worldpop"),
-        "origin": {"lat": loc["lat"], "lng": loc["lng"]},
-        "radius_m": float(radius_m),
-        "coordinate_reference": coord_ref,
-        "population_total": raw.get("population_total") or raw.get("total_population"),
-        "age_buckets": raw.get("age_buckets") or raw.get("age_breakdown"),
-        "notes": raw.get("notes"),
-    }
+# @rt.function_node
+# def tool_get_distances(
+#     origin: Optional[Dict[str, Any]] = None,
+#     *,
+#     location: Optional[Dict[str, Any]] = None,
+#     destinations: Sequence[Dict[str, Any]] = (),
+#     mode: str = "walk",
+#     units: str = "metric",
+# ) -> List[Dict[str, Any]]:
+#     ori = normalize_geo(origin or location or {})
+#     dests = [normalize_geo(d) for d in list(destinations)]
+#     if "lat" not in ori or "lng" not in ori:
+#         raise ValueError("origin/location must include lat and lng/lon")
+#     if not dests:
+#         return []
+#     return list(getDistances(ori, dests, mode=mode, units=units))
 
 
-@rt.function_node
-def tool_build_static_map(
-    lat: Optional[float] = None,
-    lng: Optional[float] = None,
-    *,
-    origin: Optional[Dict[str, Any]] = None,
-    location: Optional[Dict[str, Any]] = None,
-    zoom: int = 16,
-    width: int = 600,
-    height: int = 400,
-) -> str:
-    if lat is None or lng is None:
-        o = normalize_geo(origin or location or {})
-        lat, lng = extract_lat_lng(o)
-    if lat is None or lng is None:
-        raise ValueError("lat/lng or origin/location with lat/lng is required")
-    return osm_static_map_url(lat, lng, zoom=zoom, width=width, height=height)
+# @rt.function_node
+# def tool_get_population_stats(
+#     location: Optional[Dict[str, Any]] = None,
+#     *,
+#     lat: Optional[float] = None,
+#     lng: Optional[float] = None,
+#     lon: Optional[float] = None,
+#     radius_m: float = 500.0,
+#     coord_ref: str = "GCJ-02",
+# ) -> Dict[str, Any]:
+#     loc = normalize_geo(location or {"lat": lat, "lng": lng or lon, "lon": lng or lon})
+#     if "lat" not in loc or "lng" not in loc:
+#         raise ValueError("location must include numeric 'lat' and 'lng' (or 'lon') fields")
+
+#     raw = getPopulationStats(loc, radius_m=radius_m, coord_ref=coord_ref)
+#     return {
+#         "provider": raw.get("provider", "worldpop"),
+#         "origin": {"lat": loc["lat"], "lng": loc["lng"]},
+#         "radius_m": float(radius_m),
+#         "coordinate_reference": coord_ref,
+#         "population_total": raw.get("population_total") or raw.get("total_population"),
+#         "age_buckets": raw.get("age_buckets") or raw.get("age_breakdown"),
+#         "notes": raw.get("notes"),
+#     }
+
+
+# @rt.function_node
+# def tool_build_static_map(
+#     lat: float,
+#     lng: float,
+#     *,
+#     # origin: Optional[Dict[str, Any]] = None,
+#     # location: Optional[Dict[str, Any]] = None,
+#     zoom: int = 16,
+#     width: int = 600,
+#     height: int = 400,
+# ) -> str:
+#     """
+#     Produce a static visualization (e.g., a map image URL) for the supplied geometry.
+#     Args:
+#         lat (float): latitude
+#         lng (float): longitude
+#         zoom (Optional[int]): Zoom in extent, default as 16, select span between (10-19), higher digit means more zoom in, choose 14-15 for district, 16-17 for neighborhood/site overviews, 18-19 for tight individual streets.
+        
+#     Returns:
+#         str: static map URL.
+#     """
+#     # if lat is None or lng is None:
+#     #     o = normalize_geo(origin or location or {})
+#     #     lat, lng = extract_lat_lng(o)
+#     if lat is None or lng is None:
+#         raise ValueError("lat/lng or origin/location with lat/lng is required")
+#     # coordinate projection: 
+#     lng, lat = gcj02_to_wgs84(lng, lat)
+#     url = osm_static_map_url(lat, lng, zoom=zoom, width=width, height=height)
+#     return url
 
 
 @rt.function_node
@@ -326,9 +347,9 @@ def make_understanding_agent() -> Any:
     system = rt.llm.SystemMessage(UNDERSTANDING_AGENT_SYSTEM)
     return rt.agent_node(
         name="UnderstandingAgent",
-        tool_nodes=(tool_get_place_info, tool_build_static_map),
+        tool_nodes=(tool_get_place_info, tool_get_map_visualization, tool_static_map_image_understand),
         system_message=system,
-        llm=rt.llm.OpenAILLM("gpt-4o"),
+        llm=rt.llm.OpenAILLM("gpt-5.1"),
         max_tool_calls=12,
     )
 
@@ -337,9 +358,9 @@ def make_customer_agent() -> Any:
     system = rt.llm.SystemMessage(CUSTOMER_AGENT_SYSTEM)
     return rt.agent_node(
         name="CustomerAgent",
-        tool_nodes=(tool_get_population_stats,),
+        tool_nodes=(tool_get_population_stats, tool_get_nearby_places, tool_web_search, tool_get_map_visualization, tool_static_map_image_understand),
         system_message=system,
-        llm=rt.llm.OpenAILLM("gpt-4o"),
+        llm=rt.llm.OpenAILLM("gpt-5.1"),
         max_tool_calls=12,
     )
 
@@ -350,7 +371,7 @@ def make_traffic_agent() -> Any:
         name="TrafficAgent",
         tool_nodes=(tool_get_nearby_places, tool_get_distances),
         system_message=system,
-        llm=rt.llm.OpenAILLM("gpt-4o"),
+        llm=rt.llm.OpenAILLM("gpt-5.1"),
         max_tool_calls=16,
     )
 
@@ -361,7 +382,7 @@ def make_competition_agent() -> Any:
         name="CompetitionAgent",
         tool_nodes=(tool_get_nearby_places, tool_get_distances),
         system_message=system,
-        llm=rt.llm.OpenAILLM("gpt-4o"),
+        llm=rt.llm.OpenAILLM("gpt-5.1"),
         max_tool_calls=16,
     )
 
@@ -372,7 +393,7 @@ def make_weighting_agent() -> Any:
         name="WeightingAgent",
         tool_nodes=(),
         system_message=system,
-        llm=rt.llm.OpenAILLM("gpt-4o"),
+        llm=rt.llm.OpenAILLM("gpt-5.1"),
     )
 
 
@@ -386,7 +407,7 @@ def make_evaluation_agent() -> Any:
         name="EvaluationAgent",
         tool_nodes=(),  # no tools
         system_message=system,
-        llm=rt.llm.OpenAILLM("gpt-4o"),
+        llm=rt.llm.OpenAILLM("gpt-5.1"),
     )
 
 
@@ -400,7 +421,7 @@ def make_final_report_agent() -> Any:
         name="FinalReportAgent",
         tool_nodes=(),  # no tools
         system_message=system,
-        llm=rt.llm.OpenAILLM("gpt-4o"),
+        llm=rt.llm.OpenAILLM("gpt-5.1"),
     )
 
 
@@ -417,6 +438,8 @@ async def run_sitesage_session_async(
     session_dir = ensure_session_dir(session_id)
     errors: List[str] = []
     assets: Dict[str, Any] = {"reports": {}}
+
+    clean_map_cache()
 
     # 1) Understanding
     understanding_agent = make_understanding_agent()
@@ -440,8 +463,9 @@ async def run_sitesage_session_async(
     lat, lng = extract_lat_lng(place)
     if lat is not None and lng is not None:
         place["lat"], place["lng"], place["lon"] = lat, lng, lng
-        if not map_image_url:
-            map_image_url = osm_static_map_url(lat, lng)
+        # if not map_image_url:
+        # now we are using amap static map in agent, osm static map in frontend
+        map_image_url = osm_static_map_url(lat, lng)
 
     # 2) Customer
     customer_agent = make_customer_agent()
@@ -457,7 +481,7 @@ async def run_sitesage_session_async(
 
     # 3) Traffic - receives Customer report
     traffic_agent = make_traffic_agent()
-    traffic_prompt = get_traffic_prompt(store_info, place, customer_report)
+    traffic_prompt = get_traffic_prompt(store_info, place, customer_report, str(map_nearby_places_cache))
     with rt.Session(logging_setting="VERBOSE"):
         tresp = await rt.call(traffic_agent, user_input=traffic_prompt)
     

@@ -8,3 +8,4 @@ src/.env
 .python-version
 pytest.ini
 src/logs/*
+tests/.env

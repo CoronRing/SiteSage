@@ -2,79 +2,52 @@
 
 TRAFFIC_AGENT_SYSTEM = """You are a traffic and accessibility analyst for retail site selection.
 
-Your task is to analyze the accessibility and traffic potential of a location by examining nearby transit options, parking, and connectivity.
+Your task is to analyze the visibility, accessibility and traffic potential of a location by examining nearby transit options, parking, and connectivity.
 
-**IMPORTANT**: You may receive a customer demographics analysis from a previous step. If provided, use it to contextualize your traffic analysis:
-- Consider what transportation modes the target demographic would use
-- Think about how population density affects foot traffic
-- Assess whether accessibility aligns with customer needs
-
-Use the tools to find nearby transit stations, bus stops, parking facilities, and calculate distances.
-
-Tool usage guide:
-- tool_get_nearby_places(origin:{lat,lng}, descriptive_types:List[str], radius:int[, rank:str, include_details:bool, num_pages:int]) -> List[dict]
-  Aliases: you can also pass 'types' instead of 'descriptive_types'; 'pages' instead of 'num_pages'.
-- tool_get_distances(origin:{lat,lng}, destinations:[{lat,lng}], mode:str="walk", units:str="metric") -> List[dict]
-
-Suggested categories: ["subway_station","metro_station","bus_station","bus_stop","parking","parking_lot"]
-
-Try different radius values and num_pages if initial results are sparse.
+**IMPORTANT**: You may receive a customer analysis and cached nearby places from a previous step. If provided, you may use it as context, and perform traffic analysis:
+- Check nearby public transportations, such as subway stations, bus stations, train stations, etc.
+- Check nearby parkings (separate from the public transportations).
+- Consider what transportation modes the target customers would use, where would they come and where would they go, 
+- Estimate the detour for visiting. You can use static map to visulize the relative locations of public transport to destinations (e.g. office/home/school/mall) to estimate how much detour does visiting the store require.
+- Check the visibility of the location by checking if it lies on intersection of most travelled roads or not.
+- Assess whether accessibility aligns with customer needs.
 
 DO NOT return JSON with scores. Instead, write a detailed natural language report in markdown format evaluating:
 - Proximity to public transit (subway, metro, bus)
-- Density of transit options within walking distance
 - Parking availability
+- Density of transit options within walking distance
+- Necessary detour estimation
+- Visibility analysis
 - Overall accessibility assessment
-- Pedestrian and vehicular traffic implications
 - **How accessibility aligns with target customer profile (if customer analysis was provided)**
 
-Return ONLY:
-```markdown
-# Traffic & Accessibility Analysis
-
-## Public Transit Access
-[Detailed analysis of nearby subway, metro, and bus options]
-
-## Walking Distance Assessment
-[Analysis of distances to nearest transit points]
-
-## Parking Availability
-[Analysis of nearby parking facilities]
-
-## Overall Accessibility Evaluation
-[Comprehensive assessment of how easy it is to reach this location]
-
-## Traffic Implications
-[Discussion of expected foot traffic and vehicular access]
-
-## Customer-Traffic Alignment
-[If customer analysis provided: How does accessibility match target demographic needs?]
-```
-
-Be thorough and provide specific distance measurements and counts.
+Be thorough and provide specific numerical values.
 """
 
-
-def get_traffic_prompt(store_info: dict, place: dict, customer_report: str = "") -> str:
+def get_traffic_prompt(store_info: dict, place: dict, customer_report: str = "", nearby_places_cache: str = "") -> str:
     """Build prompt for traffic and accessibility analysis."""
     customer_context = ""
     if customer_report:
         customer_context = f"""
-
 ---
 
 PREVIOUS ANALYSIS - Customer Demographics:
 {customer_report}
 
-Consider the customer analysis above when evaluating traffic and accessibility. Think about:
-- What transit modes would the target demographic use?
-- How does population density affect traffic patterns?
-- Are there specific accessibility needs based on age distribution?
+---
+"""
+    
+    if nearby_places_cache:
+        nearby_places_context = f"""
+---
+
+CACHED NEARBY PLACES:
+{nearby_places_cache}
 
 ---
 """
-
-    return f"""Analyze the traffic and accessibility for this location.
+        
+    return f"""Analyze the traffic for this location.
 
 Store Information:
 {store_info}
@@ -82,6 +55,7 @@ Store Information:
 Location:
 {place}
 {customer_context}
+{nearby_places_context}
 Suggested transit categories to search: subway_station, metro_station, bus_station, bus_stop, parking, parking_lot
 
 Write a detailed markdown report analyzing accessibility and traffic potential."""

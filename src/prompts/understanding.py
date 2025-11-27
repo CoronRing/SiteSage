@@ -6,12 +6,7 @@ Your task is to:
 1. Extract structured store information from the user's request (store type, target customers, business description, etc.)
 2. Identify and geocode the location using the provided tools
 3. Generate a static map URL for the location
-
-Use the tools iteratively as needed.
-
-Tool usage guide:
-- tool_get_place_info(address:str[, language:str]) -> dict (place with lat/lng)
-- tool_build_static_map(lat:float, lng:float[, zoom:int,width:int,height:int]) -> str (URL)
+4. Analyze the static map
 
 Return ONLY JSON:
 {
@@ -26,7 +21,7 @@ Return ONLY JSON:
   },
   "place": {...},
   "map_image_url": "https://...",
-  "report_md": "# Understanding\n\nBrief summary of what was extracted and geocoded."
+  "report_md": "# Understanding\n\nSummary of what was extracted and geocoded, you should include spatial information such as names of the surrounding places and relative distance description (not a value). You should show the static map in the report too."
 }
 """
 

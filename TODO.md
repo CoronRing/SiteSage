@@ -1,6 +1,7 @@
 ## Location analysis
 - static map + vlm -> first impression about surroundings (`data1`)
 
+# Prompts
 ## Customer
 - `data1` -> potential customer categories (`cat1`)
 - world pop -> composition, number of surrounding residents (only residents, does not reflect school or shopping mall) -> `data2`
@@ -10,6 +11,14 @@
 - `data1` -> 
 - 
 
+
+## tool
+- vlm
+
 ## rubrics
 - weighting rubrics
 - evaluating rubrics
+- hard rubrics
+
+## test
+automatic process
