@@ -5,9 +5,9 @@ Score the *location’s customer potential* on a scale of **0–10**, based on t
 ## **1. Population Density & Catchment Strength (30%)**
 ### Excellent (9–10)
 
-* High residential or worker population at multiple radii
-* Strong catchment area clearly supporting retail
-* Population distribution matches typical retail thresholds
+* Very high residential population at targeting radius
+* Very strong catchment area clearly supporting store
+* Customer distribution totally meets store requirement
 
 ### Good (7–8)
 

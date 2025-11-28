@@ -1,33 +1,26 @@
 """Competition analysis agent prompts."""
 
-COMPETITION_AGENT_SYSTEM = """You are a competitive landscape analyst for retail site selection.
+COMPETITION_AGENT_SYSTEM = """You are a competitive analyst for retail site selection.
 
 Your task is to analyze the competitive environment by identifying nearby competitors and assessing market saturation.
 
-**IMPORTANT**: You may receive previous analyses (customer demographics and traffic/accessibility) from earlier steps. If provided, use them to contextualize your competition analysis:
-- **Customer Analysis**: Does the customer base size support additional competitors?
-- **Traffic Analysis**: How does accessibility affect competitive advantage?
-- Consider whether there are underserved customer segments
-- Think about how traffic patterns create competitive opportunities
+**IMPORTANT**: You may receive previous analyses (customer and traffic) from earlier steps. If provided, use them to contextualize your competition analysis.
 
-Use the tools to find nearby competing businesses and calculate distances.
+Your task:
+- Find the nearby competitors: analyze who are the competitors based on store information, how many competitors are there, how close they are (list the nearest ones)
+- Market saturation assessment: Does the customer base size support additional competitors?
+- Competitive positioning opportunities: How does traffic affect competitive advantage and create competitive opportunities?
+- Customer attraction analysis: Under the competitive environment, which part of customers do this location have advantages and which part disadvantageous.
+- Market entry and differentiation potential: Consider whether there are underserved customer segments in this location.
+- How competition interacts with customer base and traffic.
 
-Tool usage guide:
-- tool_get_nearby_places(origin:{lat,lng}, descriptive_types:List[str], radius:int[, num_pages:int]) -> List[dict]
-- tool_get_distances(origin:{lat,lng}, destinations:[{lat,lng}]) -> List[dict]
+DO NOT return JSON with scores. Instead, write a detailed natural language report in markdown format
 
-Use categories: ["coffee_shop","cafe"]. Adjust radius and pages to get counts at different distances (e.g., 500m, 1000m, 1500m).
+You MUST issue only one tool call at a time. 
+Do not call multiple tools together. 
+Wait for the previous tool's result before deciding the next action.
 
-DO NOT return JSON with scores. Instead, write a detailed natural language report in markdown format evaluating:
-- Number of competitors at various radii
-- Distance to nearest competitor
-- Market saturation assessment
-- Competitive positioning opportunities
-- Market differentiation potential
-- **How competition interacts with customer base and accessibility (if previous analyses provided)**
-
-Return ONLY:
-```markdown
+Return ONLY MARKDOWN:
 # Competition Analysis
 
 ## Competitor Density
@@ -42,6 +35,8 @@ Return ONLY:
 ## Competitive Positioning
 [Discussion of how to differentiate in this competitive landscape]
 
+## Customer Attration Analysis
+
 ## Market Entry Considerations
 [Strategic considerations for entering this market]
 
@@ -49,7 +44,7 @@ Return ONLY:
 [If customer/traffic analyses provided: How does competition interact with customer base and accessibility?]
 ```
 
-Be thorough and provide specific counts and distances.
+Be thorough, analytical and provide specific numerical values in your assessment.
 """
 
 
@@ -58,6 +53,7 @@ def get_competition_prompt(
     place: dict,
     customer_report: str = "",
     traffic_report: str = "",
+    nearby_places_cache: str = ""
 ) -> str:
     """Build prompt for competition analysis agent."""
     previous_context = ""
@@ -67,7 +63,7 @@ def get_competition_prompt(
 
 ---
 
-PREVIOUS ANALYSIS - Customer Demographics:
+PREVIOUS ANALYSIS - Customer & Demographics:
 {customer_report}
 
 """
@@ -80,17 +76,21 @@ PREVIOUS ANALYSIS - Traffic & Accessibility:
 
 """
 
-    if previous_context:
-        previous_context += """Consider the previous analyses when evaluating competition. Think about:
-- Does the customer base support additional coffee shops?
-- How does accessibility affect competitive dynamics?
-- Are there underserved segments or locations given the traffic patterns?
-
+    nearby_places_context = ""
+    if nearby_places_cache:
+        nearby_places_context = f"""
 ---
 
-"""
+CACHED NEARBY PLACES:
+{nearby_places_cache}
 
-    return f"""Analyze the competitive landscape for this location.
+---
+"""
+        
+    return f"""
+{nearby_places_context}
+
+Analyze the competitive landscape for this location.
 
 Store Information:
 {store_info}
@@ -98,6 +98,5 @@ Store Information:
 Location:
 {place}
 {previous_context}
-Suggested competitor categories to search: coffee_shop, cafe
 
-Write a detailed markdown report analyzing the competition."""
+Write a detailed markdown report analyzing competition environment and potential."""

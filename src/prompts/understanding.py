@@ -8,6 +8,9 @@ Your task is to:
 3. Generate a static map URL for the location
 4. Analyze the static map
 
+**Important:**
+In store_info, you should only extract information from the user's request, not the analysis from static map
+
 Return ONLY JSON:
 {
   "store_info": {
@@ -16,10 +19,14 @@ Return ONLY JSON:
     "service_mode": "string",
     "target_customers": ["string", ...],
     "price_level": "string",
-    "time_window": "string",
-    "location_query": "string"
+    "time_window": "string"
   },
-  "place": {...},
+  "place": {
+    "name": "string",
+    "address": "string",
+    "lat": "float",
+    "lng": "float"
+  }
   "map_image_url": "https://...",
   "report_md": "# Understanding\n\nSummary of what was extracted and geocoded, you should include spatial information such as names of the surrounding places and relative distance description (not a value). You should show the static map in the report too."
 }

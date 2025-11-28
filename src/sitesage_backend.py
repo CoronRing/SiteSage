@@ -15,7 +15,6 @@ from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple
 from openai import OpenAI
 import railtracks as rt
 from ddgs import DDGS  # pip install ddgs
-# from worldpop_apis.coordTransform.coordTransform_utils import gcj02_to_wgs84
 
 rt.set_config(save_state=True)
 
@@ -25,8 +24,8 @@ from tools.map_rt import (
     tool_get_map_visualization,
     tool_get_nearby_places,
     tool_get_place_info,
-    map_nearby_places_cache,
-    clean_map_cache
+    clean_map_cache,
+    get_map_cache
 )
 
 from tools.demographics_rt import tool_get_population_stats
@@ -197,138 +196,105 @@ def osm_static_map_url(lat: float, lng: float, zoom: int = 16, width: int = 600,
     )
 
 
+_openai_client: Optional[OpenAI] = None
+
+
+def _get_openai_client() -> OpenAI:
+    global _openai_client
+    if _openai_client is None:
+        _openai_client = OpenAI()
+    return _openai_client
+
+
+def extract_location_info(place: Mapping[str, Any]) -> Dict[str, Any]:
+    location: Dict[str, Any] = {}
+    lat, lng = extract_lat_lng(place)
+    location["lat"] = lat
+    location["lng"] = lng
+
+    address = ""
+    if isinstance(place, Mapping):
+        address = place.get("address") or place.get("formatted_address") or ""
+    if address:
+        location["address"] = address
+    else:
+        logger.error("Extract location infor failed to extract address from:%s", str(place))
+    
+    return location
+
+
+def _summarize_text(system_prompt: str, report: str) -> str:
+    if not report:
+        return ""
+    client = _get_openai_client()
+    try:
+        response = client.responses.create(
+            model="gpt-5.1",
+            reasoning={"effort": "low"},
+            input=[
+                {"role": "system", "content": system_prompt},
+                {
+                    "role": "user",
+                    "content": [{"type": "input_text", "text": report}],
+                },
+            ],
+        )
+    except Exception as exc:
+        logger.warning("Failed to summarize report: %s", exc)
+        return report
+    return response.output_text
+
+
+def summarize_understanding_report(report: str) -> str:
+    system_prompt = (
+        "You should summarize the information that user input of a location report, "
+        "the output should be a paragraph, stating street context, surrounding context, "
+        "and relative locations. You don't need to extract the address, coordinates, "
+        "and anything related to store itself. Show less descriptive expression, keep more facts. "
+        "Directly output the summarized paragraph."
+    )
+    return _summarize_text(system_prompt, report)
+
+
+def summarize_report(report: str, report_type: str = "") -> str:
+    system_prompt = (
+        "You should summarize the information from a {} analysis report for a store in a location, "
+        "the output should be no more than 3 paragraphs. Show less descriptive expression, keep more facts, "
+        "places and digits. Directly output the summarized paragraphs.".format(report_type)
+    )
+    return _summarize_text(system_prompt, report)
+
+
+def fix_json_error(text: str) -> str:
+    client = _get_openai_client()
+    try:
+        response = client.responses.create(
+            model="gpt-5.1",
+            reasoning={"effort": "low"},
+            input=[
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "input_text",
+                            "text": (
+                                f"Here is a Json string with some problems, please fix the error in the json, "
+                                f"and return the fixed json. Input: {text} \nDirectly return the fixed json."
+                            ),
+                        }
+                    ],
+                }
+            ],
+        )
+    except Exception as exc:
+        logger.error("Failed to fix JSON error: %s", exc)
+        return text
+    return response.output_text
+
+
 # -----------------------------------------------------------------------------
-# Tools exposed to the agents (robust signatures and normalization)
+# Extra Tools exposed to the agents
 # -----------------------------------------------------------------------------
-# @rt.function_node
-# def tool_get_place_info(
-#     address: Optional[str] = None,
-#     *,
-#     query: Optional[str] = None,
-#     language: Optional[str] = None,
-#     extra_params: Optional[Dict[str, Any]] = None,
-# ) -> Dict[str, Any]:
-#     addr = address or query
-#     if not addr:
-#         raise ValueError("address or query is required")
-#     place = getPlaceInfo(addr, language=language, extra_params=extra_params)
-#     lat, lng = extract_lat_lng(place)
-#     if lat is not None and lng is not None:
-#         place["lat"], place["lng"], place["lon"] = lat, lng, lng
-#     return place
-
-
-# @rt.function_node
-# def tool_get_nearby_places(
-#     origin: Optional[Dict[str, Any]] = None,
-#     *,
-#     location: Optional[Dict[str, Any]] = None,
-#     descriptive_types: Optional[Sequence[str]] = None,
-#     types: Optional[Sequence[str]] = None,
-#     radius: int = 500,
-#     rank: str = "DISTANCE",
-#     include_details: bool = False,
-#     num_pages: int = 2,
-#     pages: Optional[int] = None,
-# ) -> List[Dict[str, Any]]:
-#     ori = normalize_geo(origin or location or {})
-#     if "lat" not in ori or "lng" not in ori:
-#         raise ValueError("origin/location must include lat and lng/lon")
-
-#     dt = normalize_types(descriptive_types) or normalize_types(types)
-#     if not dt:
-#         logger.warning("tool_get_nearby_places: empty descriptive types; returning empty list")
-#         return []
-
-#     n_pages = int(pages or num_pages or 1)
-#     return list(
-#         getNearbyPlaces(
-#             ori,
-#             dt,
-#             radius=radius,
-#             rank=rank,
-#             include_details=include_details,
-#             num_pages=n_pages,
-#         )
-#     )
-
-
-# @rt.function_node
-# def tool_get_distances(
-#     origin: Optional[Dict[str, Any]] = None,
-#     *,
-#     location: Optional[Dict[str, Any]] = None,
-#     destinations: Sequence[Dict[str, Any]] = (),
-#     mode: str = "walk",
-#     units: str = "metric",
-# ) -> List[Dict[str, Any]]:
-#     ori = normalize_geo(origin or location or {})
-#     dests = [normalize_geo(d) for d in list(destinations)]
-#     if "lat" not in ori or "lng" not in ori:
-#         raise ValueError("origin/location must include lat and lng/lon")
-#     if not dests:
-#         return []
-#     return list(getDistances(ori, dests, mode=mode, units=units))
-
-
-# @rt.function_node
-# def tool_get_population_stats(
-#     location: Optional[Dict[str, Any]] = None,
-#     *,
-#     lat: Optional[float] = None,
-#     lng: Optional[float] = None,
-#     lon: Optional[float] = None,
-#     radius_m: float = 500.0,
-#     coord_ref: str = "GCJ-02",
-# ) -> Dict[str, Any]:
-#     loc = normalize_geo(location or {"lat": lat, "lng": lng or lon, "lon": lng or lon})
-#     if "lat" not in loc or "lng" not in loc:
-#         raise ValueError("location must include numeric 'lat' and 'lng' (or 'lon') fields")
-
-#     raw = getPopulationStats(loc, radius_m=radius_m, coord_ref=coord_ref)
-#     return {
-#         "provider": raw.get("provider", "worldpop"),
-#         "origin": {"lat": loc["lat"], "lng": loc["lng"]},
-#         "radius_m": float(radius_m),
-#         "coordinate_reference": coord_ref,
-#         "population_total": raw.get("population_total") or raw.get("total_population"),
-#         "age_buckets": raw.get("age_buckets") or raw.get("age_breakdown"),
-#         "notes": raw.get("notes"),
-#     }
-
-
-# @rt.function_node
-# def tool_build_static_map(
-#     lat: float,
-#     lng: float,
-#     *,
-#     # origin: Optional[Dict[str, Any]] = None,
-#     # location: Optional[Dict[str, Any]] = None,
-#     zoom: int = 16,
-#     width: int = 600,
-#     height: int = 400,
-# ) -> str:
-#     """
-#     Produce a static visualization (e.g., a map image URL) for the supplied geometry.
-#     Args:
-#         lat (float): latitude
-#         lng (float): longitude
-#         zoom (Optional[int]): Zoom in extent, default as 16, select span between (10-19), higher digit means more zoom in, choose 14-15 for district, 16-17 for neighborhood/site overviews, 18-19 for tight individual streets.
-        
-#     Returns:
-#         str: static map URL.
-#     """
-#     # if lat is None or lng is None:
-#     #     o = normalize_geo(origin or location or {})
-#     #     lat, lng = extract_lat_lng(o)
-#     if lat is None or lng is None:
-#         raise ValueError("lat/lng or origin/location with lat/lng is required")
-#     # coordinate projection: 
-#     lng, lat = gcj02_to_wgs84(lng, lat)
-#     url = osm_static_map_url(lat, lng, zoom=zoom, width=width, height=height)
-#     return url
-
-
 @rt.function_node
 def tool_web_search(query: str, max_results: int = 5, region: str = "wt-wt") -> List[Dict[str, str]]:
     rows: List[Dict[str, str]] = []
@@ -358,7 +324,7 @@ def make_customer_agent() -> Any:
     system = rt.llm.SystemMessage(CUSTOMER_AGENT_SYSTEM)
     return rt.agent_node(
         name="CustomerAgent",
-        tool_nodes=(tool_get_population_stats, tool_get_nearby_places, tool_web_search, tool_get_map_visualization, tool_static_map_image_understand),
+        tool_nodes=(tool_get_population_stats, tool_get_nearby_places, tool_web_search),
         system_message=system,
         llm=rt.llm.OpenAILLM("gpt-5.1"),
         max_tool_calls=12,
@@ -369,7 +335,7 @@ def make_traffic_agent() -> Any:
     system = rt.llm.SystemMessage(TRAFFIC_AGENT_SYSTEM)
     return rt.agent_node(
         name="TrafficAgent",
-        tool_nodes=(tool_get_nearby_places, tool_get_distances),
+        tool_nodes=(tool_get_place_info, tool_get_nearby_places, tool_web_search, tool_get_map_visualization, tool_static_map_image_understand),
         system_message=system,
         llm=rt.llm.OpenAILLM("gpt-5.1"),
         max_tool_calls=16,
@@ -380,7 +346,7 @@ def make_competition_agent() -> Any:
     system = rt.llm.SystemMessage(COMPETITION_AGENT_SYSTEM)
     return rt.agent_node(
         name="CompetitionAgent",
-        tool_nodes=(tool_get_nearby_places, tool_get_distances),
+        tool_nodes=(tool_get_place_info, tool_get_nearby_places, tool_web_search, tool_get_map_visualization, tool_static_map_image_understand),
         system_message=system,
         llm=rt.llm.OpenAILLM("gpt-5.1"),
         max_tool_calls=16,
@@ -439,6 +405,7 @@ async def run_sitesage_session_async(
     errors: List[str] = []
     assets: Dict[str, Any] = {"reports": {}}
 
+    # clean map cache
     clean_map_cache()
 
     # 1) Understanding
@@ -450,26 +417,34 @@ async def run_sitesage_session_async(
     try:
         ujson = parse_json_from_text(resp.text)
     except Exception as e:
-        logger.error("Failed to parse understanding agent response as JSON: %s", e)
-        ujson = {}
-    
+        logger.error("Failed to parse understanding agent response as JSON, retry...: %s", e)
+        try:
+            ujson = parse_json_from_text(fix_json_error(resp.text))
+        except:
+            logger.error("Failed to parse understanding agent response as JSON again: %s, %s", e, resp.text)
+            # raise ValueError("Failed to parse understanding json")
+            ujson = {}
+
     assets["reports"]["01_understanding"] = write_markdown(
         session_dir, "01_understanding", ujson.get("report_md", "# Understanding")
     )
+
+    # extract store and location information
     store_info = dict(ujson.get("store_info", {}))
     place = dict(ujson.get("place", {}))
-    map_image_url = ujson.get("map_image_url", "")
+    location_info = extract_location_info(place)
+    location_description = summarize_understanding_report(ujson.get("report_md", ""))
+    if location_description:
+        location_info["description"] = location_description
+    logger.info(f"session {session_id}: store_info: {store_info}, location_info: {location_info}")
 
-    lat, lng = extract_lat_lng(place)
-    if lat is not None and lng is not None:
-        place["lat"], place["lng"], place["lon"] = lat, lng, lng
-        # if not map_image_url:
-        # now we are using amap static map in agent, osm static map in frontend
-        map_image_url = osm_static_map_url(lat, lng)
+    # prefer deterministic OSM static map so frontend always has an image
+    # map_image_url = ujson.get("map_image_url", "")
+    map_image_url = osm_static_map_url(location_info['lat'], location_info['lng'])
 
     # 2) Customer
     customer_agent = make_customer_agent()
-    customer_prompt = get_customer_prompt(store_info, place)
+    customer_prompt = get_customer_prompt(store_info, location_info)
     with rt.Session(logging_setting="VERBOSE"):
         cresp = await rt.call(customer_agent, user_input=customer_prompt)
     
@@ -478,10 +453,11 @@ async def run_sitesage_session_async(
     assets["reports"]["02_customer"] = write_markdown(
         session_dir, "02_customer", customer_report
     )
+    customer_context = summarize_report(customer_report, "customer")
 
     # 3) Traffic - receives Customer report
     traffic_agent = make_traffic_agent()
-    traffic_prompt = get_traffic_prompt(store_info, place, customer_report, str(map_nearby_places_cache))
+    traffic_prompt = get_traffic_prompt(store_info, location_info, customer_context)
     with rt.Session(logging_setting="VERBOSE"):
         tresp = await rt.call(traffic_agent, user_input=traffic_prompt)
     
@@ -490,10 +466,16 @@ async def run_sitesage_session_async(
     assets["reports"]["03_traffic"] = write_markdown(
         session_dir, "03_traffic", traffic_report
     )
+    traffic_context = summarize_report(traffic_report, "traffic")
 
     # 4) Competition - receives Customer and Traffic reports
     competition_agent = make_competition_agent()
-    competition_prompt = get_competition_prompt(store_info, place, customer_report, traffic_report)
+    competition_prompt = get_competition_prompt(
+        store_info,
+        location_info,
+        customer_context,
+        traffic_context,
+    )
     with rt.Session(logging_setting="VERBOSE"):
         kresp = await rt.call(competition_agent, user_input=competition_prompt)
     
@@ -522,7 +504,11 @@ async def run_sitesage_session_async(
     try:
         wjson = parse_json_from_text(wresp.text)
     except Exception as e:
-        logger.error("Failed to parse weighting agent response as JSON: %s", e)
+        logger.error("Failed to parse weighting agent response as JSON, retry...: %s", e)
+        try:
+            wjson = parse_json_from_text(fix_json_error(wresp.text))
+        except Exception as e:
+            logger.error("Failed to parse weighting agent response as JSON again: %s", e)
         wjson = {}
     
     assets["reports"]["05_weighting"] = write_markdown(
@@ -583,8 +569,14 @@ async def run_sitesage_session_async(
     try:
         ejson = parse_json_from_text(eresp.text)
     except Exception as e:
-        logger.error("Failed to parse evaluation agent response as JSON: %s", e)
-        ejson = {}
+        logger.error("Failed to parse evaluation agent response as JSON, retry...: %s", e)
+        try:
+            fixed = fix_json_error(eresp.text)
+            ejson = parse_json_from_text(fixed)
+        except Exception as inner:
+            logger.error("Failed to parse evaluation agent response as JSON again: %s, %s", inner, eresp.text)
+            # raise ValueError("Failed to parse evaluation json")
+            ejson = {}
     
     # Extract scores
     evaluation_scores = {
@@ -614,7 +606,6 @@ async def run_sitesage_session_async(
     final_prompt = get_final_report_prompt(
         session_id=session_id,
         prompt=prompt,
-        language=language,
         store_info=store_info,
         place=place,
         customer_report=customer_report,

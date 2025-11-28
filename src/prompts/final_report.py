@@ -64,7 +64,6 @@ Include the numerical scores prominently to support data-driven decision making.
 def get_final_report_prompt(
     session_id: str,
     prompt: str,
-    language: str,
     store_info: dict,
     place: dict,
     customer_report: str,
@@ -78,7 +77,6 @@ def get_final_report_prompt(
     return f"""Write a comprehensive final report synthesizing all analysis with scores.
 
 Session ID: {session_id}
-Language: {language}
 
 Original User Request:
 {prompt}

@@ -3,31 +3,47 @@ from __future__ import annotations
 import railtracks as rt
 
 from pathlib import Path
-from typing import Any, Dict, Iterable, Mapping, MutableMapping, Optional, Sequence
+from typing import Any, Dict, Iterable, Mapping, MutableMapping, Optional, Sequence, List
 
 from tools.map import MapTool
 
-map_nearby_places_cache = []
+import csv
+from io import StringIO
+
+place_keys = ["name", "lat", "lng", "distance", "type"]
+map_nearby_places_cache = set()
 
 map_tool = MapTool()
 
 def clean_map_cache():
     global map_nearby_places_cache
-    map_nearby_places_cache = []
-    
+    map_nearby_places_cache = set()
+
+def get_map_cache():
+    return '\n'.join(['\t'.join(place_keys)] + list(map_nearby_places_cache))
+
+def postprocess_nearby_place(place: Mapping[str, Any]) -> Mapping[str, Any]:
+    return {k: place[k] for k in place_keys}
+
+def write_map_cache(places: Sequence[Mapping[str, Any]]):
+    global map_nearby_places_cache
+    for place in places:
+        val = "\t".join([str(place[k]) for k in place_keys])
+        map_nearby_places_cache.add(val)
+
 @rt.function_node
 def tool_get_place_info(
     address: str,
     city: str
 ) -> Mapping[str, Any]:
     """
-    Resolve a textual address or POI description into a normalized provider record.
+    Search place information (such as lat/lng) based on address.
     Args:
         address (str): string of address, do not put city, if in China, you must put district name before the road name (e.g. in China: 天河区体育西路21号)
         city (str): string of city name.
 
     Returns:
-        Mapping[str, Any]: Place information, including lat, lon.
+        Dict: Place information, including lat, lng.
     """
     return map_tool.getPlaceInfo(
         address,
@@ -43,15 +59,15 @@ def tool_get_map_visualization(
     style: Optional[str] = None,
 ) -> Mapping[str, Any]:
     """
-    Produce a static visualization (e.g., a map image URL) for the supplied geometry.
+    Render a provider static map (url) centered on the origin and optional overlay markers
     Args:
-        origin (Mapping[str, Any]): Primary location that is highlighted, should include lat, lng, or address (only when you don't know lat, lng), the origin point will be labeled as 'origin' on map.
-        zoom (Optional[int]): Zoom in extent, default as 14, select span between (12-15), higher digit means more zoom in.
-        overlays (Optional[Iterable[Mapping[str, Any]]]): Additional markers to render, maximum 10 overlays, each should include lat, lng, or address (only when you don't know lat, lng), and label for the name in map.
+        origin (Dict): Primary location, should include 'lat', 'lng', or 'address' (only when you don't know lat, lng), its label will be 'A' on the map.
+        zoom (Optional[int]): Zoom in extent, default as 14, select span between 12-17: Lower values show more district-wide context, higher values zoom in to street/building detail.
+        overlays (Optional[List[Dict]]): Additional markers to render except for origin, maximum 10 overlays, each should include lat, lng, (or address only when you don't know lat, lng), and label (you can only use 1-character labels such as A,B,C,...).
         style (Optional[str]): Provider-specific style identifier for the visualization.
 
     Returns:
-        Mapping[str, Any]: Visualization payload, including url.
+        Dict: Visualization payload, including url, the origin point will be labeled as 'A'.
     """
     return map_tool.getMapVisualization(
         origin, zoom=zoom, overlays=overlays, style=style
@@ -65,18 +81,18 @@ def tool_get_nearby_places(
     radius: int = 500,
     rank: str = "DISTANCE",
     num_pages: int = 2,
-) -> Sequence[Mapping[str, Any]]:
+) -> List[Mapping[str, Any]]:
     """
     Retrieve nearby places by projecting descriptive categories to provider-specific types.
     Args:
-        origin (Mapping[str, Any]): Primary location that is searched on, should include lat, lng, or address (only when you don't know lat, lng).
-        descriptive_types (Sequence[str]): Human-readable categories to search for.
+        origin (Dict): Primary location that is searched on, should include lat, lng, or address (only when you don't know lat, lng).
+        descriptive_types (List[str]): List of categories to search for.
         radius (Optional[int]): Search radius in meters, default 500, minimal 500.
         rank (Optional[str]): Provider-supported ranking strategy, choose from "DISTANCE" and "WEIGHT".
         num_pages (Optional[int]): Maximum number of pagination pages (25 results each page) to traverse, default 2.
 
     Returns:
-        Sequence[Mapping[str, Any]]: Ordered list of nearby place payloads.
+        List[Dict]: Ordered list of nearby place dict (keys: name, lat, lng, distance, type).
     """
 
     nearby_places = map_tool.getNearbyPlaces(
@@ -86,9 +102,8 @@ def tool_get_nearby_places(
         rank=rank,
         num_pages=num_pages,
     )
-    global map_nearby_places_cache
-    map_nearby_places_cache.extend([str(x) for x in nearby_places])
-    map_nearby_places_cache = list(set(map_nearby_places_cache))
+    write_map_cache(nearby_places)
+    nearby_places = [postprocess_nearby_place(p) for p in nearby_places]
     return nearby_places
 
 @rt.function_node
@@ -101,12 +116,12 @@ def tool_get_distances(
     """
     Compute travel distance metrics from an origin to one or more destinations.
     Args:
-        origin (Mapping[str, Any]): Starting location for the route calculation, should include lat, lng, or address (only when you don't know lat, lng).
-        destinations (Sequence[Mapping[str, Any]]): Target endpoints to evaluate, same requirement as origin.
+        origin (Dict): Starting location for the route calculation, should include lat, lng, or address (only when you don't know lat, lng).
+        destinations (List[Dict]): Target endpoints to evaluate, same requirement as origin.
         mode (Optional[str]): Travel mode (walk, drive, transit, etc.), default walk.
 
     Returns:
-        Sequence[Mapping[str, Any]]: Distance and duration payloads per destination.
+        List[Dict]: Distance and duration payloads per destination.
     """
     return map_tool.getDistances(
         origin, destinations, mode=mode

@@ -51,13 +51,14 @@ def _match_place_with_addresses(place: str, addresses: Sequence[str]):
     from openai import OpenAI
     client = OpenAI()
     response = client.responses.create(
-        model="gpt-4o",
+        model="gpt-5.1",
         input=[
             {
                 "role": "user",
-                "content": f"within given addresses, find the one match the most with the given place.\naddresss:{addresses}\nplace:{place}\nYou must only output the matched address."
+                "content": f"Within given addresses, find the one match the most with the given place.\naddresss:{addresses}\nplace:{place}\nYou must only output the exact matched address, not any other texts."
             }
-        ]
+        ],
+        temperature=0.01
     ).output_text
     if response in addresses:
         return True, response
@@ -178,12 +179,21 @@ class AMap(MapAPI):
             raise ValueError(f"AMap could not find POI for: {address!r}")
 
         top_5_addresses = [poi.get("address") for poi in pois[:5]]
-        matched, response = _match_place_with_addresses(address, top_5_addresses)
+        top_5_names = [poi.get("name") for poi in pois[:5]]
+        logger.info(f"top 5 results for getPlaceInfo:{str(pois[:5])}")
+        matched, response = _match_place_with_addresses(address, top_5_addresses + top_5_names)
         if not matched:
             logger.error(f"No matching found for address:{address}, {top_5_addresses}, {response}")
             raise ValueError(f"AMap could not find POI for: {address!r} due to matching issue, response:{response}")
         
-        record = pois[[i for i, x in enumerate(top_5_addresses) if x == response][0]]
+        target = [i for i, x in enumerate(top_5_addresses) if x == response]
+        if len(target) == 0:
+            target = [i for i, x in enumerate(top_5_names) if x == response]
+            if len(target) == 0:
+                logger.error(f"Result does not match with any of the addresses or names")
+                raise ValueError(f"Result does not match with any of the addresses or names: search {address}, candidates {top_5_addresses} {top_5_names}")
+        
+        record = pois[target[0]]
 
         lng, lat = self._parse_location(record.get("location"))
 

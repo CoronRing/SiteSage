@@ -16,7 +16,7 @@ def tool_get_population_stats(
     Summarize population counts and age composition within a radius around a latitude/longitude point using worldpop rasters.
 
     Args:
-        origin (Mapping[str, Any]): Location from which proximity is measured, keys 'lat' and 'lon' are required.
+        origin (Mapping[str, Any]): Location from which proximity is measured, keys 'lat' and 'lng' are required.
         radius (Optional[float]): Default 500. Search radius in meters. Any numbers bigger than 100 are valid.
 
     Returns:
