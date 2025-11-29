@@ -353,14 +353,25 @@ def make_competition_agent() -> Any:
     )
 
 
-def make_weighting_agent() -> Any:
-    system = rt.llm.SystemMessage(WEIGHTING_AGENT_SYSTEM)
-    return rt.agent_node(
-        name="WeightingAgent",
-        tool_nodes=(),
-        system_message=system,
-        llm=rt.llm.OpenAILLM("gpt-5.1"),
+def run_weighting_agent(weighting_prompt: str) -> str:
+    """
+    Call the weighting agent directly using the OpenAI client instead of RailTracks.
+
+    Returns the raw response text that is expected to be JSON according to the prompt.
+    """
+    client = _get_openai_client()
+    response = client.responses.create(
+        model="gpt-5.1",
+        temperature=0.01,
+        input=[
+            {"role": "system", "content": WEIGHTING_AGENT_SYSTEM},
+            {
+                "role": "user",
+                "content": [{"type": "input_text", "text": weighting_prompt}],
+            },
+        ],
     )
+    return response.output_text
 
 
 def make_evaluation_agent() -> Any:
@@ -486,8 +497,8 @@ async def run_sitesage_session_async(
     )
 
     # 5) Weighting (logically parallel to evaluation - does NOT receive scores)
-    weighting_agent = make_weighting_agent()
-    
+    weighting_response_text = ""
+
     # Load weighting rubric
     rubric_dir = os.path.abspath("rubrics")
     try:
@@ -498,17 +509,23 @@ async def run_sitesage_session_async(
         weighting_rubric = ""
     
     weighting_prompt = get_weighting_prompt(store_info, weighting_rubric)
-    with rt.Session(logging_setting="VERBOSE"):
-        wresp = await rt.call(weighting_agent, user_input=weighting_prompt)
-    
     try:
-        wjson = parse_json_from_text(wresp.text)
-    except Exception as e:
-        logger.error("Failed to parse weighting agent response as JSON, retry...: %s", e)
+        weighting_response_text = run_weighting_agent(weighting_prompt)
+    except Exception as exc:
+        logger.error("Weighting agent call failed: %s", exc)
+        weighting_response_text = ""
+    
+    if weighting_response_text:
         try:
-            wjson = parse_json_from_text(fix_json_error(wresp.text))
+            wjson = parse_json_from_text(weighting_response_text)
         except Exception as e:
-            logger.error("Failed to parse weighting agent response as JSON again: %s", e)
+            logger.error("Failed to parse weighting agent response as JSON, retry...: %s", e)
+            try:
+                wjson = parse_json_from_text(fix_json_error(weighting_response_text))
+            except Exception as e:
+                logger.error("Failed to parse weighting agent response as JSON again: %s", e)
+                wjson = {}
+    else:
         wjson = {}
     
     assets["reports"]["05_weighting"] = write_markdown(

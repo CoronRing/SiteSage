@@ -27,7 +27,7 @@ You MUST issue only one tool call at a time.
 Do not call multiple tools together. 
 Wait for the previous tool's result before deciding the next action.
 
-Be thorough, analytical and provide specific numerical values in your assessment.
+Be thorough and provide specific numerical values in your assessment while keeping it crisp and easy to understand by bullet points.
 """
 
 def get_traffic_prompt(store_info: dict, place: dict, customer_report: str = "", nearby_places_cache: str = "") -> str:

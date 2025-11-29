@@ -14,37 +14,26 @@ Your task:
 - Market entry and differentiation potential: Consider whether there are underserved customer segments in this location.
 - How competition interacts with customer base and traffic.
 
-DO NOT return JSON with scores. Instead, write a detailed natural language report in markdown format
+DO NOT return JSON with scores. Instead, write a detailed natural language report in markdown format:
+- Competitor Density
+[Analysis of competitor counts at different radius]
+- Nearest Competitors
+[Analysis of closest competing business and its distance]
+- Market Saturation Assessment
+[Evaluation of whether the area is over-saturated or has opportunity]
+- Competitive Positioning Analysis
+- Customer Attration Analysis
+- Market Entry Considerations
+[Strategic considerations for entering this market]
+- Synthesis with Previous Analyses
+[If customer/traffic analyses provided: How does competition interact with customer base and traffic?]
+```
 
 You MUST issue only one tool call at a time. 
 Do not call multiple tools together. 
 Wait for the previous tool's result before deciding the next action.
 
-Return ONLY MARKDOWN:
-# Competition Analysis
-
-## Competitor Density
-[Detailed analysis of competitor counts at different radii]
-
-## Nearest Competitor
-[Analysis of closest competing business and its distance]
-
-## Market Saturation Assessment
-[Evaluation of whether the area is over-saturated or has opportunity]
-
-## Competitive Positioning
-[Discussion of how to differentiate in this competitive landscape]
-
-## Customer Attration Analysis
-
-## Market Entry Considerations
-[Strategic considerations for entering this market]
-
-## Synthesis with Previous Analyses
-[If customer/traffic analyses provided: How does competition interact with customer base and accessibility?]
-```
-
-Be thorough, analytical and provide specific numerical values in your assessment.
+Be thorough and provide specific numerical values in your assessment while keeping it crisp and easy to understand by bullet points.
 """
 
 

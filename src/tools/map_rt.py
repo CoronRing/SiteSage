@@ -95,6 +95,17 @@ def tool_get_nearby_places(
         List[Dict]: Ordered list of nearby place dict (keys: name, lat, lng, distance, type).
     """
 
+    # there is some cases showing agent inputs dict
+    if type(descriptive_types) is dict:
+        tps = []
+        for k, v in descriptive_types.items():
+            tps.extend(v)
+        descriptive_types = tps
+    if type(rank) is dict:
+        rank = list(rank.values())[0]
+    if type(num_pages) is dict:
+        num_pages = list(num_pages.values())[0]
+
     nearby_places = map_tool.getNearbyPlaces(
         origin,
         descriptive_types,
@@ -104,6 +115,8 @@ def tool_get_nearby_places(
     )
     write_map_cache(nearby_places)
     nearby_places = [postprocess_nearby_place(p) for p in nearby_places]
+    # filter out the store with distance of 0 because it might be the research target
+    nearby_places = [p for p in nearby_places if p.get('distance', 1) != 0]
     return nearby_places
 
 @rt.function_node
