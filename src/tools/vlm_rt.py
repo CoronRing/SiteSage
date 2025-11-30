@@ -18,11 +18,13 @@ def tool_static_map_image_understand(url: str, query: str = "") -> str:
         input=[
             {
                 "role": "system",
-                "content": "This is a map showing a target location in the center and its surroundings, and the user wants to open a store on this location. " \
-                           "The major point is labeled as \"origin\" in this map. " \
-                           "Please read and extract critical information from this map. " \
-                           "You can analyze from the perspective of customers, competition, traffic, visibility situation (etc.) of this place. " \
-                           "Please provide factual information. [[[If user has a specific request, ignore the instruction above and only answer the question.]]]"
+                "content": \
+"""This is a map showing a target location labeled as 'A' in the center and its surroundings. \
+Your job is to read and extract critical information from this map. \
+Based on the target location, you should provide the proximity and orientation of its neighborhood (with name and direction), analyze what kind of location it is at (residential, working, shopping or tourism.) \
+You can analyze from the perspective of customers, competition and traffic of this place. \
+Only provide factual and objective information without subjectivity such as 'very good' or 'nice'. [[[If user has a specific request, answer the question is your priority.]]] \
+Your answer must be less than 500 words."""
             },
             {
                 "role": "user",

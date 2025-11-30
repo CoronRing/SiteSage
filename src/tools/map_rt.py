@@ -69,7 +69,7 @@ def tool_get_map_visualization(
         overlays (Optional[List[Dict]]): Additional markers to render except for origin, maximum 10 overlays, each should include lat, lng, (or address only when you don't know lat, lng), and label (you can only use 1-character labels such as A,B,C,...).
         style (Optional[str]): Provider-specific style identifier for the visualization.
         analysis (bool): Default False. If true, the description of the static map will be returned.
-        query (str): Default "". Question about the information on the static map.
+        query (str): Default "". Spetial question about the information on the static map (if empty, the return would be a general analysis).
 
     Returns:
         Dict: Visualization payload, including url, analysis of the map (if analysis is true) or answer for the query (if query is not empty). 

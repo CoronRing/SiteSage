@@ -32,7 +32,7 @@ Wait for the previous tool's result before deciding the next action.
 
 You must support your analysis with specific specific numerical values, do not use qualitative words such as "very strong" or "attractive"
 Keep the report detailed with real information and easy to understand by bullet points.
-Keep the words less than 2000.
+**[[[[Keep the words less than 2000]]]]**
 """
 
 
@@ -40,8 +40,7 @@ def get_competition_prompt(
     store_info: dict,
     place: dict,
     customer_report: str = "",
-    traffic_report: str = "",
-    nearby_places_cache: str = ""
+    traffic_report: str = ""
 ) -> str:
     """Build prompt for competition analysis agent."""
     previous_context = ""
@@ -63,21 +62,8 @@ PREVIOUS ANALYSIS - Traffic & Accessibility:
 {traffic_report}
 
 """
-
-    nearby_places_context = ""
-    if nearby_places_cache:
-        nearby_places_context = f"""
----
-
-CACHED NEARBY PLACES:
-{nearby_places_cache}
-
----
-"""
         
     return f"""
-{nearby_places_context}
-
 Analyze the competitive landscape for this location.
 
 Store Information:
