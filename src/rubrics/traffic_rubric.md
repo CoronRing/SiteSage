@@ -1,162 +1,117 @@
-# **Traffic & Accessibility Potential Rubric (Location-Oriented)**
+# Traffic and Accessibility Rubric (Further Revised, Location-Oriented, Commuter-Focused)
 
-Score **0–10** based on how easily and naturally target customers reach and pass the site.
+Purpose: Score 0–10 based on how easily and naturally target customers reach and pass the storefront, and the magnitude and timing of those flows. Emphasis is on storefront-level access and pass-by, not just node-wide transit volumes.
 
-### Weights (sum = 100%)
+## Sub-dimension weights for Traffic (sum = 100%)
 
-1. Public Transit & Connectivity Quality – **35%**
-2. Walkability, Parking & Road Access – **25%**
-3. Target Customer Mobility Fit – **20%**
-4. Traffic Volume & Temporal Benefits – **20%**
+1. Public transit and connectivity quality – 20%
+2. Walkability, parking and road access – 10%
+3. Target customer mobility fit – 10%
+4. Traffic volume and temporal benefits – 60%
 
 ---
 
-1. Public Transit & Connectivity Quality (35%)
+## 1. Public transit and connectivity quality (20%)
 
-Consider **number of modes**, **distance**, **integration**, and **passenger volumes**, **relative to the city**.
+Evaluate potential inflow to the immediate area from metro or rail and major buses, before micro-routing inside buildings.
 
-### Excellent (9–10)
+Consider:
+- Number of lines and modes.
+- Distance from key exits or hubs to the overall project or building.
+- Daily passenger throughput.
 
-- Node is among the **top ~10–15%** in the city for relevant transit passenger volumes.
-- Multiple **high‑frequency transit modes**, typically including:
-  - 2+ metro/subway lines or an equivalent (e.g., metro + major BRT + dense bus hub), and
-  - Short, convenient connections between modes.
-- Nearest key transit access typically **≤300 m** (≤5 min walk); ideally the project is **inside or directly connected to** the station/hub.
-- As a rough guideline in large cities:
-  - Daily passenger volumes ~**150k–250k** → **9.0–9.4**,
-  - **>250k/day** and/or central CBD/interchange role → **9.5–10.0**.
+### Excellent (8–10)
 
-### Good (7–8.5)
+### 9.0-10.0 (top-tier city transit hubs, directly integrated)
+- Three or more metro or rail lines, or metro plus a major intercity or bus hub.
+- At least one major entrance or concourse is inside the project or within roughly 0–50 m, with high-capacity, sheltered paths.
+- In a large city, daily passenger throughput ≈250k–300k or more.
 
-- Strong transit access but not a top‑decile city node:
-  - At least one major metro line or a well‑used suburban rail/BRT line, and/or
-  - Dense bus network with frequent service.
-- Typical walk distances **≤500 m** from main stops/stations.
-- Passenger volumes clearly above average for the city but below its largest interchanges.
+### 8.0–9.0 (strong multi-line or regional nodes)
+- Two or more high-frequency metro lines, or one metro line plus a dense bus hub, with main exits within about 0–300 m.
+- In a large city, daily passenger throughput ≈120k–250k.
 
-### Adequate (5–6.9)
+### Good (6.5–8.0)
+- Solid transit: one major metro line or bus rapid transit within roughly 300–500 m plus multiple bus routes, or smaller multi-line nodes with ≈20k–120k daily passengers.
 
-- Basic transit coverage:
-  - One line or a few bus routes within 500–800 m.
-- Gaps in service hours or frequency; some segments of target customers face mild inconvenience.
+### Adequate (5–6.5)
+- Basic coverage: one line or a few routes within roughly 500–800 m and ≈5k–20k daily passengers.
 
 ### Poor (3–4.9)
-
-- Sparse transit:
-  - Infrequent buses; no rail within easy walking distance.
-- Many potential customers must rely on long walks, transfers, or private vehicles.
+- Sparse or inconvenient transit for target users.
 
 ### Insufficient (0–2.9)
-
-- Minimal or no effective transit access for the majority of target customers.
+- Minimal transit access.
 
 ---
 
-## 2. Walkability, Parking & Road Access (25%)
+## 2. Walkability, parking and road access (10%)
 
-Evaluate **pedestrian experience**, **car access**, and **overall ease of approach**.
+Assess pedestrian quality, vehicle access, and approach simplicity.
 
 ### Excellent (9–10)
+- Safe, continuous sidewalks; natural desire lines pass directly by the storefront.
+- Multiple barrier-free entries; good shelter from rain, heat and cold for main flows.
+- Sufficient parking within roughly 3–5 minutes' walk and simple car access if drivers are a meaningful segment.
 
-- Safe, continuous sidewalks and **natural pedestrian paths** that pass the site frontage.
-- Multiple **entry points** and barrier‑free access (ramps, elevators where needed).
-- Sufficient, reasonably priced parking **≤3–5 min walk** (on‑site or adjacent), or strong drop‑off points.
-- Simple, well‑signed road network; vehicles can approach and exit without major congestion.
+### Good (7–8.9)
+- Generally good walking conditions with minor flaws; adequate parking within about 5–8 minutes or workable short-stop options.
 
-### Good (7–8)
+### Adequate (5–6.9)
+- Mixed: some indirect or fragmented walkways, awkward but usable parking, or minor safety concerns.
 
-- Generally walkable environment; minor issues (e.g., some crossings or narrow sidewalks).
-- Adequate parking within 5–8 minutes’ walk or clear drop‑off space.
-- Road access workable with occasional congestion.
+### Poor (3–4.9)
+- Difficult walking (dangerous crossings, missing sidewalks) or very limited parking in a car-dependent context.
 
-### Adequate (5–6)
-
-- Mixed conditions:
-  - Walkways may be indirect or fragmented.
-  - Limited or more distant parking; some navigation complexity for drivers.
-
-### Poor (3–4)
-
-- Difficult for pedestrians (broken sidewalks, dangerous crossings) **or**
-- Very limited/expensive parking and tricky vehicle access; approach is a clear deterrent.
-
-### Insufficient (0–2)
-
-- Significant **physical or regulatory barriers** (e.g., no pedestrian infrastructure, restricted vehicle access) that severely limit reachability for most customers.
+### Insufficient (0–2.9)
+- Major physical or regulatory barriers severely limit reachability.
 
 ---
 
-## 3. Target Customer Mobility Fit (20%)
+## 3. Target customer mobility fit (10%)
 
-How well the site’s access modes match **how target customers actually travel**.
+How well actual access modes and micro-routes match how target customers travel between transit, parking, offices, homes, and the store.
 
 ### Excellent (9–10)
+- Dominant travel modes are directly and conveniently served:
+  - For metro office commuters: key exits and walking routes run past or beside the storefront within roughly 150 m, preferably on the shortest paths between station and office clusters.
+  - For car users where relevant: parking in the same project or adjacent, with simple vertical circulation to the store level.
+- For most target users, extra detour versus their natural path is ≤3 minutes, often ≈0–2 minutes.
+- Main flows in critical hours coincide with open, accessible entries and corridors.
 
-- Dominant customer travel modes are **directly supported**:
-  - E.g., students heavily reliant on metro next door; families with cars served by abundant nearby parking.
-- Minimal extra detour time:
-  - For most target users, added walk/drive time ≤3 minutes vs their natural path.
+### Commuter caps (hard):
+- For commuter-dependent formats, if more than half of relevant commuters must detour >4 minutes off their station-to-office or home-to-station routes, cap this sub-score at 7.5.
+- If more than half must detour >6 minutes, cap at 6.5.
 
-### Good (7–8)
+### Good (7–8.9)
+- Mostly aligned; typical detours ≈3–5 minutes for major segments, with straightforward routing and limited friction.
 
-- Mostly aligned with some gaps:
-  - E.g., office workers well‑served by transit, but residents less so.
-- Typical detour ≤5 minutes for key segments.
+### Adequate (5–6.9)
+- Partial alignment: some key segments are well served; others require 5–10 minute detours, awkward transfers, or unclear routing.
 
-### Adequate (5–6)
+### Poor (3–4.9)
+- Major target segments face significant friction.
 
-- Partial alignment:
-  - Some important segments must make moderate detours, but others are well served.
-
-### Poor (3–4)
-
-- Main customer segments face material frictions:
-  - Long detours, no parking despite car dependence, or poor transit despite student dependence.
-
-### Insufficient (0–2)
-
-- Accessibility patterns are **mismatched** with how target customers move; even interested customers find it hard to visit regularly.
+### Insufficient (0–2.9)
+- Access patterns are clearly misaligned with how likely customers travel.
 
 ---
 
-## 4. Traffic Volume & Temporal Benefits (20%)
+## 4. Traffic volume and temporal benefits (60%)
 
-Assess **magnitude and continuity of flows** around the actual site, not just the wider node.
+Evaluate how much usable traffic actually passes near the storefront (roughly 0–30 m) and whether it aligns with key dayparts.
 
 ### Excellent (9–10)
+- Storefront lies directly on a primary pedestrian flow (station exit concourse, main mall spine between major anchors, or primary high-street corner) with strong volumes in relevant hours.
 
-- The storefront is directly on or immediately adjacent to **primary pedestrian flows**:
-  - Large mall corridors, station exits, main street sidewalks.
-- Strong and predictable peaks (e.g., commute, lunch, after‑school, evenings/weekends) with **visible, sustained streams**.
-- For transaction‑driven formats, realistic potential for **above‑average** pass‑by volumes given the micro‑location.
+### Good (7–8.9)
+- Storefront is close to but not perfectly on a main corridor, or traffic is strong but concentrated in fewer windows.
 
-### Good (7–8)
+### Adequate (5–6.9)
+- Moderate pass-by: side corridors, secondary streets, or upper floors with some draw.
 
-- Solid traffic:
-  - Visible foot or vehicle traffic most of the day.
-- Storefront is near but not perfectly on the main flow, or traffic is strong only in certain periods (e.g., evenings/weekends).
+### Poor (3–4.9)
+- Limited passing traffic, such as rear streets or deep interior corners.
 
-### Adequate (5–6)
-
-- Moderate, usable traffic:
-  - People pass but flows are thinner, or the store is off the main corridor and relies partly on intentional visits.
-
-### Poor (3–4)
-
-- Limited passing traffic:
-  - Side street, upper floor with weak draw, or deeply inside a complex without clear wayfinding.
-
-### Insufficient (0–2)
-
-- Very low visible traffic near the site; customers must almost exclusively be destination‑driven.
-
----
-
-### Traffic & Accessibility – Output Format
-
-```json
-{
-  "score": 9.0,
-  "justification": "The site is directly integrated with a multi-line metro interchange and dense bus network, with strong all-day pedestrian flows passing the storefront. Short walking distances, good sidewalks, and ample nearby parking create excellent accessibility aligned with commuter and office-worker mobility patterns."
-}
-```
+### Insufficient (0–2.9)
+- Very low visible traffic near the site, heavily destination-only.

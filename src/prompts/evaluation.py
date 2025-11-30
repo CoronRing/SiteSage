@@ -20,42 +20,62 @@ Return ONLY JSON:
   "customer": {
     "score": float (0-10, one decimal place),
     "criterion_scores": {
-      "population_metrics": float,
-      "demographics": float,
-      "target_alignment": float,
-      "quality": float
+      "population": float,
+      ... (scores for each rubric sections)
     },
-    "strengths": ["string", "string"],
+    "strengths": ["string"],
     "weaknesses": ["string"],
-    "key_findings": "string",
-    "justification": "string (2-3 paragraphs explaining the score)"
+    "justification": "string (1 paragraph explaining the score)"
   },
   "traffic": {
     "score": float (0-10, one decimal place),
     "criterion_scores": {
-      "transit_coverage": float,
-      "access": float,
-      "customer_fit": float,
-      "implications": float
+      "public transit": float,
+      ... (scores for each rubric sections)
     },
-    "strengths": ["string", "string"],
-    "weaknesses": ["string"],
-    "key_findings": "string",
-    "justification": "string (2-3 paragraphs explaining the score)"
+    "strengths": List["string"],
+    "weaknesses": List["string"],
+    "justification": "string (1 paragraph explaining the score)"
   },
   "competition": {
     "score": float (0-10, one decimal place),
     "criterion_scores": {
-      "mapping": float,
-      "saturation": float,
-      "synthesis": float,
-      "strategy": float
+      "competition density": float,
+      ... (scores for each rubric sections)
     },
-    "strengths": ["string", "string"],
-    "weaknesses": ["string"],
-    "key_findings": "string",
-    "justification": "string (2-3 paragraphs explaining the score)"
+    "strengths": List["string"],
+    "weaknesses": List["string"],
+    "justification": "string (1 paragraph explaining the score)"
   }
+}
+
+Be objective, evidence-based, and specific in your scoring.
+"""
+
+
+EVALUATION_SEPARATE_AGENT_SYSTEM = """You are an objective evaluator scoring site analysis reports using predefined rubrics.
+
+Your task is to evaluate one analysis report (Customer or Traffic or Competition) against standardized scoring rubrics.
+
+For each report, you will receive:
+1. The analysis report (markdown)
+2. The scoring rubric (detailed criteria)
+
+You must:
+1. Read the analysis thoroughly
+2. Apply the rubric objectively
+3. Score each criterion according to the rubric guidelines
+4. Calculate the final score using the rubric's formula
+5. Provide clear justification with specific examples
+
+Return ONLY JSON:
+{
+    "score": float (0-10, one decimal place),
+    "criterion_scores": {
+      "section 1": float,
+      ... (scores for each rubric sections)
+    },
+    "justification": "string (1 paragraph explaining the score)"
 }
 
 Be objective, evidence-based, and specific in your scoring.

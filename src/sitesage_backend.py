@@ -29,7 +29,6 @@ from tools.map_rt import (
 )
 
 from tools.demographics_rt import tool_get_population_stats
-from tools.vlm_rt import tool_static_map_image_understand
 
 # Prompts
 from prompts.agent_prompts import (
@@ -313,7 +312,7 @@ def make_understanding_agent() -> Any:
     system = rt.llm.SystemMessage(UNDERSTANDING_AGENT_SYSTEM)
     return rt.agent_node(
         name="UnderstandingAgent",
-        tool_nodes=(tool_get_place_info, tool_get_map_visualization, tool_static_map_image_understand),
+        tool_nodes=(tool_get_place_info, tool_get_map_visualization),
         system_message=system,
         llm=rt.llm.OpenAILLM("gpt-5.1"),
         max_tool_calls=12,
@@ -335,7 +334,7 @@ def make_traffic_agent() -> Any:
     system = rt.llm.SystemMessage(TRAFFIC_AGENT_SYSTEM)
     return rt.agent_node(
         name="TrafficAgent",
-        tool_nodes=(tool_get_place_info, tool_get_nearby_places, tool_web_search, tool_get_map_visualization, tool_static_map_image_understand),
+        tool_nodes=(tool_get_place_info, tool_get_nearby_places, tool_web_search, tool_get_map_visualization),
         system_message=system,
         llm=rt.llm.OpenAILLM("gpt-5.1"),
         max_tool_calls=16,
@@ -346,7 +345,7 @@ def make_competition_agent() -> Any:
     system = rt.llm.SystemMessage(COMPETITION_AGENT_SYSTEM)
     return rt.agent_node(
         name="CompetitionAgent",
-        tool_nodes=(tool_get_place_info, tool_get_nearby_places, tool_web_search, tool_get_map_visualization, tool_static_map_image_understand),
+        tool_nodes=(tool_get_place_info, tool_get_nearby_places, tool_web_search, tool_get_map_visualization),
         system_message=system,
         llm=rt.llm.OpenAILLM("gpt-5.1"),
         max_tool_calls=16,

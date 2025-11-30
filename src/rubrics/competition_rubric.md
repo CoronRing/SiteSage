@@ -1,184 +1,136 @@
+# Competition and Positioning Rubric (Location-Oriented)
 
-# Competition & Positioning Rubric (Location‑Oriented)
+Purpose: Score 0–10 on net competitive favorability: density, saturation, differentiation room, and risk. High-traffic hubs can still have modest competition scores, but competition should not fully overturn large advantages in customer and traffic unless there is clear evidence of over-supply and underperformance.
 
-Score **0–10** based on **net competitive favorability**: density vs demand, saturation, positioning white space, and competitive risk.
+## Sub-dimension weights for Competition (sum = 100%)
 
-### Weights (sum = 100%)
+1. Competitor density and micro-proximity – 20%
+2. Market saturation versus demand – 30%
+3. Positioning opportunity – 25%
+4. Competitive risk – 25%
 
-1. Competitor Density & Proximity – **30%**
-2. Market Saturation vs. Demand – **25%**
-3. Positioning Opportunity – **30%**
-4. Competitive Risk – **15%**
+## 1. Competitor density and micro-proximity (20%)
 
-**Important demand‑adjustment principle:**  
-High competitor counts in a **proven high‑demand hub** should **not automatically** yield very low scores. Reserve the lowest scores for locations where many operators actually underperform or fail.
+Assess direct substitutes within roughly 500 m, focusing on:
+- How many are on the same primary micro-flows (same concourse, corridor, or short block), and
+- Distances to the closest direct competitors (≤25 m, 25–100 m, 100–300 m, >300 m).
+
+### Excellent (9–10)
+- Light or balanced competition:
+  - Five or fewer direct competitors within roughly 500 m, and
+  - No major direct competitor within 100 m on the same main path.
+
+### Good (7–8.9)
+- Several competitors within roughly 500 m (about 6–15), but not tightly clustered on the same micro-flow; at most one direct substitute within 50 m.
+
+### Adequate (5–6.9)
+- Noticeable density, including direct substitutes in the same building or within 100–300 m, but demand clearly supports multiple players and the new concept has plausible differentiation.
+- Typical of busy central business districts and transit hubs where many operators coexist and seem reasonably healthy.
+
+Hub guideline:
+- In strong hubs where customer and traffic both score ≥8.5 and most peers appear busy in relevant dayparts, dense supply often justifies scores between roughly 5.5 and 7.5. Use scores <5.0 only where micro-clustering is clearly extreme.
+
+### Poor (3–4.9)
+- High density of near-identical competitors tightly clustered on the same micro-flows:
+  - Three or more direct substitutes within 50 m on the same corridor or entrance, or
+  - Five or more within 100 m on the same primary desire line.
+- Best-visible positions mostly occupied by incumbents, leaving marginal exposure for the new store.
+
+**Hard rules**:
+- If there is at least one flagship or large-format direct competitor (for example a reserve or hero unit) and at least two other direct substitutes within 50 m on the same path, this sub-score should usually be 4.0 or lower, even in high-demand hubs.
+
+**Interior-mall hyper-cluster rule** (for coffee, tea and similar beverages):
+- If, inside the same mall or podium block and within roughly 150 m, there are four or more branded chain coffee or tea units plus three or more bakery or dessert cafes offering similar beverages, then:
+  - Competitor density should usually be ≤3.5, and
+  - Competitive risk (section 4) should usually be ≤4.0, unless strong evidence shows chronic unmet demand and very high per-store volumes.
+
+### Insufficient (0–2.9)
+- Severe clustering of direct substitutes and clear signs that new entrants struggle despite good traffic.
 
 ---
 
-## 1. Competitor Density & Proximity (30%)
+## 2. Market saturation versus demand (30%)
 
-Evaluate **direct substitutes** within ~300–800 m, their clustering around the site, and overlap with the proposed format.
-
-### Excellent (9–10)
-
-- Balanced or light competition:
-  - A few established competitors that validate demand, but clear physical and/or positioning gaps remain.
-- No major direct competitor in **immediate adjacency** (e.g., same corridor or entrance) unless the concept is strongly differentiated or complementary.
-
-### Good (7–8)
-
-- Manageable number of competitors:
-  - Several operators within walking distance, but not tightly clustered around the exact site.
-- Mix of complementary and partially overlapping offers.
-
-### Adequate (5–6)
-
-- Noticeable density of competitors, including **direct substitutes** within ~100–300 m.
-- However:
-  - Differentiation by price/format/experience is possible, **and/or**
-  - Demand in the node is clearly strong enough to support multiple players.
-- **Demand‑rich “red” corridors** in major hubs (high traffic, many busy competitors) typically belong here if most stores appear healthy.
-
-> **Hard rule for large hubs:**  
-> In locations with **strong Customer (C ≥ 8.5) and Traffic (T ≥ 8.5) scores**, do **not** score this sub‑dimension below **5** purely on the count of competitors, **unless** there is concrete evidence of many weak/empty stores or closures.
-
-### Poor (3–4)
-
-- High density of direct competitors tightly clustered around the site:
-  - Many near‑identical offers in the same price tier and format within short walking distance.
-- Competitors occupy **best micro‑locations**, leaving limited remaining exposure.
-- Use this band when density is high **and** demand appears only moderate.
-
-### Insufficient (0–2)
-
-- **Severe clustering** of direct substitutes with little or no physical or conceptual spacing.
-- Clear signs that new entrants struggle to gain traction (numerous closures, chronically empty stores) despite attempts at differentiation.
-- Reserve this for demonstrably over‑built sub‑markets, not just “a lot of stores.”
-
----
-
-## 2. Market Saturation vs. Demand (25%)
-
-Match **aggregate supply** to **aggregate demand** in the relevant category.
+Match aggregate category supply to aggregate demand, emphasizing realistic per-store volume for the category and node.
 
 ### Excellent (9–10)
+- Clear unmet demand:
+  - Frequent queues or lack of capacity at multiple incumbents outside holidays.
+  - Peak times show customers turned away or enduring long waits without heavy discounting.
 
-- Clear **unmet demand**:
-  - Customer queues, long waits, limited seating, or capacity constraints common among incumbents.
-- Few if any signs of over‑supply; rents and occupancy are strong.
+### Good (7–8.9)
+- Supply and demand are favorable:
+  - Existing stores generally busy and healthy in relevant times.
+  - Room for additional entrants, especially with differentiation or new daypart focus.
 
-### Good (7–8)
-
-- Demand likely supports additional entrants:
-  - Existing stores are reasonably busy.
-  - No systematic discounting or failure pattern.
-- New store can grow mainly with **incremental** demand and moderate share capture.
-
-### Adequate (5–6)
-
+### Adequate (5–6.9)
 - Rough balance between supply and demand:
-  - Many operators appear stable but not obviously stretched.
-  - Some stores are busy, others average or below.
-- Additional entry requires some share capture and/or clear niche positioning.
+  - Many operators are steady but not stretched; some busy, some average.
+  - Discounts or promotions common but not extreme; limited churn.
+- New entrants must take share and/or carve a clear niche.
 
-> In **high‑demand hubs** with many busy stores and few closures, dense competition but healthy performance should normally be scored **5–6**, not **3–4**.
+Hyper-density check for high-frequency categories (coffee, tea, quick service):
+- If there are ≥20 direct outlets within roughly 250 m or ≥60 within roughly 500 m, and not all appear very busy in key dayparts, this sub-score should usually be in the 3.0–5.0 band.
+- Only raise above 5.0 when there is strong evidence that per-outlet demand remains well above network norms.
 
-### Poor (3–4)
+### Poor (3–4.9)
+- Signs of existing or emerging over-supply:
+  - Several clearly under-utilized operators in good positions, especially in key dayparts.
+  - Frequent deep discounting and visible churn of similar concepts.
 
-- Signs of emerging over‑supply:
-  - Several operators visibly under‑utilized.
-  - Frequent price promotions or discount wars.
-  - Slow traffic in off‑peak periods even in good locations.
-- New entrant must primarily win share from incumbents, with limited growth in total demand.
-
-### Insufficient (0–2)
-
-- Market appears **fully saturated or shrinking**:
-  - Many chronically underperforming units, visible closures, and high turnover.
-  - Customer numbers are flat or declining while supply remains high.
-- New entry is structurally unlikely to be sustainable.
+### Insufficient (0–2.9)
+- Market appears fully saturated or shrinking; many underperformers and frequent closures despite good locations.
 
 ---
 
-## 3. Positioning Opportunity (30%)
+## 3. Positioning opportunity (25%)
 
-Assess **room to differentiate** on any meaningful axis: price, quality, speed, experience, assortment, daypart, or target segment.
+Assess room to differentiate on dimensions customers value: price, quality, speed, assortment, experience, or daypart focus.
 
 ### Excellent (9–10)
+- Clear, sizable white spaces such as:
+  - Missing price tiers (for example no mid-priced quality option between premium and value chains).
+  - Missing formats (for example no express commuter kiosk at a busy exit, or no serious specialty option in a value-heavy cluster).
+  - Underserved dayparts (for example early morning in a node where most cafes open late).
 
-- **Clear, sizable white spaces**:
-  - Missing price tiers (e.g., no credible premium or no affordable option).
-  - Missing formats (e.g., no fast/express vs all sit‑down; no family‑friendly vs all bar‑like).
-  - Untapped dayparts (e.g., night‑time, early morning).
-- Strong potential to own a distinctive position that is **easy to explain to customers**.
+### Good (7–8.9)
+- Several credible differentiation angles; the concept can plausibly become best-in-class on at least one important dimension (fastest, best coffee, healthiest, most convenient) even in a crowded area.
 
-### Good (7–8)
+### Adequate (5–6.9)
+- Limited but real differentiation room; obvious positions (cheap versus standard versus premium, fast versus slow, sit-down versus takeaway) are mostly taken. Success depends more on superior execution than on a structural white space.
 
-- Several plausible differentiation angles:
-  - You can be clearly “best at something” (e.g., fastest, healthiest, most suitable for work, best dessert, kids‑friendly), even if core product overlaps.
+### Poor (3–4.9)
+- Hard to stand out: most obvious positions are strongly owned by entrenched brands with high loyalty and similar formats.
 
-### Adequate (5–6)
+### Insufficient (0–2.9)
+- No credible positioning space: all key niches are saturated with powerful incumbents and there is little sign of customer dissatisfaction.
 
-- Limited but non‑zero differentiation room:
-  - You can still fine‑tune offer or atmosphere, but major concepts are already present.
-- New concept likely to be “one of many” unless execution is outstanding.
-
-### Poor (3–4)
-
-- Hard to differentiate meaningfully:
-  - Most obvious positions (price, quality, convenience, experience) already strongly owned by incumbents.
-- New offer risks being perceived as generic or redundant.
-
-### Insufficient (0–2)
-
-- **No viable positioning** apparent:
-  - All key niches are saturated **and** competitors are entrenched.
-  - Any attempt at differentiation would be extremely narrow or commercially insignificant.
+**Clustered-mall adjustment**:
+- In interior malls where several strong chains already anchor the main commuter or shopping corridors at similar tiers, apply a downward tilt of about 0.5–1.0 points to positioning opportunity relative to a street node with the same brands but looser spacing, unless there is clear white space in daypart, speed, or price tier.
 
 ---
 
-## 4. Competitive Risk (15%)
+## 4. Competitive risk (25%)
 
-Evaluate the **risk profile** from incumbents, including brand strength, resources, and likelihood of intense competitive responses.
+Evaluate risk from incumbents' brand power, resources, landlord relationships, and likely reactions.
 
 ### Excellent (9–10)
+- Competitive risk low: most nearby operators are complementary or target different segments or occasions, or are significantly weaker on brand, product, or access.
 
-- Competitive risk is low:
-  - Nearby operators are complementary or serve different segments.
-  - No dominant players in direct head‑to‑head format.
+### Good (7–8.9)
+- Some pressure but manageable; strong brands exist but overlap is partial (different dayparts, formats, or price tiers).
 
-### Good (7–8)
+### Adequate (5–6.9)
+- Clear competitive risks from strong brands within roughly 100–200 m, but not overwhelming; responses likely but survivable with good execution and differentiation.
 
-- Some competitive pressure, but manageable:
-  - Strong brands exist but not in direct conflict, or they have different strengths.
-  - Limited history of price wars or aggressive reactions in this category/area.
-
-### Adequate (5–6)
-
-- Clear competitive risks:
-  - Well‑known chains or powerful local brands with overlapping propositions.
-  - Some risk of promotions or copycat responses, but not constant.
-
-### Poor (3–4)
-
+### Poor (3–4.9)
 - High competitive risk:
-  - Multiple strong incumbents very close to the proposed site.
-  - History or expectation of **frequent price‑based competition** or rapid copycatting.
-  - New entrant must be significantly better or cheaper to win.
+  - Multiple strong incumbents in close proximity (about 50–100 m) with similar offers and overlapping peak dayparts.
+  - Likely aggressive defense (heavy coupons, corporate deals, landlord support) making it hard to build share.
 
-### Insufficient (0–2)
+**Hard rules**:
+- If a flagship or hero unit of a top competitor (for example a reserve or iconic cafe) is in the same building or within roughly 25 m of the entrance and targets nearly identical use cases, this sub-score should usually be 4.5 or lower.
+- In interior malls where several strong chains already anchor the main commuter corridors at similar tiers, apply a downward tilt of about 0.5–1.0 points to both competitive risk and positioning opportunity versus a comparable street node.
 
-- Very high risk environment:
-  - Dominant incumbent(s) with overwhelming advantages (network, price, landlord relationships) and a track record of defending territory.
-  - Highly likely that new store will trigger unsustainable competitive responses.
-
----
-
-### Competition & Positioning – Output Format
-
-```json
-{
-  "score": 5.5,
-  "justification": "The area hosts many direct competitors, but strong observed demand and stable performance suggest a demand-rich yet crowded market rather than true oversupply. Several white spaces exist in experience and daypart positioning, while competitive risk is moderate due to entrenched national chains nearby."
-}
-```
+### Insufficient (0–2.9)
+- Extremely high-risk environment with dominant incumbents, strong landlord ties, and history of aggressive defense; new entry is structurally very high risk.

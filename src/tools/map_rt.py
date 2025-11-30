@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Any, Dict, Iterable, Mapping, MutableMapping, Optional, Sequence, List
 
 from tools.map import MapTool
+from tools.vlm_rt import tool_static_map_image_understand
 
 import csv
 from io import StringIO
@@ -57,21 +58,33 @@ def tool_get_map_visualization(
     zoom: Optional[int] = 14,
     overlays: Optional[Iterable[Mapping[str, Any]]] = None,
     style: Optional[str] = None,
+    analysis: bool = False,
+    query: str = ""
 ) -> Mapping[str, Any]:
     """
-    Render a provider static map (url) centered on the origin and optional overlay markers
+    Render a static map (url) centered on the origin and optional overlay markers and (if requested) analysis of the static map or answer for a query
     Args:
         origin (Dict): Primary location, should include 'lat', 'lng', or 'address' (only when you don't know lat, lng), its label will be 'A' on the map.
         zoom (Optional[int]): Zoom in extent, default as 14, select span between 12-17: Lower values show more district-wide context, higher values zoom in to street/building detail.
         overlays (Optional[List[Dict]]): Additional markers to render except for origin, maximum 10 overlays, each should include lat, lng, (or address only when you don't know lat, lng), and label (you can only use 1-character labels such as A,B,C,...).
         style (Optional[str]): Provider-specific style identifier for the visualization.
+        analysis (bool): Default False. If true, the description of the static map will be returned.
+        query (str): Default "". Question about the information on the static map.
 
     Returns:
-        Dict: Visualization payload, including url, the origin point will be labeled as 'A'.
+        Dict: Visualization payload, including url, analysis of the map (if analysis is true) or answer for the query (if query is not empty). 
     """
-    return map_tool.getMapVisualization(
+    if overlays:
+        overlays = overlays[:10]
+    payload = map_tool.getMapVisualization(
         origin, zoom=zoom, overlays=overlays, style=style
     )
+    if query and type(query) is dict:
+        query = list(query.values())[0]
+    if analysis or query:
+        resp = tool_static_map_image_understand(payload["url"], query)
+        payload["analysis"] = resp
+    return payload
 
 @rt.function_node
 def tool_get_nearby_places(
