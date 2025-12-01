@@ -38,6 +38,7 @@ from prompts.agent_prompts import (
     COMPETITION_AGENT_SYSTEM,
     WEIGHTING_AGENT_SYSTEM,
     EVALUATION_AGENT_SYSTEM,
+    EVALUATION_SEPARATE_AGENT_SYSTEM,
     FINAL_REPORT_AGENT_SYSTEM,
     get_understanding_prompt,
     get_customer_prompt,
@@ -373,11 +374,59 @@ def run_weighting_agent(weighting_prompt: str) -> str:
     return response.output_text
 
 
-def make_evaluation_agent() -> Any:
+def run_evaluation_agent(
+        customer_report: str,
+        traffic_report: str,
+        competition_report: str,
+        customer_rubric: str,
+        traffic_rubric: str,
+        competition_rubric: str) -> Any:
     """
     Evaluation agent that scores the three analysis reports using rubrics.
     Returns JSON with scores for customer, traffic, and competition.
     """
+    user_prompt = """Evaluate the analysis report using the provided rubrics. Score objectively and provide detailed justifications.
+
+---
+
+ANALYSIS REPORT:
+{report}
+
+SCORING RUBRIC:
+{rubric}
+
+---
+
+Evaluate report according to its rubric. Return the JSON with scores and justifications."""
+    
+    client = _get_openai_client()
+    def _run(report, rubric):
+        response = client.responses.create(
+            model="gpt-5.1",
+            reasoning={"effort": "low"},
+            input=[
+                {"role": "system", "content": EVALUATION_SEPARATE_AGENT_SYSTEM},
+                {
+                    "role": "user",
+                    "content": [{"type": "input_text", "text": user_prompt.format(report=report, rubric=rubric)}],
+                },
+            ],
+        )
+        try:
+            payload = parse_json_from_text(response.output_text)
+        except Exception as e:
+            print("error in parsing revision, try again ...", e)
+            payload = parse_json_from_text(fix_json_error(response.output_text))
+        return payload
+    
+    return {
+        "customer": _run(customer_report, customer_rubric),
+        "traffic": _run(traffic_report, traffic_rubric),
+        "competition": _run(competition_report, competition_rubric),
+    }
+
+
+def make_evaluation_agent():
     system = rt.llm.SystemMessage(EVALUATION_AGENT_SYSTEM)
     return rt.agent_node(
         name="EvaluationAgent",
@@ -545,7 +594,6 @@ async def run_sitesage_session_async(
     #   - Evaluation (Step 6) determines quality based on ANALYSIS RUBRICS (how well analysis was done)
     #   - Weighting does NOT receive evaluation scores to avoid bias
     #   - This ensures weights reflect business priorities, not analysis quality
-    evaluation_agent = make_evaluation_agent()
     
     # Load rubric files
     rubric_dir = os.path.abspath("rubrics")
@@ -570,29 +618,41 @@ async def run_sitesage_session_async(
         logger.error("Failed to load competition_rubric.md: %s", e)
         competition_rubric = "# Competition Rubric\nNo rubric available."
     
-    evaluation_prompt = get_evaluation_prompt(
+    # old version: use rt evaluation agent to evaluate all reports at once
+    # evaluation_agent = make_evaluation_agent()
+    # evaluation_prompt = get_evaluation_prompt(
+    #     customer_report=customer_report,
+    #     traffic_report=traffic_report,
+    #     competition_report=competition_report,
+    #     customer_rubric=customer_rubric,
+    #     traffic_rubric=traffic_rubric,
+    #     competition_rubric=competition_rubric,
+    # )
+    
+    # with rt.Session(logging_setting="VERBOSE", timeout=600.0):
+    #     eresp = await rt.call(evaluation_agent, user_input=evaluation_prompt)
+    
+    # try:
+    #     ejson = parse_json_from_text(eresp.text)
+    # except Exception as e:
+    #     logger.error("Failed to parse evaluation agent response as JSON, retry...: %s", e)
+    #     try:
+    #         fixed = fix_json_error(eresp.text)
+    #         ejson = parse_json_from_text(fixed)
+    #     except Exception as inner:
+    #         logger.error("Failed to parse evaluation agent response as JSON again: %s, %s", inner, eresp.text)
+    #         # raise ValueError("Failed to parse evaluation json")
+    #         ejson = {}
+
+    # new version: evaluate reports one by one
+    ejson = run_evaluation_agent(
         customer_report=customer_report,
         traffic_report=traffic_report,
         competition_report=competition_report,
         customer_rubric=customer_rubric,
         traffic_rubric=traffic_rubric,
-        competition_rubric=competition_rubric,
+        competition_rubric=competition_rubric
     )
-    
-    with rt.Session(logging_setting="VERBOSE", timeout=600.0):
-        eresp = await rt.call(evaluation_agent, user_input=evaluation_prompt)
-    
-    try:
-        ejson = parse_json_from_text(eresp.text)
-    except Exception as e:
-        logger.error("Failed to parse evaluation agent response as JSON, retry...: %s", e)
-        try:
-            fixed = fix_json_error(eresp.text)
-            ejson = parse_json_from_text(fixed)
-        except Exception as inner:
-            logger.error("Failed to parse evaluation agent response as JSON again: %s, %s", inner, eresp.text)
-            # raise ValueError("Failed to parse evaluation json")
-            ejson = {}
     
     # Extract scores
     evaluation_scores = {

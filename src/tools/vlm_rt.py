@@ -1,3 +1,5 @@
+import base64
+import requests
 from openai import OpenAI
 import railtracks as rt
 
@@ -12,6 +14,14 @@ def tool_static_map_image_understand(url: str, query: str = "") -> str:
         str: analysis / understanding of the static map catering to user's query.
     """
     client = OpenAI()
+
+    # download image
+    response = requests.get(url, timeout=10)
+    response.raise_for_status()        # fails fast if AMap blocks you
+    img_bytes = response.content       # raw PNG/JPEG bytes from AMap
+    base64_image = base64.b64encode(img_bytes).decode("utf-8")
+
+    # request for openai
     response = client.responses.create(
         model="gpt-5.1",
         reasoning={ "effort": "low" },
@@ -35,7 +45,8 @@ Your answer must be less than 500 words."""
                     },
                     {
                         "type": "input_image",
-                        "image_url": url
+                        "image_url": f"data:image/jpeg;base64,{base64_image}"
+                        # "image_url": url
                     }
                 ]
             }

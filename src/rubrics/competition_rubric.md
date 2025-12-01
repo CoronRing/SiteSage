@@ -1,136 +1,237 @@
-# Competition and Positioning Rubric (Location-Oriented)
+Competition & Node Potential Rubric
 
-Purpose: Score 0–10 on net competitive favorability: density, saturation, differentiation room, and risk. High-traffic hubs can still have modest competition scores, but competition should not fully overturn large advantages in customer and traffic unless there is clear evidence of over-supply and underperformance.
+Goal
+- Score 0–10 on **net competitive favorability** for a new coffee-focused store at a given node.
+- Score should track **realistic sustainable daily cups (RSV)** for this store.
+- Higher-RSV nodes must score **clearly higher**, and large differences in effective traffic should translate to **meaningful score gaps**.
 
-## Sub-dimension weights for Competition (sum = 100%)
+Dimension weights (sum = 100%)
+1. Effective Node Volume (RSV proxy) – **65%**
+2. Saturation & Per-capita Competition – **15%**
+3. Positioning White Space – **10%**
+4. Anchor / Incumbent Risk – **10%**
 
-1. Competitor density and micro-proximity – 20%
-2. Market saturation versus demand – 30%
-3. Positioning opportunity – 25%
-4. Competitive risk – 25%
-
-## 1. Competitor density and micro-proximity (20%)
-
-Assess direct substitutes within roughly 500 m, focusing on:
-- How many are on the same primary micro-flows (same concourse, corridor, or short block), and
-- Distances to the closest direct competitors (≤25 m, 25–100 m, 100–300 m, >300 m).
-
-### Excellent (9–10)
-- Light or balanced competition:
-  - Five or fewer direct competitors within roughly 500 m, and
-  - No major direct competitor within 100 m on the same main path.
-
-### Good (7–8.9)
-- Several competitors within roughly 500 m (about 6–15), but not tightly clustered on the same micro-flow; at most one direct substitute within 50 m.
-
-### Adequate (5–6.9)
-- Noticeable density, including direct substitutes in the same building or within 100–300 m, but demand clearly supports multiple players and the new concept has plausible differentiation.
-- Typical of busy central business districts and transit hubs where many operators coexist and seem reasonably healthy.
-
-Hub guideline:
-- In strong hubs where customer and traffic both score ≥8.5 and most peers appear busy in relevant dayparts, dense supply often justifies scores between roughly 5.5 and 7.5. Use scores <5.0 only where micro-clustering is clearly extreme.
-
-### Poor (3–4.9)
-- High density of near-identical competitors tightly clustered on the same micro-flows:
-  - Three or more direct substitutes within 50 m on the same corridor or entrance, or
-  - Five or more within 100 m on the same primary desire line.
-- Best-visible positions mostly occupied by incumbents, leaving marginal exposure for the new store.
-
-**Hard rules**:
-- If there is at least one flagship or large-format direct competitor (for example a reserve or hero unit) and at least two other direct substitutes within 50 m on the same path, this sub-score should usually be 4.0 or lower, even in high-demand hubs.
-
-**Interior-mall hyper-cluster rule** (for coffee, tea and similar beverages):
-- If, inside the same mall or podium block and within roughly 150 m, there are four or more branded chain coffee or tea units plus three or more bakery or dessert cafes offering similar beverages, then:
-  - Competitor density should usually be ≤3.5, and
-  - Competitive risk (section 4) should usually be ≤4.0, unless strong evidence shows chronic unmet demand and very high per-store volumes.
-
-### Insufficient (0–2.9)
-- Severe clustering of direct substitutes and clear signs that new entrants struggle despite good traffic.
+Final score = weighted average of 4 dimensions, then adjusted by gates in Section 5.
 
 ---
+1. Effective Node Volume (RSV proxy) – 65%
 
-## 2. Market saturation versus demand (30%)
+1.1 Required inputs
+- **Effective passers (by daypart, within 0–50 m of frontage)**
+  - Morning peak (7:30–10:30) – only people passing within ~0–50 m on real desire lines.
+  - Other dayparts (lunch, afternoon, evening) – only if flows pass within ~0–50 m.
+- **Daily-path base (0–100 m)**
+  - Office workers, students, mall staff whose **daily path** passes within 0–100 m.
+  - Residents within 800–1,000 m who are likely **weekly visitors** to this node.
+- **Coffee penetration assumptions (daily buyers among relevant users)**
+  - Mature CBD / dense office cluster: **8–10%**.
+  - Strong mixed-use mall + offices: **6–8%**.
+  - Community / weaker coffee culture: **3–6%**.
+- **New-store share assumptions (of total coffee volume at node)**
+  - Heavy saturation, many strong brands on same corridor: **3–6%**.
+  - Moderate competition, good micro-position: **6–10%**.
+  - Light competition, strong micro-position: **10–15%**.
+  - Adjust down if micro-position off main line or detour >3 min vs peers.
 
-Match aggregate category supply to aggregate demand, emphasizing realistic per-store volume for the category and node.
+1.2 Estimating RSV (step-by-step)
+- Step 1 – **Effective daily users**
+  - Start from morning 0–50 m flows; add other dayparts that also pass 0–50 m (use conservative estimates, avoid counting whole-station entries).
+- Step 2 – **Theoretical coffee volume**
+  - Theoretical cups/day = effective users × appropriate penetration % (use mid-point of range).
+- Step 3 – **New-store share**
+  - Choose share band based on competition and micro-position.
+  - Reduce share if multiple similar brands sit directly on same 0–50 m path.
+- Step 4 – **RSV (realistic sustainable cups/day)**
+  - RSV = theoretical cups/day × new-store share.
+  - Cross-check vs observed benchmarks for similar brands at the node.
 
-### Excellent (9–10)
-- Clear unmet demand:
-  - Frequent queues or lack of capacity at multiple incumbents outside holidays.
-  - Peak times show customers turned away or enduring long waits without heavy discounting.
+1.3 Scoring bands (by RSV)
+- **Excellent (9.0–10.0)**
+  - RSV ≥ 1,000 cups/day.
+- **Very strong (8.0–8.9)**
+  - RSV 800–999 cups/day.
+- **Strong (7.0–7.9)**
+  - RSV 600–799 cups/day.
+- **Upper-adequate (6.0–6.9)**
+  - RSV 450–599 cups/day.
+- **Adequate (5.0–5.9)**
+  - RSV 350–449 cups/day.
+- **Weak (4.0–4.9)**
+  - RSV 250–349 cups/day.
+- **Failing / Marginal (0.0–3.9)**
+  - RSV < 250 cups/day.
 
-### Good (7–8.9)
-- Supply and demand are favorable:
-  - Existing stores generally busy and healthy in relevant times.
-  - Room for additional entrants, especially with differentiation or new daypart focus.
-
-### Adequate (5–6.9)
-- Rough balance between supply and demand:
-  - Many operators are steady but not stretched; some busy, some average.
-  - Discounts or promotions common but not extreme; limited churn.
-- New entrants must take share and/or carve a clear niche.
-
-Hyper-density check for high-frequency categories (coffee, tea, quick service):
-- If there are ≥20 direct outlets within roughly 250 m or ≥60 within roughly 500 m, and not all appear very busy in key dayparts, this sub-score should usually be in the 3.0–5.0 band.
-- Only raise above 5.0 when there is strong evidence that per-outlet demand remains well above network norms.
-
-### Poor (3–4.9)
-- Signs of existing or emerging over-supply:
-  - Several clearly under-utilized operators in good positions, especially in key dayparts.
-  - Frequent deep discounting and visible churn of similar concepts.
-
-### Insufficient (0–2.9)
-- Market appears fully saturated or shrinking; many underperformers and frequent closures despite good locations.
-
----
-
-## 3. Positioning opportunity (25%)
-
-Assess room to differentiate on dimensions customers value: price, quality, speed, assortment, experience, or daypart focus.
-
-### Excellent (9–10)
-- Clear, sizable white spaces such as:
-  - Missing price tiers (for example no mid-priced quality option between premium and value chains).
-  - Missing formats (for example no express commuter kiosk at a busy exit, or no serious specialty option in a value-heavy cluster).
-  - Underserved dayparts (for example early morning in a node where most cafes open late).
-
-### Good (7–8.9)
-- Several credible differentiation angles; the concept can plausibly become best-in-class on at least one important dimension (fastest, best coffee, healthiest, most convenient) even in a crowded area.
-
-### Adequate (5–6.9)
-- Limited but real differentiation room; obvious positions (cheap versus standard versus premium, fast versus slow, sit-down versus takeaway) are mostly taken. Success depends more on superior execution than on a structural white space.
-
-### Poor (3–4.9)
-- Hard to stand out: most obvious positions are strongly owned by entrenched brands with high loyalty and similar formats.
-
-### Insufficient (0–2.9)
-- No credible positioning space: all key niches are saturated with powerful incumbents and there is little sign of customer dissatisfaction.
-
-**Clustered-mall adjustment**:
-- In interior malls where several strong chains already anchor the main commuter or shopping corridors at similar tiers, apply a downward tilt of about 0.5–1.0 points to positioning opportunity relative to a street node with the same brands but looser spacing, unless there is clear white space in daypart, speed, or price tier.
+1.4 Guardrails & sensitivity
+- If **effective morning peak passers within 0–50 m ≥ 12,000** and per-capita competition (see 2.2) is not extreme (>4 outlets per 10k users):
+  - Effective Node Volume score should normally be **≥ 7.5** even if competition is dense.
+- If effective morning peak passers within 0–50 m are **6,000–11,999** and RSV **450–699**:
+  - Score should normally be **≥ 6.5**.
+- If effective morning peak passers within 0–50 m **≤ 4,000** and RSV **≤ 350**:
+  - Score should normally be **≤ 6.0**.
+- **Cross-location sensitivity (same city / decision set):**
+  - If two locations’ estimated RSV differ by a factor **≥ 2.0**, their Effective Node Volume scores must differ by **≥ 2.0 points** in the same direction.
+  - If RSV ratio is **1.5–2.0**, their Effective Node Volume scores must differ by **≥ 1.0 point** in the same direction.
 
 ---
+2. Saturation & Per-capita Competition – 15%
 
-## 4. Competitive risk (25%)
+2.1 Inputs
+- Count **direct substitutes** (coffee-first; plus bakeries/tea that realistically capture morning coffee) in rings:
+  - 0–25 m – same frontage / same immediate cluster.
+  - 25–100 m – same corridor or side of main street.
+  - 100–300 m – same node, short walk.
+- Within 300 m, estimate **effective daily users** who can reach with ≤3 min detour (from Section 1 inputs).
+- Compute **per-capita density**:
+  - Direct coffee outlets (including coffee-strong bakeries) **per 10,000 effective daily users**.
+- Note **qualitative saturation signals**:
+  - Many quiet or visibly weak units.
+  - Heavy, persistent discounting.
+  - Recent closures on same corridor.
 
-Evaluate risk from incumbents' brand power, resources, landlord relationships, and likely reactions.
+2.2 Scoring bands (combine absolute counts + per-capita)
+- **Excellent (9.0–10.0)**
+  - ≤ 3 direct coffee outlets within 100 m; and
+  - ≤ 10 direct coffee outlets within 300 m; and
+  - ≤ 1.5 direct outlets per 10k effective daily users; and
+  - Few/no weak or empty units.
+- **Good (7.0–8.9)**
+  - 4–6 direct outlets within 100 m; or
+  - 11–18 within 300 m; and
+  - 1.6–2.5 outlets per 10k effective users; and
+  - Most units healthy, no clear oversupply.
+- **Adequate (5.0–6.9)**
+  - 7–9 direct outlets within 100 m; or
+  - 19–30 within 300 m; or
+  - 2.6–3.5 outlets per 10k effective users;
+  - Node still has strong Effective Node Volume (score ≥ 6.5) and most peers appear healthy.
+- **Poor (3.0–4.9)**
+  - ≥ 10 direct outlets within 100 m; or
+  - 31–45 within 300 m; or
+  - > 3.5 outlets per 10k effective users; or
+  - Clear signs that additional similar stores mostly cannibalise share (weak units despite good traffic).
+- **Extreme saturation (0.0–2.9)**
+  - > 50 coffee-related outlets within 500 m; and
+  - Multiple visibly weak or half-empty coffee units on same main flows; and
+  - Per-capita density clearly above sustainable norms (> 4.5 direct outlets per 10k effective users).
 
-### Excellent (9–10)
-- Competitive risk low: most nearby operators are complementary or target different segments or occasions, or are significantly weaker on brand, product, or access.
+2.3 Scale-sensitive notes
+- In **very high-volume CBD nodes** with many outlets but still healthy peers, do **not** automatically push this score into 0–2 range; use **3–5** unless there is evidence of structural oversupply.
+- In **medium-volume suburban/commercial nodes** with much lower effective passers, similar outlet counts should be penalized **more harshly** via per-capita density.
 
-### Good (7–8.9)
-- Some pressure but manageable; strong brands exist but overlap is partial (different dayparts, formats, or price tiers).
+---
+3. Positioning White Space – 10%
 
-### Adequate (5–6.9)
-- Clear competitive risks from strong brands within roughly 100–200 m, but not overwhelming; responses likely but survivable with good execution and differentiation.
+3.1 Checks
+- **Coverage by incumbent formats on same main flows (0–100 m)**
+  - Value commuter chains (Luckin/Cotti-style).
+  - Mass specialty (Manner-style).
+  - Global brands (Starbucks/Costa/Tims).
+  - Premium boutiques / design cafés.
+  - Brunch/bakery sit-down with strong coffee.
+- **Daypart coverage** by incumbents (7–9 am commute, lunch, afternoon, evening).
+- **Potential roles for new store on same flows**
+  - Fastest high-quality commuter option (order-to-drink ≤ 60–90 sec) with clear proof of speed vs peers.
+  - Distinctive product / roast / flavor profile that is clearly different from nearby chains.
+  - Only or clearly best option for a specific sizeable niche (e.g., serious coffee + grab-and-go breakfast on that corridor).
+- Estimate **incremental uplift** from differentiation vs being a generic follower (cups/day).
 
-### Poor (3–4.9)
-- High competitive risk:
-  - Multiple strong incumbents in close proximity (about 50–100 m) with similar offers and overlapping peak dayparts.
-  - Likely aggressive defense (heavy coupons, corporate deals, landlord support) making it hard to build share.
+3.2 Scoring bands
+- **Excellent (9.0–10.0)**
+  - Clear structural white space on main flows (0–50 m), e.g.:
+    - No truly fast commuter-focused specialty outlet; or
+    - No serious specialty-quality player despite obvious quality-seeking base.
+  - Plausible incremental uplift from differentiation **≥ 400–500 cups/day** vs a generic offer.
+- **Good (7.0–8.9)**
+  - 1–2 strong, monetizable differentiation angles despite similar brands; visible pain points (queues, slow service, weak breakfast, tourist-only focus).
+  - Incremental potential ≈ **250–400 cups/day**.
+- **Adequate (5.0–6.9)**
+  - Some white space but narrow or execution-dependent; most price/format slots are already covered.
+  - Incremental potential ≈ **150–250 cups/day**.
+- **Poor (3.0–4.9)**
+  - All major positions (value commuter, mass specialty, premium sit-down, design boutique, breakfast+coffee) already held by 2+ strong players on same flows.
+  - Incremental potential likely **≤ 150 cups/day**.
+- **Insufficient (0.0–2.9)**
+  - No credible, monetizable white space; new store is effectively redundant on the corridor.
 
-**Hard rules**:
-- If a flagship or hero unit of a top competitor (for example a reserve or iconic cafe) is in the same building or within roughly 25 m of the entrance and targets nearly identical use cases, this sub-score should usually be 4.5 or lower.
-- In interior malls where several strong chains already anchor the main commuter corridors at similar tiers, apply a downward tilt of about 0.5–1.0 points to both competitive risk and positioning opportunity versus a comparable street node.
+3.3 Volume-linked caps
+- If Effective Node Volume score **≤ 4.0** (RSV < 350):
+  - Positioning White Space score should normally be **≤ 6.0**.
+- If Effective Node Volume score **≤ 3.0** (RSV < 250):
+  - Positioning White Space score should normally be **≤ 5.0**.
 
-### Insufficient (0–2.9)
-- Extremely high-risk environment with dominant incumbents, strong landlord ties, and history of aggressive defense; new entry is structurally very high risk.
+---
+4. Anchor / Incumbent Risk – 10%
+
+4.1 Inputs
+- Presence and proximity (0–100 m) of **top-tier brands on same flows**:
+  - Starbucks (especially Reserve/flagship), Manner, Luckin, Cotti, M Stand, Peet's, %Arabica, Blue Bottle, major bakery-café anchors.
+- **Hero or flagship units**:
+  - Reserve/Roastery, iconic specialty bars, landmark kiosks directly on main exits.
+- **Depth of clustering** of strong brands around the site (how many within 0–50 m and 50–100 m on main paths).
+- **Competitive behaviour**:
+  - Aggressive digital promotions, large app ecosystems, delivery dominance, corporate tie-ups.
+
+4.2 Scoring bands
+- **Excellent (9.0–10.0)**
+  - No top-tier chains within 50 m on main flows; and
+  - At most 1–2 within 100 m, with clearly different price tiers or primary dayparts.
+- **Good (7.0–8.9)**
+  - 1–2 strong chains within 50 m with only partial overlap; or
+  - 3–4 within 100 m but mixed formats (e.g., more sit-down, more tourist focus) and strong node volume.
+- **Adequate (5.0–6.9)**
+  - 2–3 strong chains within 50 m, overlapping some core use cases; or
+  - 5–6 within 100 m, but no single hero flagship directly on top of the site.
+- **Poor (3.0–4.9)**
+  - ≥ 1 hero/flagship unit (e.g., Reserve, iconic flagship) within 25 m **directly overlapping** target use; and/or
+  - ≥ 4 strong chains within 50 m or ≥ 7 within 100 m on same flows.
+- **Extreme (0.0–2.9)**
+  - Hero/flagship unit essentially co-located (0–10 m) plus multiple strong chains (≥ 3) within 50 m on same flow; or
+  - Clear pattern of similar entrants failing recently on the same frontage.
+
+4.3 Scale-sensitive notes
+- In **extremely large nodes** with very high RSV (≥ 900), strong anchors still matter but should not fully override volume:
+  - Do not raise this dimension above **6.0** if a hero/flagship is co-located on the same flow.
+
+---
+5. Gates and Cross-node Consistency
+
+5.1 RSV-based caps on final score
+- If Effective Node Volume score **≤ 2.9** (RSV < 250):
+  - Cap final score at **4.5**.
+- If Effective Node Volume score **3.0–3.9** (RSV 250–299):
+  - Cap final score at **5.5**.
+- If Effective Node Volume score **4.0–4.4** (RSV 300–349):
+  - Cap final score at **6.5**.
+
+5.2 Extreme anchor override caps
+- If there is a **hero/flagship unit within 0–10 m** directly overlapping the new store's core use; and
+  - There are **≥ 3 other strong chains within 50 m**, or **≥ 6 within 100 m** on the same flows:
+    - Cap final score at **6.5**.
+- If there is a hero/flagship within 0–25 m and Saturation & Per-capita Competition score **≤ 4.0**:
+  - Cap final score at **7.0**.
+
+5.3 Protection for very strong, less-saturated nodes
+- If Effective Node Volume score **≥ 8.0** and Saturation & Per-capita Competition score **≥ 5.0**:
+  - Do not cap final score below **7.0** solely due to anchor presence.
+
+5.4 Cross-node spread rules (same city / same decision set)
+- Define RSV bands by daily cups:
+  - Band A: < 250
+  - Band B: 250–349
+  - Band C: 350–449
+  - Band D: 450–599
+  - Band E: 600–799
+  - Band F: ≥ 800
+- When comparing two locations:
+  - If they fall **two or more bands apart** (e.g., B vs D, C vs E):
+    - Their final scores should differ by **≥ 2.0 points** in the direction of the higher RSV.
+  - If they fall in **adjacent bands** (e.g., C vs D):
+    - Their final scores should differ by **≥ 1.0 point** in the direction of the higher RSV.
+  - If RSV ratio **≥ 2.0 or ≤ 0.5**:
+    - Avoid giving final scores whose **ratio is < 1.3** in the opposite direction or nearly flat.
+
+5.5 Application notes (for report writers)
+- Always base Effective Node Volume on **0–50 m flows by daypart**, not entire-station or district traffic.
+- Treat **time-based catchments (e.g., 5–10 min walk)** only as support for understanding where users come from, not as direct substitutes for 0–50 m passers.
+- In highly saturated CBD / flagship clusters with 40–70 coffee-related outlets in 500 m, default to **low new-store share** unless there is quantified evidence for higher share – but still respect very high effective traffic.
+- In dense office clusters with high effective passers and fewer outlets per user, allow RSV and final scores to be **meaningfully higher** than in mid-volume suburban malls with similar raw outlet counts.
