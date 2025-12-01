@@ -1,0 +1,5 @@
+# Weighting Rationale
+
+The boutique coffee shop planned for Nanjing Road in Shanghai needs to prioritize traffic and accessibility due to its location in a dense urban area with high commuter foot traffic. Given that the target audience includes young professionals and students, it is crucial to ensure that the location is convenient for morning visits, thus prioritizing accessibility-related factors. 
+
+While demographic factors receive notable importance, ensuring that the shop appeals to the desired customer base, this is secondary to achieving high visibility. Finally, although there is noticeable competition within the area, the uniqueness of the store's cozy vibe and targeted marketing strategy allows for a lower emphasis on competition as the store's differentiated offering can create a niche. Hence, the competition weight is lower relative to the other factors, maintaining its significance but not overwhelming the primary focus on accessibility and demographic fit.

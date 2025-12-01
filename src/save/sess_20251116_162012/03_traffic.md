@@ -1,0 +1,1 @@
+The Coffee Shop is highly accessible, boasting a variety of transit options nearby. Specifically, there are 2 bus stations and 26 bus stops within a 1 km radius, with the closest transit point being just 31 meters away. Additionally, there are 14 parking facilities available. The lack of nearby subway or metro stations is offset by the extensive bus stop network.

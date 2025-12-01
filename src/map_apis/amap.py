@@ -178,20 +178,20 @@ class AMap(MapAPI):
         if not pois:
             raise ValueError(f"AMap could not find POI for: {address!r}")
 
-        top_5_addresses = [poi.get("address") for poi in pois[:5]]
-        top_5_names = [poi.get("name") for poi in pois[:5]]
-        logger.info(f"top 5 results for getPlaceInfo:{str(pois[:5])}")
-        matched, response = _match_place_with_addresses(address, top_5_addresses + top_5_names)
+        top_10_addresses = [poi.get("address") for poi in pois[:10]]
+        top_10_names = [poi.get("name") for poi in pois[:10]]
+        logger.info(f"top 5 results for getPlaceInfo:{top_10_addresses} {top_10_names}")
+        matched, response = _match_place_with_addresses(address, top_10_addresses + top_10_names)
         if not matched:
-            logger.error(f"No matching found for address:{address}, {top_5_addresses}, {response}")
+            logger.error(f"No matching found for address:{address}, {top_10_addresses}, {response}")
             raise ValueError(f"AMap could not find POI for: {address!r} due to matching issue, response:{response}")
         
-        target = [i for i, x in enumerate(top_5_addresses) if x == response]
+        target = [i for i, x in enumerate(top_10_addresses) if x == response]
         if len(target) == 0:
-            target = [i for i, x in enumerate(top_5_names) if x == response]
+            target = [i for i, x in enumerate(top_10_names) if x == response]
             if len(target) == 0:
                 logger.error(f"Result does not match with any of the addresses or names")
-                raise ValueError(f"Result does not match with any of the addresses or names: search {address}, candidates {top_5_addresses} {top_5_names}")
+                raise ValueError(f"Result does not match with any of the addresses or names: search {address}, candidates {top_10_addresses} {top_10_names}")
         
         record = pois[target[0]]
 

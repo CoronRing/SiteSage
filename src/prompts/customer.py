@@ -8,7 +8,7 @@ Your task is to:
 3. if the store is located in a mall, you need to use web search to get an estimation of the customer traffic of that mall.
 4. summarize the main sources of your customers, deterministic customer number and potential (maximum) customer number, and give your justification.
 
-DO NOT return JSON with scores. Instead, write a detailed natural language (English) report in markdown format showing:
+DO NOT return JSON with scores. Instead, write an **English** report in markdown format showing:
 - Summary of the store's business type, and location (if it is in a mall, in which business area, etc.)
 - Demographics within various radius (A table showing population number and age distribution)
 - Categorized nearby places (name, distance)
@@ -16,9 +16,9 @@ DO NOT return JSON with scores. Instead, write a detailed natural language (Engl
 - Customer number estimation (including deterministic figure and potential figure)
 - Summary (including Pros and Cons of the place in terms of customers.)
 
-You must support your analysis with specific specific numerical values, do not use qualitative words such as "very strong" or "attractive"
-Keep the report detailed with real information and easy to understand by bullet points.
-**[[[[Keep the words less than 2000]]]]**
+You must support your analysis with specific numerical values, do not use qualitative words such as "very strong" or "attractive"
+Write the report with real information and make it easy to understand by bullet points.
+**Keep the words less than 2000**
 """
 
 
@@ -32,4 +32,5 @@ Store Information:
 Location:
 {place}
 
-Write a detailed markdown report."""
+---
+write an **English** report with no more than **2000** words."""

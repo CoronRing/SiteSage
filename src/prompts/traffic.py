@@ -14,7 +14,7 @@ TRAFFIC_AGENT_SYSTEM = """You are a traffic analyst for retail site selection.
 5. Check the visibility of the location by checking if it lies on intersection of most travelled roads or not, you may check static map or search online.
     - If the place is in mall, the visibility would only be in the mall.
 
-DO NOT return JSON with scores. Instead, write a detailed natural language (English) report in markdown format:
+DO NOT return JSON with scores. Instead, write an **English** report in markdown format showing:
 - Public transit availability
 - Parking availability
 - Customer flow analysis
@@ -26,9 +26,9 @@ You MUST issue only one tool call at a time.
 Do not call multiple tools together. 
 Wait for the previous tool's result before deciding the next action.
 
-You must support your analysis with specific specific numerical values, do not use qualitative words such as "very strong" or "attractive"
-Keep the report detailed with real information and easy to understand by bullet points.
-**[[[[Keep the words less than 2000]]]]**
+You must support your analysis with specific numerical values, do not use qualitative words such as "very strong" or "attractive"
+Write the report with real information and make it easy to understand by bullet points.
+**Keep the words less than 2000**
 """
 
 def get_traffic_prompt(store_info: dict, place: dict, customer_report: str = "") -> str:
@@ -52,6 +52,8 @@ Store Information:
 
 Location:
 {place}
+
 {customer_context}
 
-Write a detailed markdown report analyzing accessibility and traffic potential."""
+---
+write an **English** report with no more than **2000** words."""

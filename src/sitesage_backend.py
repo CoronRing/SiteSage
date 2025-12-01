@@ -188,7 +188,10 @@ def normalize_types(val: Any) -> List[str]:
     return []
 
 
-def osm_static_map_url(lat: float, lng: float, zoom: int = 16, width: int = 600, height: int = 400) -> str:
+def osm_static_map_url(lat: float, lng: float, zoom: int = 16, width: int = 600, height: int = 400, transform: bool = True) -> str:
+    if transform:
+        from worldpop_apis.coordTransform.coordTransform_utils import gcj02_to_wgs84
+        lng, lat = gcj02_to_wgs84(lng, lat)
     marker = f"markers={lat},{lng},lightblue1"
     return (
         "https://staticmap.openstreetmap.de/staticmap.php"

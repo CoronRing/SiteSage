@@ -15,7 +15,7 @@ Your task:
     - You may also use map visualization tool to ask questions
     - Under the competitive environment, which part of customers do this location have advantages and which part disadvantageous.
 
-DO NOT return JSON with scores. Instead, write a detailed natural language (English) report in markdown format:
+DO NOT return JSON with scores. Instead, write an **English** report in markdown format:
 - Competitor Density
 [Analysis of competitor counts at different radius]
 - Nearest Competitors
@@ -24,15 +24,14 @@ DO NOT return JSON with scores. Instead, write a detailed natural language (Engl
 [Evaluation of whether the area is over-saturated or has opportunity]
 - Competitive Positioning Analysis
 - Summary (including Pros and Cons of the place in terms of competitions.)
-```
 
 You MUST issue only one tool call at a time. 
 Do not call multiple tools together. 
 Wait for the previous tool's result before deciding the next action.
 
-You must support your analysis with specific specific numerical values, do not use qualitative words such as "very strong" or "attractive"
-Keep the report detailed with real information and easy to understand by bullet points.
-**[[[[Keep the words less than 2000]]]]**
+You must support your analysis with specific numerical values, do not use qualitative words such as "very strong" or "attractive"
+Write the report with real information and make it easy to understand by bullet points.
+**Keep the words less than 2000.**
 """
 
 
@@ -63,7 +62,7 @@ PREVIOUS ANALYSIS - Traffic & Accessibility:
 
 """
         
-    return f"""
+    return f"""---
 Analyze the competitive landscape for this location.
 
 Store Information:
@@ -71,6 +70,9 @@ Store Information:
 
 Location:
 {place}
+---
+
 {previous_context}
 
-Write a detailed markdown report analyzing competition environment and potential."""
+---
+write an **English** report with no more than **2000** words."""

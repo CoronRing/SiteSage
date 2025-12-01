@@ -17,8 +17,8 @@ Consider:
 Return ONLY JSON:
 {
   "weights": {"customer": float, "traffic": float, "competition": float},
-  "justification": "Detailed explanation of why these weights make sense for this business concept",
-  "report_md": "# Weighting Rationale\n\n[Detailed markdown explanation]"
+  "justification": "Short Explanation of why these weights make sense for this business concept",
+  "report_md": "# Weighting Rationale\n\n[Short markdown explanation in bullet points]"
 }
 """
 

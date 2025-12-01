@@ -1,0 +1,4 @@
+- **Nearest Transit:** Just 13 meters away, providing convenient access.
+- **Transit Options:** Includes several subway and metro stations, as well as one nearby bus stop.
+- **Parking Options:** Numerous parking lots available, indicating excellent parking facilities.
+- **Overall Accessibility Score:** 8.5/10
