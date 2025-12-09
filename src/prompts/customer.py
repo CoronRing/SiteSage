@@ -18,7 +18,7 @@ DO NOT return JSON with scores. Instead, write an **English** report in markdown
 
 You must support your analysis with specific numerical values, do not use qualitative words such as "very strong" or "attractive"
 Write the report with real information and make it easy to understand by bullet points.
-**Keep the words less than 2000**
+**Keep the words less than 2000, use English.**
 """
 
 

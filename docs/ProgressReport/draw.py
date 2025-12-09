@@ -1,15 +1,22 @@
 import matplotlib.pyplot as plt
-
+import matplotlib.dates as mdates
 import pandas as pd
 import sys
+from pathlib import Path
 
+# =====================
+# Load and preprocess
+# =====================
 df = pd.read_csv(sys.argv[1])
 
-# Load the data, parse the dates, and sort for nicer plotting.
-df["date"] = pd.to_datetime(df["date"], format="%d/%m/%Y")
+# Parse dates safely
+df["date"] = pd.to_datetime(df["date"], format="%d/%m/%Y", errors="coerce")
+df = df.dropna(subset=["date"])
+
+# Sort by store and date
 df = df.sort_values(["store", "date"])
 
-# Pivot the table so that each store becomes a column.
+# Pivot: one column per store
 pivot_df = (
     df.pivot_table(
         index="date",
@@ -20,34 +27,96 @@ pivot_df = (
     .sort_index()
 )
 
-fig, ax = plt.subplots(figsize=(10, 6))
+# =====================
+# NeurIPS Plot Style
+# =====================
+plt.rcParams.update({
+    "font.family": "serif",
+    "font.serif": ["Times New Roman", "Times", "DejaVu Serif"],
+    "axes.titlesize": 15,
+    "axes.labelsize": 12,
+    "xtick.labelsize": 10,
+    "ytick.labelsize": 10,
+    "legend.fontsize": 11,
+    "axes.linewidth": 1.0,
+    "figure.dpi": 400,
+})
 
+fig, ax = plt.subplots(figsize=(12, 6))
+
+# =====================
+# Plot Each Store Line
+# =====================
 store_colors = {}
 
-# Draw one line per store and remember its color so mean lines match.
 for store in pivot_df.columns:
-    line, = ax.plot(pivot_df.index, pivot_df[store], marker="o", label=store)
+    # Drop NaNs for better-connected lines
+    series = pivot_df[store].dropna()
+
+    if len(series) == 0:
+        continue
+
+    line, = ax.plot(
+        series.index,
+        series.values,
+        marker="o",
+        linewidth=2.0,
+        label=store,
+    )
     store_colors[store] = line.get_color()
 
+# =====================
+# Plot Mean Lines
+# =====================
 mean_counts = pivot_df.mean()
 x_min, x_max = pivot_df.index.min(), pivot_df.index.max()
 
 for store, mean_value in mean_counts.items():
     ax.hlines(
-        mean_value,
-        x_min,
-        x_max,
-        colors=store_colors.get(store, None),
+        y=mean_value,
+        xmin=x_min,
+        xmax=x_max,
+        color=store_colors.get(store, "gray"),
         linestyles="--",
-        linewidth=1,
+        linewidth=1.2,
+        alpha=0.9,
     )
 
+# =====================
+# Axis Labels / Title
+# =====================
 ax.set_xlabel("Date")
 ax.set_ylabel("Review Count")
 ax.set_title("Review Counts Over Time by Store")
-ax.legend(title="Store", loc="best")
-ax.grid(True, linestyle="--", linewidth=0.5)
 
-fig.autofmt_xdate()
+# cleaner legend
+ax.legend(
+    title="Store",
+    frameon=False,
+    loc="upper left",
+    # bbox_to_anchor=(1.01, 1.0)  # place outside plot for neatness
+)
+
+# =====================
+# Beautify X Axis (Date)
+# =====================
+ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m-%d"))
+ax.xaxis.set_major_locator(mdates.AutoDateLocator())
+
+fig.autofmt_xdate(rotation=30)
+
+# =====================
+# NeurIPS-style grid & spines
+# =====================
+ax.grid(axis="y", linestyle="--", linewidth=0.8, color="0.85")
+ax.spines["top"].set_visible(False)
+ax.spines["right"].set_visible(False)
+
+# Tight layout
 plt.tight_layout()
-plt.savefig("data.jpg")
+
+# Save
+output_path = Path("review_trends_by_store.png")
+plt.savefig(output_path, bbox_inches="tight")
+print("Saved to:", output_path)
+plt.close(fig)

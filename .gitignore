@@ -3,7 +3,6 @@ data
 */__pycache__
 __pycache__
 .railtracks
-save/
 src/.env
 .python-version
 pytest.ini

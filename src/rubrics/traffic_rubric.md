@@ -1,155 +1,117 @@
-Traffic & Accessibility Rubric
+# Traffic and Accessibility Rubric
 
-Purpose
-- Score each location 0–10 based only on traffic & accessibility for a weekday-morning, commuter-focused specialty coffee shop.
-- Output score is a weighted average of sub-dimensions (0–10 each). Weights sum to 100%.
-- Emphasis is on: *actual* morning pass-by at the storefront, how on‑path the store is, and the size/quality of captive office populations.
+Purpose: Score 0–10 based on how easily and naturally target customers reach and pass the storefront, and the magnitude and timing of those flows. Emphasis is on storefront-level access and pass-by, not just node-wide transit volumes.
 
-Weights (sum 100%)
-- A. Effective morning pass‑by at storefront (0–30 m) – **38%**
-- B. Commuter detour & path fit – **15%**
-- C. Commuter composition & peak-hour alignment – **10%**
-- D. Macro transit relevance & capture – **10%**
-- E. Surrounding employment & resident density (1 km) – **8%**
-- F. Captive on-site / same-complex population – **12%**
-- G. In-project visibility & unit placement – **5%**
-- H. Car & drop-off accessibility – **2%**
+## Sub-dimension weights for Traffic (sum = 100%)
 
-Global caps (apply after weighted average)
-- If A (morning pass-by) < 5.0 → overall score ≤ 6.5.
-- If A < 4.0 → overall score ≤ 5.5.
-- If B (detour & path fit) < 5.0 → overall score ≤ 6.5.
-- If C (commuter composition) < 5.0 → overall score ≤ 6.5.
-- If D (macro transit relevance & capture) < 5.0 → overall score ≤ 7.5.
-- If F (captive on-site population) < 4.0 → overall score ≤ 7.0.
-- If G (in-project visibility) < 4.0 → overall score ≤ 7.0.
+1. Public transit and connectivity quality – 20%
+2. Walkability, parking and road access – 10%
+3. Target customer mobility fit – 10%
+4. Traffic volume and temporal benefits – 60%
 
-Scoring bands (all dimensions)
-- 9–10: Excellent
-- 7–8: Strong
-- 5–6: Moderate
-- 3–4: Weak
-- 0–2: Very weak / poor
+---
 
-A. Effective morning pass‑by at storefront (0–30 m) – 38%
-Measure
-- Pedestrians passing within ~0–30 m of storefront with clear line-of-sight, 07:00–10:00 on a typical weekday.
-- Count only the corridor / entrance where the unit actually sits (not whole mall or distant street segments).
-- Use conservative averages over at least 3 normal weekdays.
+## 1. Public transit and connectivity quality (20%)
 
-Scoring (07:00–10:00 unique passers, both directions)
-- 9–10: ≥ 30,000 passers; corridor is the primary path for station→office or home→station.
-- 8: 20,000–29,999 passers; one of 1–2 dominant commuter paths.
-- 7: 14,000–19,999 passers; strong commuter path, clearly on main flows.
-- 6: 9,000–13,999 passers; meaningful, steady commuter flow but not the heaviest corridor.
-- 5: 6,000–8,999 passers; secondary path with visible but limited morning flow.
-- 4: 3,000–5,999 passers; side corridor or partial visibility from main path.
-- 2–3: 1,000–2,999 passers; weak, mainly destination usage.
-- 0–1: <1,000 passers; very off-peak relative to 07:00–10:00.
+Evaluate potential inflow to the immediate area from metro or rail and major buses, before micro-routing inside buildings.
 
-Notes
-- If internal placement is uncertain, base estimates on the *narrowest* plausible corridor volume, not project-wide or hub-wide figures.
+Consider:
+- Number of lines and modes.
+- Distance from key exits or hubs to the overall project or building.
+- Daily passenger throughput.
 
-B. Commuter detour & path fit – 15%
-Measure
-- Extra time vs. shortest path for major commuter groups (by volume): metro→office, home→station, parking→office.
-- Use walking speed 70–85 m/min; include level changes, backtracking, crossings and waiting at doors/escalators.
+### Excellent (8–10)
 
-Scoring (focus on ≥70% of relevant commuters)
-- 9–10 (Excellent on-path): For ≥70% of key commuters, extra detour ≤ 2 min (≤ ~150 m); no extra road crossings; path is straight and intuitive.
-- 7–8 (Strong fit): For ≥60% of key commuters, extra detour 2–4 min (~150–300 m); at most one extra simple crossing or turn.
-- 5–6 (Moderate): For ≥50% of key commuters, extra detour 4–7 min (~300–500 m) *or* noticeable friction (multiple turns/levels, bottlenecks).
-- 3–4 (Weak): Majority need >7 min extra or clear backtracking away from desire lines.
-- 0–2 (Poor): Store is largely off main mobility patterns; few commuters can include it without major detours.
+### 9.0-10.0 (top-tier city transit hubs, directly integrated)
+- Three or more metro or rail lines, or metro plus a major intercity or bus hub.
+- At least one major entrance or concourse is inside the project or within roughly 0–50 m, with high-capacity, sheltered paths.
+- In a large city, daily passenger throughput ≈250k–300k or more.
 
-Caps inside B
-- If >50% of core commuters would detour >5 min, B ≤ 7.0.
-- If >50% would detour >8 min, B ≤ 5.0.
+### 8.0–9.0 (strong multi-line or regional nodes)
+- Two or more high-frequency metro lines, or one metro line plus a dense bus hub, with main exits within about 0–300 m.
+- In a large city, daily passenger throughput ≈120k–250k.
 
-C. Commuter composition & peak-hour alignment – 10%
-Measure
-- Share of nearby traffic (within ~200 m of project) that is repeat weekday commuters vs. tourists/leisure.
-- Strength of 07:00–10:00 and 17:00–19:00 peaks vs. midday/evening.
-- How much of total footfall is usable weekday-morning coffee demand.
+### Good (6.5–8.0)
+- Solid transit: one major metro line or bus rapid transit within roughly 300–500 m plus multiple bus routes, or smaller multi-line nodes with ≈20k–120k daily passengers.
 
-Scoring
-- 9–10 (Commuter-dominant): ≥40% of daily flows occur in peaks (07:00–10:00 + 17:00–19:00); ≥60% of morning passers are repeat commuters/students.
-- 7–8 (Commuter-strong mixed): 25–39% of daily flows in peaks; 40–59% of morning passers are regular commuters.
-- 5–6 (Balanced / leisure-skewed): 15–24% of daily flows in peaks; commuters a clear minority but still meaningful.
-- 3–4 (Leisure-dominant): <15% of daily flows in 07:00–10:00; most traffic is midday/evening/weekend.
-- 0–2 (Event/tourist only): Almost no stable commuter base; flows are event/tourist bursts.
+### Adequate (5–6.5)
+- Basic coverage: one line or a few routes within roughly 500–800 m and ≈5k–20k daily passengers.
 
-Caps inside C
-- If area is clearly leisure/tourist-dominant with weak morning peak, C ≤ 6.0 regardless of total volumes.
+### Poor (3–4.9)
+- Sparse or inconvenient transit for target users.
 
-D. Macro transit relevance & capture – 10%
-Measure
-- Rail/metro lines and major bus hubs within ~600 m walking of main customer entrances.
-- **Relevant station volume** = station entries/exits × estimated share whose shortest on-foot path naturally passes toward the project (within ~400 m of entrances).
-- Exclude lines/platforms and station flows whose typical paths lead away from the project.
+### Insufficient (0–2.9)
+- Minimal transit access.
 
-Scoring (use conservative relevant volumes)
-- 9–10 (Super-core captured hub): ≥3 lines within ~600 m *and* relevant volume ≥ 200,000/day *and* at least one major station within ~400 m with direct built-in linkage.
-- 7–8 (Strong captured hub): ≥2 lines within ~600 m *and* relevant volume 80,000–199,999/day.
-- 5–6 (Moderate): ≥1 line within ~800 m *and* relevant volume 30,000–79,999/day.
-- 3–4 (Weak): Only 1 small line beyond ~800 m *or* bus hub 10,000–29,999 relevant users with no strong rail capture.
-- 0–2 (Minimal): No meaningful rail within comfortable walk; only minor bus (<10,000 relevant users).
+---
 
-Caps inside D
-- If relevant volume <40,000/day, D ≤ 8.0.
-- If only 5–20% of a large hub’s flows naturally walk toward the project, cap D at 6.0 even if the hub itself is very large.
+## 2. Walkability, parking and road access (10%)
 
-E. Surrounding employment & resident density (1 km) – 8%
-Measure
-- Working-age residents (≈15–64) within ~1 km.
-- Daytime employment within ~1 km (office, retail, institutional).
-- Avoid double counting; define total base = residents + workers.
+Assess pedestrian quality, vehicle access, and approach simplicity.
 
-Scoring
-- 9–10 (Very dense core): Base ≥160,000; at least one segment very strong (≥100,000 workers or ≥90,000 working-age residents).
-- 7–8 (Dense urban): Base 90,000–159,999; at least one segment strong (≥60,000 workers or ≥60,000 residents).
-- 5–6 (Medium): Base 40,000–89,999.
-- 3–4 (Low): Base 15,000–39,999.
-- 0–2 (Very low): Base <15,000.
+### Excellent (9–10)
+- Safe, continuous sidewalks; natural desire lines pass directly by the storefront.
+- Multiple barrier-free entries; good shelter from rain, heat and cold for main flows.
+- Sufficient parking within roughly 3–5 minutes' walk and simple car access if drivers are a meaningful segment.
 
-F. Captive on-site / same-complex population – 12%
-Measure
-- Number of workers and hotel guests directly in the same podium/tower or immediately connected complex (0–100 m indoor walk):
-  - Office workers in upstairs towers directly linked to the podium.
-  - Hotel guests in the same building/superblock with indoor access.
-- Do *not* include wider 1 km area here (that is E).
+### Good (7–8.9)
+- Generally good walking conditions with minor flaws; adequate parking within about 5–8 minutes or workable short-stop options.
 
-Scoring (weekday daytime captive base with ≤3-min indoor walk, no road crossings)
-- 9–10: ≥15,000 captive workers/guests; project is a primary daily path node (elevators, lobby, transit link).
-- 7–8: 7,000–14,999 captive; strong integration but not entire district.
-- 5–6: 3,000–6,999 captive; meaningful tower(s) but not very large.
-- 3–4: 1,000–2,999 captive; small or partially linked buildings.
-- 0–2: <1,000 captive or weak connection (not on typical internal route).
+### Adequate (5–6.9)
+- Mixed: some indirect or fragmented walkways, awkward but usable parking, or minor safety concerns.
 
-Caps inside F
-- If captive base <1,000, F ≤ 2.0.
-- If captive base 1,000–2,999, F ≤ 4.0.
+### Poor (3–4.9)
+- Difficult walking (dangerous crossings, missing sidewalks) or very limited parking in a car-dependent context.
 
-G. In-project visibility & unit placement – 5%
-Measure
-- Whether storefront is on primary desire lines between transit exits, office lobbies, parking cores, and major anchors.
-- Line-of-sight distance from main internal spines and entrances used 07:00–10:00.
+### Insufficient (0–2.9)
+- Major physical or regulatory barriers severely limit reachability.
 
-Scoring
-- 9–10 (Prime): Faces main internal spine; visible within ≤20 m from at least one major entrance or transit-linked corridor open 07:00–10:00.
-- 7–8 (Strong): ≤30 m offset or one simple turn from main route; strong visibility from key escalators/elevator lobbies; seen by most commuters who traverse the project.
-- 5–6 (Moderate): On secondary corridor; requires multiple turns *or* is only visible after entering deeper into mall.
-- 3–4 (Weak): Cul-de-sac/upper floor; little organic discovery from transit→office paths.
-- 0–2 (Very weak): Not on any realistic commuter path; essentially destination-only.
+---
 
-H. Car & drop-off accessibility – 2%
-Measure
-- Structured parking spaces within ~3–8 min walk (especially same project/connected complex).
-- Ease of legal taxi/ride-hail drop-off within ~50–150 m of main customer entrance.
+## 3. Target customer mobility fit (10%)
 
-Scoring
-- 9–10 (Excellent): ≥1,500 usable spaces directly attached or within 3–5 min walk; clear, convenient drop-off within ~50–100 m.
-- 7–8 (Good): 600–1,499 spaces within 5–8 min; practical, legal drop-off nearby.
-- 5–6 (Adequate): 200–599 spaces or access hampered by congestion/pricing but still workable.
-- 3–4 (Poor): Minimal dedicated parking in a car-using context or awkward/unsafe drop-off.
-- 0–2 (Very poor): Almost no usable parking or legal drop-off where cars are important.
+How well actual access modes and micro-routes match how target customers travel between transit, parking, offices, homes, and the store.
+
+### Excellent (9–10)
+- Dominant travel modes are directly and conveniently served:
+  - For metro office commuters: key exits and walking routes run past or beside the storefront within roughly 150 m, preferably on the shortest paths between station and office clusters.
+  - For car users where relevant: parking in the same project or adjacent, with simple vertical circulation to the store level.
+- For most target users, extra detour versus their natural path is ≤3 minutes, often ≈0–2 minutes.
+- Main flows in critical hours coincide with open, accessible entries and corridors.
+
+### Commuter caps (hard):
+- For commuter-dependent formats, if more than half of relevant commuters must detour >4 minutes off their station-to-office or home-to-station routes, cap this sub-score at 7.5.
+- If more than half must detour >6 minutes, cap at 6.5.
+
+### Good (7–8.9)
+- Mostly aligned; typical detours ≈3–5 minutes for major segments, with straightforward routing and limited friction.
+
+### Adequate (5–6.9)
+- Partial alignment: some key segments are well served; others require 5–10 minute detours, awkward transfers, or unclear routing.
+
+### Poor (3–4.9)
+- Major target segments face significant friction.
+
+### Insufficient (0–2.9)
+- Access patterns are clearly misaligned with how likely customers travel.
+
+---
+
+## 4. Traffic volume and temporal benefits (60%)
+
+Evaluate how much usable traffic actually passes near the storefront (roughly 0–30 m) and whether it aligns with key dayparts.
+
+### Excellent (9–10)
+- Storefront lies directly on a primary pedestrian flow (station exit concourse, main mall spine between major anchors, or primary high-street corner) with strong volumes in relevant hours.
+
+### Good (7–8.9)
+- Storefront is close to but not perfectly on a main corridor, or traffic is strong but concentrated in fewer windows.
+
+### Adequate (5–6.9)
+- Moderate pass-by: side corridors, secondary streets, or upper floors with some draw.
+
+### Poor (3–4.9)
+- Limited passing traffic, such as rear streets or deep interior corners.
+
+### Insufficient (0–2.9)
+- Very low visible traffic near the site, heavily destination-only.

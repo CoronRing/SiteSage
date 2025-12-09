@@ -22,6 +22,9 @@ def tool_get_population_stats(
     Returns:
         Mapping[str, Any]: total population, population composition stratified by age (0-14, 15-59, 60-64, 65+).
     """
+    if radius is not float:
+        return {"error": f"Radius should be a float, not a {type(radius)}"}
+            
     return demographics_tool.getPopulationStats(
         location, radius_m=radius, coord_ref=coord_ref
     )
