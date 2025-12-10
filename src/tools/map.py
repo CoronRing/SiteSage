@@ -4,8 +4,9 @@ from pathlib import Path
 from typing import Any, Dict, Iterable, Mapping, MutableMapping, Optional, Sequence
 
 from map_apis.amap import AMap
+from map_apis.google_maps import GoogleMaps
 from map_apis.map_api import MapAPI
-from map_apis.type_projection import AMapTypeProjectionAdapter
+from map_apis.type_projection import AMapTypeProjectionAdapter, GooglePlacesTypeProjectionAdapter
 
 LOCATION_SCHEMA: Mapping[str, Any] = {
     "type": "object",
@@ -27,16 +28,26 @@ LOCATION_SCHEMA: Mapping[str, Any] = {
 
 __all__ = ["MapTool", "LOCATION_SCHEMA"]
 
-def process_amap_place(place: Mapping[str, Any]) -> Mapping[str, Any]:
+def process_place(place: Mapping[str, Any]) -> Mapping[str, Any]:
+    """Process place data to extract common fields regardless of provider."""
+    provider = place.get("provider", "unknown")
     new_place = {
-        "provider": place["provider"], 
-        "name": place["name"],
-        "lat": place["lat"],
-        "lng": place["lng"],
-        "address": place["address"],
-        "distance": place["raw"]["distance"],
-        "type": place["raw"]["type"] 
+        "provider": provider, 
+        "name": place.get("name"),
+        "lat": place.get("lat"),
+        "lng": place.get("lng"),
+        "address": place.get("address"),
     }
+    
+    # Provider-specific distance field
+    if provider == "amap":
+        new_place["distance"] = place.get("raw", {}).get("distance")
+        new_place["type"] = place.get("raw", {}).get("type")
+    elif provider == "google_maps":
+        # Google doesn't return distance in nearby search, calculate from origin if needed
+        new_place["distance"] = place.get("raw", {}).get("distance")
+        new_place["type"] = ", ".join(place.get("raw", {}).get("types", []))
+    
     return new_place
 
 class MapTool:
@@ -50,18 +61,20 @@ class MapTool:
       * getDistances
     """
 
-    _PROVIDERS: Dict[str, type[MapAPI]] = {"amap": AMap}
+    _PROVIDERS: Dict[str, type[MapAPI]] = {"amap": AMap, "google_maps": GoogleMaps, "google": GoogleMaps}
 
     def __init__(
         self,
-        map_choice: str = "amap",
+        map_choice: str = "google_maps",
     ) -> None:
         self.provider_name = map_choice.lower()
         self.map_api = self._select_provider(self.provider_name)
         if self.provider_name == "amap":
             self.type_projector = AMapTypeProjectionAdapter()
+        elif self.provider_name in ("google_maps", "google"):
+            self.type_projector = GooglePlacesTypeProjectionAdapter()
         else:
-            raise NotImplementedError
+            raise NotImplementedError(f"No type projector for provider: {self.provider_name}")
         self._tool_schemas = self._build_tool_schemas()
 
     @property
@@ -129,7 +142,7 @@ class MapTool:
             include_details=include_details,
             num_pages=num_pages,
         )
-        nearby_places = [process_amap_place(p) for p in nearby_places]
+        nearby_places = [process_place(p) for p in nearby_places]
         return nearby_places
 
     def getDistances(

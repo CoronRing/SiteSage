@@ -1,19 +1,24 @@
 # SiteSage — Royal Edition
 
-A prototype, agentic site-selection system that evaluates retail locations (initially coffee shops in Shanghai) with explainable, data-driven insights. It runs a staged analysis pipeline, saves step-by-step reports, and presents a modern golden/royal-styled frontend for exploration.
+A prototype, agentic site-selection system that evaluates retail locations with explainable, data-driven insights. It runs a staged analysis pipeline, saves step-by-step reports, and presents a modern golden/royal-styled frontend for exploration.
+
+**Now supports both Chinese (AMap) and Western (Google Maps) APIs for global use!** 🌍
 
 - Agents (LLM + tools where applicable) with sequential data flow
-  1) Understanding: parse prompt, geocode, static map
-  2) Customer: population and demographics analysis → produces markdown report
-  3) Traffic: transit/parking accessibility → receives customer report
-  4) Competition: competitor density/proximity → receives customer + traffic reports
-  5) Weighting: derive weights for each domain
-  6) Evaluation: score all analyses objectively using rubrics (0-10 scale)
-  7) Final Report: synthesize all analyses with scores into executive summary
+
+  1. Understanding: parse prompt, geocode, static map
+  2. Customer: population and demographics analysis → produces markdown report
+  3. Traffic: transit/parking accessibility → receives customer report
+  4. Competition: competitor density/proximity → receives customer + traffic reports
+  5. Weighting: derive weights for each domain
+  6. Evaluation: score all analyses objectively using rubrics (0-10 scale)
+  7. Final Report: synthesize all analyses with scores into executive summary
 
 - Tools
-  - AMap wrapper (geocoding, nearby POIs, distance matrix) via `tools/map_rt.py`
-  - Population stats via `tools/demographics_rt.py` (WorldPop rasters)
+  - **Map Services** (configurable):
+    - Google Maps Platform (geocoding, nearby POIs, distance matrix, static maps) — **NEW!** For US/Western locations
+    - AMap (高德地图) — For Chinese locations
+  - Population stats via `tools/demographics_rt.py` (WorldPop rasters - global coverage)
   - Optional lightweight web search via `ddgs`
   - Static map preview via Leaflet (frontend)
 
@@ -40,26 +45,31 @@ A prototype, agentic site-selection system that evaluates retail locations (init
 
 ## Demo
 
-1) Start the frontend server
+1. Start the frontend server
+
 ```bash
 python -c "import sitesage_frontend as f; f.main()"
 ```
 
-2) Open the app in a browser
+2. Open the app in a browser
+
 - http://127.0.0.1:8000
 
-3) In the left panel:
+3. In the left panel:
+
 - Select language (EN/中文)
 - Enter a prompt (example below)
 - Click “Run Analysis”
 
 Example prompt:
+
 ```
 Open a boutique coffee shop with a cozy vibe targeting young professionals and students.
 Strong morning traffic is desired. The location is near 南京东路300号, 黄浦区, 上海.
 ```
 
-4) Explore results
+4. Explore results
+
 - Right pane shows an interactive map first.
 - The “Artifacts” list (bottom-left) will populate with step-wise markdown reports and the “Final Report.” Click to view in the right pane.
 
@@ -68,6 +78,7 @@ Strong morning traffic is desired. The location is near 南京东路300号, 黄�
 ## Architecture
 
 - Orchestrated 7-step agentic pipeline with sequential data flow (LLM + tools):
+
   - UnderstandingAgent → tool_get_place_info, tool_build_static_map
   - CustomerAgent → tool_get_population_stats → markdown report
   - TrafficAgent (receives customer report) → tool_get_nearby_places, tool_get_distances → markdown report
@@ -77,8 +88,9 @@ Strong morning traffic is desired. The location is near 南京东路300号, 黄�
   - FinalReportAgent → no tools; synthesizes with scores into polished markdown report
 
 - Data sources:
-  - AMap (geocoding, POIs, distance)
-  - WorldPop rasters (population/age composition)
+
+  - **Google Maps Platform** (US/Western) or **AMap** (China) - geocoding, POIs, distance
+  - WorldPop rasters (population/age composition) - global coverage
   - OpenStreetMap tiles (frontend map)
 
 - Design highlights:
@@ -93,23 +105,37 @@ Strong morning traffic is desired. The location is near 南京东路300号, 黄�
 
 ## Requirements
 
+### For US/Western Locations (Google Maps)
+
+📍 **See [GOOGLE_MAPS_SETUP.md](GOOGLE_MAPS_SETUP.md) for complete Google Maps setup guide!**
+
 - Python 3.9+ (tested on 3.12)
 - Packages:
   - railtracks
   - ddgs
   - fastapi
   - uvicorn
-- API keys and provider configs set up for:
+- API keys:
   - OpenAI (for railtracks LLM): `OPENAI_API_KEY`
-  - AMap (if your `tools/map_rt.py` needs AMap keys)
-  - WorldPop rasters preloaded/accessible by your `tools.demographics` implementation
+  - **Google Maps Platform**: `GOOGLE_MAPS_API_KEY` (for US/Western)
+  - WorldPop rasters for your region
+
+### For Chinese Locations (AMap)
+
+- Same Python packages as above
+- API keys:
+  - OpenAI: `OPENAI_API_KEY`
+  - **AMap (高德)**: `AMAP_API_KEY` (for China)
+  - WorldPop rasters for China
 
 Install dependencies:
+
 ```bash
 pip install railtracks ddgs fastapi uvicorn
 ```
 
 Environment variables:
+
 ```bash
 # Linux/macOS
 export OPENAI_API_KEY="your-openai-key"
@@ -123,6 +149,7 @@ $env:OPENAI_API_KEY="your-openai-key"
 ## Setup
 
 Place files as follows (example):
+
 ```
 project/
 ├─ sitesage_backend.py
@@ -141,14 +168,17 @@ Ensure `tools/map_rt.py` and `tools/demographics_rt.py` import correctly and are
 ## Run the Frontend
 
 Start the server:
+
 ```bash
 python -c "import sitesage_frontend as f; f.main()"
 ```
 
 Then open:
+
 - http://127.0.0.1:8000
 
 The server prints clear console logs:
+
 - System start
 - GET /
 - POST /api/run -> request in
@@ -159,11 +189,13 @@ The server prints clear console logs:
 ## Run Backend Demo Only
 
 You can run the backend demo without the frontend:
+
 ```bash
 python -c "import sitesage_backend as b; b.main()"
 ```
 
 It will:
+
 - Execute a demo prompt (in Chinese by default)
 - Save artifacts under save/demo_session/
 - Print a console summary (final score, weights, report path)
@@ -182,6 +214,7 @@ The frontend uses a simple REST endpoint.
   - Response: a JSON document described in [Result Schema](#result-schema)
 
 Example cURL:
+
 ```bash
 curl -X POST http://127.0.0.1:8000/api/run \
   -H "Content-Type: application/json" \
@@ -196,6 +229,7 @@ curl -X POST http://127.0.0.1:8000/api/run \
 ## Result Schema
 
 The backend returns a dict with the following keys:
+
 - session_id (str)
 - input (dict)
   - prompt (str)
@@ -243,6 +277,7 @@ All step-wise reports (including the Final Report) are saved to `save/<session_i
 ## Project Structure
 
 Key files:
+
 - `sitesage_backend.py`: Agentic pipeline and tools. Produces all analysis and writes reports.
 - `sitesage_frontend.py`: FastAPI server serving the UI and endpoint `/api/run`.
 - `frontend/index.html`: Golden/royal-styled SPA. Left panel for input/config and artifacts; right panel is a live map or markdown viewer.
@@ -250,6 +285,7 @@ Key files:
 - `tools/demographics_rt.py`: Thin wrapper over your DemographicsTool (WorldPop).
 
 Generated:
+
 - `save/<session_id>/`
   - `01_understanding.md` - Extracted store info and location
   - `02_customer.md` - Customer analysis report
@@ -261,6 +297,7 @@ Generated:
   - (other files or logs as your tools may create)
 
 Rubric files (project root):
+
 - `rubrics/customer_rubric.md` - Customer analysis scoring criteria
 - `rubrics/traffic_rubric.md` - Traffic analysis scoring criteria
 - `rubrics/competition_rubric.md` - Competition analysis scoring criteria
@@ -279,15 +316,19 @@ Rubric files (project root):
 ## Troubleshooting
 
 - ERROR “asyncio.run() cannot be called from a running event loop”
+
   - Fixed. The frontend awaits `run_sitesage_session_async` instead of calling the sync wrapper.
 
 - Map not rendering / DNS issues (static image)
+
   - The UI now uses Leaflet live map with OSM tiles, including a fallback tile provider.
 
 - AMap/coordinates mismatch (lon vs lng)
+
   - Tools normalize coordinates and include both `lng` and `lon`. If your provider response schema differs, check `save/<session_id>/` artifacts and adjust the wrappers.
 
 - Missing provider data or API keys
+
   - Ensure AMap and demographic tools are configured and reachable. Set `OPENAI_API_KEY` for LLM.
 
 - Large artifacts not showing in UI
