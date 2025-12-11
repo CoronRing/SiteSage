@@ -1,6 +1,6 @@
 # SiteSage
 
-> AI-powered retail site selection analysis for retail locations with explainable, data-driven insights.
+> Open-source solution to the #1 factor impacting business revenue: location.
 
 **Powered by [Railtracks](https://github.com/RailtownAI/railtracks)** <img src="https://railtracks.org/wp-content/uploads/2025/09/Railtracks_Logo_Blue-_1_.png" alt="Railtracks Logo" height="20" style="vertical-align: middle;">
 
@@ -8,7 +8,7 @@
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Powered by Railtracks](https://img.shields.io/badge/Powered%20by-Railtracks-blue)](https://github.com/RailtownAI/railtracks)
 
-![SiteSage Architecture](docs/media/SiteSage-Pipeline+Structure.png)
+![SiteSage UI](docs/media/Frontend.png)
 
 ## Overview
 
@@ -35,7 +35,7 @@ SiteSage is an agentic site-selection system that evaluates retail locations usi
 
 2. **Install dependencies**
   Suggested: 
-  
+
   ```bash
   uv venv
   .venv\Scripts\activate
@@ -99,13 +99,8 @@ Results include interactive maps, detailed reports, and actionable recommendatio
 
 SiteSage uses a **sequential agentic pipeline** where each stage builds on previous analyses:
 
-```
-Understanding → Customer → Traffic → Competition → Weighting → Evaluation → Final Report
-     ↓            ↓          ↓           ↓             ↓            ↓            ↓
-   Store Info  Pop Data   Transit    Competitors   Weights     Scores      Summary
-```
 
-![Architecture Diagram](docs/media/SiteSage-Software-Structure-nov17.png)
+![SiteSage Architecture](docs/media/SiteSage-Pipeline+Structure.png)
 
 Each agent uses:
 
@@ -122,73 +117,6 @@ See [docs/DESIGN.md](docs/DESIGN.md) for detailed architecture documentation.
 - 📙 [Design Document](docs/DESIGN.md) - Architecture and implementation details
 - 📕 [AMap Setup](docs/AMAP_API.md) - Chinese location setup guide
 - 🔧 [Troubleshooting](docs/TROUBLESHOOTING.md) - Common issues and solutions
-
-## Project Structure
-
-```
-SiteSage/
-├── src/
-│   ├── sitesage_frontend.py      # FastAPI web server
-│   ├── sitesage_backend.py       # Analysis pipeline
-│   ├── tools/                    # Map and demographics tools
-│   ├── prompts/                  # Agent system prompts
-│   ├── rubrics/                  # Evaluation criteria
-│   └── frontend/                 # Web UI (HTML/JS)
-├── docs/                         # Documentation
-├── tests/                        # Test suite
-├── pyproject.toml               # Dependencies
-└── .env.sample                  # Environment template
-```
-
-## Technology Stack
-
-- **Backend**: Python 3.9+, FastAPI, uvicorn
-- **AI/LLM**: OpenAI GPT-4, railtracks orchestration
-- **Maps**: Google Maps Platform, AMap/高德地图
-- **Demographics**: WorldPop rasters (global coverage)
-- **Frontend**: HTML/CSS/JS, Leaflet maps, Marked markdown
-
-## Sample Output
-
-The system generates:
-
-1. **Interactive map** with location marker
-2. **Step-by-step reports** for each analysis stage
-3. **Evaluation scores** (0-10 scale) with justifications
-4. **Final executive summary** with recommendations
-
-Example scores:
-
-- Customer: 8.5/10 - Dense young professional population
-- Traffic: 9.0/10 - Excellent transit access
-- Competition: 6.5/10 - High competition but proven demand
-- **Overall: 7.95/10** - Recommended with differentiation strategy
-
-See [docs/sample_run/](docs/sample_run/) for complete example outputs.
-
-## Development
-
-```bash
-# Install with dev dependencies
-pip install -e ".[dev]"
-
-# Run tests
-pytest
-
-# Type checking
-pyright
-```
-
-## Limitations
-
-- Prototype focused on coffee shops (extensible to other retail)
-- Best results for urban/dense areas with good data coverage
-- Requires API keys for full functionality
-- LLM outputs may vary between runs
-
-## Contributing
-
-This is an academic project. For questions or issues, please open a GitHub issue.
 
 ## Acknowledgments
 
