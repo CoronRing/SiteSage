@@ -197,12 +197,19 @@ This project is **proudly sponsored by [Railtracks](https://github.com/RailtownA
 6. **Error Recovery**: Graceful handling of API failures and partial results
 
 **Learn More:**
+
 - GitHub: [https://github.com/RailtownAI/railtracks](https://github.com/RailtownAI/railtracks)
 
+---
+
+### Other Credits
+
+- **Coordinate Conversion**: [coordTransform](https://github.com/wandergis/coordTransform) - Helps conversion between WorldPop and standard coordinate systems
+- **Search**: DuckDuckGo Search (ddgs)
 
 ## License
 
-Academic/research use. Please comply with API provider terms of service.
+MIT. However, please comply with API provider terms of service, in particular for the asia region which use a range of different API and service providers.
 
 ---
 

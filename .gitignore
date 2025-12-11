@@ -25,12 +25,9 @@ src/.env
 tests/.env
 
 # Project specific
-data/
 .railtracks/
 src/logs/*
-src/save/*
 logs/
-AGENTS.md
 
 # Testing
 .pytest_cache/

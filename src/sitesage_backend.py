@@ -496,7 +496,7 @@ async def run_sitesage_session_async(
     # 1) Understanding
     understanding_agent = make_understanding_agent()
     understanding_prompt = get_understanding_prompt(prompt)
-    with rt.Session(logging_setting="VERBOSE", timeout=600.0):
+    with rt.Session(logging_setting="INFO", timeout=600.0):
         resp = await rt.call(understanding_agent, user_input=understanding_prompt)
     
     try:
@@ -530,7 +530,7 @@ async def run_sitesage_session_async(
     # 2) Customer
     customer_agent = make_customer_agent()
     customer_prompt = get_customer_prompt(store_info, location_info)
-    with rt.Session(logging_setting="VERBOSE", timeout=600.0):
+    with rt.Session(logging_setting="INFO", timeout=600.0):
         cresp = await rt.call(customer_agent, user_input=customer_prompt)
     
     # Extract the markdown report (the entire response is the report)
@@ -543,7 +543,7 @@ async def run_sitesage_session_async(
     # 3) Traffic - receives Customer report
     traffic_agent = make_traffic_agent()
     traffic_prompt = get_traffic_prompt(store_info, location_info, customer_context)
-    with rt.Session(logging_setting="VERBOSE", timeout=600.0):
+    with rt.Session(logging_setting="INFO", timeout=600.0):
         tresp = await rt.call(traffic_agent, user_input=traffic_prompt)
     
     # Extract the markdown report
@@ -561,7 +561,7 @@ async def run_sitesage_session_async(
         customer_context,
         traffic_context,
     )
-    with rt.Session(logging_setting="VERBOSE", timeout=600.0):
+    with rt.Session(logging_setting="INFO", timeout=600.0):
         kresp = await rt.call(competition_agent, user_input=competition_prompt)
     
     # Extract the markdown report
@@ -655,7 +655,7 @@ async def run_sitesage_session_async(
     #     competition_rubric=competition_rubric,
     # )
     
-    # with rt.Session(logging_setting="VERBOSE", timeout=600.0):
+    # with rt.Session(logging_setting="INFO", timeout=600.0):
     #     eresp = await rt.call(evaluation_agent, user_input=evaluation_prompt)
     
     # try:
@@ -717,7 +717,7 @@ async def run_sitesage_session_async(
         weights=weights,
         final_score=final_score,
     )
-    with rt.Session(logging_setting="VERBOSE", timeout=600.0):
+    with rt.Session(logging_setting="INFO", timeout=600.0):
         fresp = await rt.call(final_agent, user_input=final_prompt)
     
     try:
