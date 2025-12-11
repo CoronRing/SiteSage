@@ -34,6 +34,15 @@ SiteSage is an agentic site-selection system that evaluates retail locations usi
    ```
 
 2. **Install dependencies**
+  Suggested: 
+  
+  ```bash
+  uv venv
+  .venv\Scripts\activate
+  uv pip install -e .
+  ```
+
+  or
 
    ```bash
    pip install -e .

@@ -27,6 +27,7 @@ tests/.env
 # Project specific
 .railtracks/
 src/logs/*
+src/save/*
 logs/
 
 # Testing
@@ -49,3 +50,4 @@ Thumbs.db
 # Config
 pytest.ini
 pyrightconfig.json
+.env

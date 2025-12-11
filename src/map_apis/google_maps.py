@@ -199,7 +199,7 @@ class GoogleMaps(MapAPI):
 
     def getNearbyPlaces(
         self,
-        place: Mapping[str, Any],
+        place: Mapping[str, Any] | str,
         types: Sequence[str],
         *,
         radius: int = 500,
@@ -210,7 +210,7 @@ class GoogleMaps(MapAPI):
         _log_function_call(
             "getNearbyPlaces",
             {
-                "place": dict(place),
+                "place": place if isinstance(place, str) else dict(place),
                 "types": list(types),
                 "radius": radius,
                 "rank": rank,
@@ -296,8 +296,8 @@ class GoogleMaps(MapAPI):
 
     def getDistance(
         self,
-        origin: Mapping[str, Any],
-        destinations: Sequence[Mapping[str, Any]],
+        origin: Mapping[str, Any] | str,
+        destinations: Sequence[Mapping[str, Any] | str],
         *,
         mode: str = "walk",
         units: str = "metric",
@@ -305,8 +305,8 @@ class GoogleMaps(MapAPI):
         _log_function_call(
             "getDistance",
             {
-                "origin": dict(origin),
-                "destinations": [dict(d) for d in destinations],
+                "origin": origin if isinstance(origin, str) else dict(origin),
+                "destinations": [d if isinstance(d, str) else dict(d) for d in destinations],
                 "mode": mode,
                 "units": units,
             },
@@ -367,7 +367,7 @@ class GoogleMaps(MapAPI):
 
     def getMapVisuailization(
         self,
-        origin: Mapping[str, Any],
+        origin: Mapping[str, Any] | str,
         *,
         zoom: Optional[Any] = 15,
         overlays: Optional[Iterable[Mapping[str, Any]]] = None,
@@ -376,9 +376,9 @@ class GoogleMaps(MapAPI):
         _log_function_call(
             "getMapVisuailization",
             {
-                "origin": dict(origin),
+                "origin": origin,
                 "zoom": zoom,
-                "overlays": [dict(o) for o in overlays] if overlays else None,
+                "overlays": list(overlays) if overlays else None,
                 "style": style,
             },
         )
@@ -473,7 +473,13 @@ class GoogleMaps(MapAPI):
         
         return payload
 
-    def _resolve_coordinates(self, place: Mapping[str, Any]) -> tuple[float, float]:
+    def _resolve_coordinates(self, place: Mapping[str, Any] | str) -> tuple[float, float]:
+        # Handle string address directly
+        if isinstance(place, str):
+            resolved = self.getPlaceInfo(place)
+            return float(resolved["lat"]), float(resolved["lng"])
+        
+        # Handle dict with lat/lng
         if "lat" in place and "lng" in place:
             return float(place["lat"]), float(place["lng"])
         if "location" in place and isinstance(place["location"], dict):

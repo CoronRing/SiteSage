@@ -65,7 +65,7 @@ def tool_get_place_info(
 
 @rt.function_node
 def tool_get_map_visualization(
-    origin: Mapping[str, Any],
+    origin: Mapping[str, Any] | str,
     *,
     zoom: Optional[int] = 14,
     overlays: Optional[Iterable[Mapping[str, Any]]] = None,
@@ -76,7 +76,7 @@ def tool_get_map_visualization(
     """
     Render a static map (url) centered on the origin and optional overlay markers and (if requested) analysis of the static map or answer for a query
     Args:
-        origin (Dict): Primary location, should include 'lat', 'lng', or 'address' (only when you don't know lat, lng), its label will be 'A' on the map.
+        origin (Dict or str): Primary location. Can be a dict with 'lat'/'lng' keys, a dict with 'address' key, or a plain address string. Its label will be 'A' on the map.
         zoom (Optional[int]): Zoom in extent, default as 14, select span between 12-17: Lower values show more district-wide context, higher values zoom in to street/building detail.
         overlays (Optional[List[Dict]]): Additional markers to render except for origin, maximum 10 overlays, each should include lat, lng, (or address only when you don't know lat, lng), and label (you can only use 1-character labels such as A,B,C,...).
         style (Optional[str]): Provider-specific style identifier for the visualization.
@@ -100,7 +100,7 @@ def tool_get_map_visualization(
 
 @rt.function_node
 def tool_get_nearby_places(
-    origin: Mapping[str, Any],
+    origin: Mapping[str, Any] | str,
     descriptive_types: Sequence[str],
     *,
     radius: int = 500,
@@ -110,7 +110,7 @@ def tool_get_nearby_places(
     """
     Retrieve nearby places by projecting descriptive categories to provider-specific types.
     Args:
-        origin (Dict): Primary location that is searched on, should include lat, lng, or address (only when you don't know lat, lng).
+        origin (Dict or str): Primary location that is searched on. Can be a dict with 'lat'/'lng' keys, a dict with 'address' key, or a plain address string.
         descriptive_types (List[str]): List of categories to search for.
         radius (Optional[int]): Search radius in meters, default 500, minimal 500.
         rank (Optional[str]): Provider-supported ranking strategy, choose from "DISTANCE" and "WEIGHT".
@@ -146,16 +146,16 @@ def tool_get_nearby_places(
 
 @rt.function_node
 def tool_get_distances(
-    origin: Mapping[str, Any],
-    destinations: Sequence[Mapping[str, Any]],
+    origin: Mapping[str, Any] | str,
+    destinations: Sequence[Mapping[str, Any] | str],
     *,
     mode: str = "walk"
 ) -> Sequence[Mapping[str, Any]]:
     """
     Compute travel distance metrics from an origin to one or more destinations.
     Args:
-        origin (Dict): Starting location for the route calculation, should include lat, lng, or address (only when you don't know lat, lng).
-        destinations (List[Dict]): Target endpoints to evaluate, same requirement as origin.
+        origin (Dict or str): Starting location for the route calculation. Can be a dict with 'lat'/'lng' keys, a dict with 'address' key, or a plain address string.
+        destinations (List[Dict or str]): Target endpoints to evaluate, same format options as origin.
         mode (Optional[str]): Travel mode (walk, drive, transit, etc.), default walk.
 
     Returns:

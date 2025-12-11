@@ -10,6 +10,7 @@ import json
 import logging
 import os
 import re
+from pathlib import Path
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple
 from openai import OpenAI
@@ -67,10 +68,12 @@ logger = logging.getLogger("sitesage")
 # Utilities
 # -----------------------------------------------------------------------------
 def ensure_session_dir(session_id: str) -> str:
-    base = os.path.abspath("save")
-    path = os.path.join(base, session_id)
-    os.makedirs(path, exist_ok=True)
-    return path
+    # Use same base directory as frontend - resolve relative to this file's location
+    base_dir = Path(__file__).resolve().parent
+    save_dir = base_dir / "save"
+    session_path = save_dir / session_id
+    session_path.mkdir(parents=True, exist_ok=True)
+    return str(session_path)
 
 
 def write_markdown(session_dir: str, name: str, content: str) -> str:
@@ -574,9 +577,10 @@ async def run_sitesage_session_async(
     weighting_response_text = ""
 
     # Load weighting rubric
-    rubric_dir = os.path.abspath("rubrics")
+    base_dir = Path(__file__).resolve().parent
+    rubric_dir = base_dir / "rubrics"
     try:
-        with open(os.path.join(rubric_dir, "weighting_rubric.md"), "r", encoding="utf-8") as f:
+        with open(rubric_dir / "weighting_rubric.md", "r", encoding="utf-8") as f:
             weighting_rubric = f.read()
     except Exception as e:
         logger.error("Failed to load weighting_rubric.md: %s", e)
@@ -622,23 +626,24 @@ async def run_sitesage_session_async(
     #   - This ensures weights reflect business priorities, not analysis quality
     
     # Load rubric files
-    rubric_dir = os.path.abspath("rubrics")
+    base_dir = Path(__file__).resolve().parent
+    rubric_dir = base_dir / "rubrics"
     try:
-        with open(os.path.join(rubric_dir, "customer_rubric.md"), "r", encoding="utf-8") as f:
+        with open(rubric_dir / "customer_rubric.md", "r", encoding="utf-8") as f:
             customer_rubric = f.read()
     except Exception as e:
         logger.error("Failed to load customer_rubric.md: %s", e)
         customer_rubric = "# Customer Rubric\nNo rubric available."
     
     try:
-        with open(os.path.join(rubric_dir, "traffic_rubric.md"), "r", encoding="utf-8") as f:
+        with open(rubric_dir / "traffic_rubric.md", "r", encoding="utf-8") as f:
             traffic_rubric = f.read()
     except Exception as e:
         logger.error("Failed to load traffic_rubric.md: %s", e)
         traffic_rubric = "# Traffic Rubric\nNo rubric available."
     
     try:
-        with open(os.path.join(rubric_dir, "competition_rubric.md"), "r", encoding="utf-8") as f:
+        with open(rubric_dir / "competition_rubric.md", "r", encoding="utf-8") as f:
             competition_rubric = f.read()
     except Exception as e:
         logger.error("Failed to load competition_rubric.md: %s", e)
@@ -787,7 +792,9 @@ def main() -> None:
     print("Weights:", {k: round(v, 2) for k, v in res["weights"].items() if isinstance(v, float)})
     print("Map:", res["assets"].get("map_image_url", ""))
     print("Final Report:", res["final_report"].get("report_path", ""))
-    print("Reports saved under:", os.path.abspath(os.path.join("save", res['session_id'])))
+    base_dir = Path(__file__).resolve().parent
+    session_path = base_dir / "save" / res['session_id']
+    print("Reports saved under:", str(session_path))
     print("\nAnalysis Reports:")
     print("  - Customer:", res["assets"]["reports"].get("02_customer", ""))
     print("  - Traffic:", res["assets"]["reports"].get("03_traffic", ""))
