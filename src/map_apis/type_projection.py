@@ -21,7 +21,7 @@ __all__ = [
 ]
 
 _PROMPTS_DIR = Path(__file__).resolve().parents[1] / "prompts"
-_DEFAULT_TAXONOMY_PATH = Path(__file__).resolve().parents[1] / "docs" / "Amap-cls-description.csv"
+_DEFAULT_TAXONOMY_PATH = Path(__file__).resolve().parents[1] / "data" / "Amap-cls-description.csv"
 _PROMPT_CACHE: Dict[str, str] = {}
 
 class TypeProjectionAdapter:

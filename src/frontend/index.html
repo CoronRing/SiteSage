@@ -92,6 +92,7 @@
     .muted{ color: var(--muted); font-size: 13px; }
     .divider{ height:1px; background: rgba(255,255,255,0.1); margin: 12px 0; }
     .error{ color: var(--err); margin-top: 8px; }
+    .warning{ color: #ffa500; margin-top: 8px; background: rgba(255, 165, 0, 0.1); padding: 10px; border-radius: 8px; border-left: 3px solid #ffa500; }
 
     /* Artifact list */
     .list{ display:flex; flex-direction:column; gap:8px; }
@@ -131,10 +132,18 @@
       <div class="body">
         <!-- Config & Input -->
         <div class="field">
+          <label>Region</label>
+          <select id="region">
+            <option value="north_america" selected>North America</option>
+            <option value="europe">Europe</option>
+            <option value="asia">Asia (China)</option>
+          </select>
+        </div>
+        <div class="field">
           <label>Language</label>
           <select id="language">
-            <option value="en">English</option>
-            <option value="zh" selected>中文 (Chinese)</option>
+            <option value="en" selected>English</option>
+            <option value="zh">中文 (Chinese)</option>
           </select>
         </div>
         <div class="field">
@@ -145,6 +154,7 @@
           <button id="btnRun" class="btn">Run Analysis</button>
           <span id="status" class="muted"></span>
         </div>
+        <div id="warnings" class="warning"></div>
         <div id="errors" class="error"></div>
 
         <div class="divider"></div>
@@ -208,7 +218,8 @@
   let mapLayer = null;
   let marker = null;
 
-  function initMap(lat=31.2304, lng=121.4737, zoom=14){
+  function initMap(lat=49.2827, lng=-123.1207, zoom=14){
+    // Default: Vancouver, BC, Canada (580 Hornby St area)
     if (map){ map.remove(); map = null; }
     map = L.map('map', { zoomControl: true });
     addTileLayerWithFallback();
@@ -319,6 +330,7 @@
   }
 
   async function runAnalysis(){
+    const region = qs('#region').value;
     const language = qs('#language').value;
     const prompt = (qs('#prompt').value || '').trim();
     if (!prompt){
@@ -328,14 +340,15 @@
     const session_id = defaultSessionId();
     qs('#status').textContent = 'Running...';
     qs('#errors').textContent = '';
+    qs('#warnings').textContent = '';
 
-    console.log("Sending request:", {session_id, language, prompt_len: prompt.length});
+    console.log("Sending request:", {session_id, region, language, prompt_len: prompt.length});
     let data = null;
     try{
       const resp = await fetch('/api/run', {
         method:'POST',
         headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ session_id, prompt, language })
+        body: JSON.stringify({ session_id, prompt, language, region })
       });
       console.log("Response in:", resp.status);
       if (!resp.ok){
@@ -352,6 +365,13 @@
     }
 
     lastResult = data;
+    
+    // Display any warnings from the backend
+    if (data.warning) {
+      console.warn("Backend warning:", data.warning);
+      qs('#warnings').textContent = '⚠️ ' + data.warning;
+    }
+    
     // Map
     updateMapFromResult(data);
     // Artifacts and summary
@@ -362,14 +382,39 @@
 
   // Setup
   document.addEventListener('DOMContentLoaded', ()=>{
-    // Demo fill
+    // Demo fill with Vancouver example
     qs('#prompt').value =
-      "Open a boutique coffee shop with a cozy vibe targeting young professionals and students. " +
-      "Strong morning traffic is desired. The location is near 南京东路300号, 黄浦区, 上海.";
+      "Open a specialty coffee shop with a modern, welcoming atmosphere targeting young professionals and students. " +
+      "Strong morning and lunch traffic is desired. The location is 580 Hornby St, Vancouver, BC, Canada.";
 
-    // Initial map
-    initMap();
+    // Initial map centered on Vancouver
+    initMap(49.2827, -123.1207, 13);
     showMap();
+    
+    // Region change handler - update example prompt
+    qs('#region').addEventListener('change', function(){
+      const region = this.value;
+      if (region === 'north_america') {
+        qs('#prompt').value =
+          "Open a specialty coffee shop with a modern, welcoming atmosphere targeting young professionals and students. " +
+          "Strong morning and lunch traffic is desired. The location is 580 Hornby St, Vancouver, BC, Canada.";
+        qs('#language').value = 'en';
+        initMap(49.2827, -123.1207, 13); // Vancouver
+      } else if (region === 'europe') {
+        qs('#prompt').value =
+          "Open a boutique coffee shop with European charm targeting professionals and tourists. " +
+          "Good foot traffic throughout the day is desired. The location is near Trafalgar Square, London, UK.";
+        qs('#language').value = 'en';
+        initMap(51.5074, -0.1278, 13); // London
+      } else if (region === 'asia') {
+        qs('#prompt').value =
+          "Open a boutique coffee shop with a cozy vibe targeting young professionals and students. " +
+          "Strong morning traffic is desired. The location is near 南京东路300号, 黄浦区, 上海.";
+        qs('#language').value = 'zh';
+        initMap(31.2304, 121.4737, 14); // Shanghai
+      }
+      showMap();
+    });
 
     // Bind
     qs('#btnRun').addEventListener('click', runAnalysis);

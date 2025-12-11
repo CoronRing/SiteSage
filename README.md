@@ -1,376 +1,209 @@
-# SiteSage — Royal Edition
+# SiteSage
 
-A prototype, agentic site-selection system that evaluates retail locations with explainable, data-driven insights. It runs a staged analysis pipeline, saves step-by-step reports, and presents a modern golden/royal-styled frontend for exploration.
+> AI-powered retail site selection analysis for retail locations with explainable, data-driven insights.
 
-**Now supports both Chinese (AMap) and Western (Google Maps) APIs for global use!** 🌍
+**Powered by [Railtracks](https://github.com/RailtownAI/railtracks)** <img src="https://railtracks.org/wp-content/uploads/2025/09/Railtracks_Logo_Blue-_1_.png" alt="Railtracks Logo" height="20" style="vertical-align: middle;">
 
-- Agents (LLM + tools where applicable) with sequential data flow
+[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Powered by Railtracks](https://img.shields.io/badge/Powered%20by-Railtracks-blue)](https://github.com/RailtownAI/railtracks)
 
-  1. Understanding: parse prompt, geocode, static map
-  2. Customer: population and demographics analysis → produces markdown report
-  3. Traffic: transit/parking accessibility → receives customer report
-  4. Competition: competitor density/proximity → receives customer + traffic reports
-  5. Weighting: derive weights for each domain
-  6. Evaluation: score all analyses objectively using rubrics (0-10 scale)
-  7. Final Report: synthesize all analyses with scores into executive summary
+![SiteSage Architecture](docs/media/SiteSage-Pipeline+Structure.png)
 
-- Tools
-  - **Map Services** (configurable):
-    - Google Maps Platform (geocoding, nearby POIs, distance matrix, static maps) — **NEW!** For US/Western locations
-    - AMap (高德地图) — For Chinese locations
-  - Population stats via `tools/demographics_rt.py` (WorldPop rasters - global coverage)
-  - Optional lightweight web search via `ddgs`
-  - Static map preview via Leaflet (frontend)
+## Overview
 
----
+SiteSage is an agentic site-selection system that evaluates retail locations using a staged analysis pipeline powered by LLMs and external data sources. It provides quantitative scores and qualitative insights for customer demographics, traffic accessibility, and competition analysis.
 
-## Table of Contents
+**Key Features:**
 
-- [Demo](#demo)
-- [Architecture](#architecture)
-- [Requirements](#requirements)
-- [Setup](#setup)
-- [Run the Frontend](#run-the-frontend)
-- [Run Backend Demo Only](#run-backend-demo-only)
-- [API Usage](#api-usage)
-- [Result Schema](#result-schema)
-- [Project Structure](#project-structure)
-- [Artifacts and Logs](#artifacts-and-logs)
-- [Troubleshooting](#troubleshooting)
-- [Limitations](#limitations)
-- [Extending](#extending)
-- [Credits](#credits)
+- 🤖 **7-stage AI agent pipeline** with sequential contextual analysis
+- 🗺️ **Multi-region support**: Google Maps (US/Western) and AMap (China/Asia)
+- 📊 **Data-driven insights**: Population demographics, transit access, competitor analysis
+- 📝 **Explainable results**: Step-by-step markdown reports with evaluation rubrics
+- 🎨 **Interactive UI**: Golden/royal themed web interface with live maps
 
----
+## Quick Start
 
-## Demo
+### Installation
 
-1. Start the frontend server
+1. **Clone the repository**
+
+   ```bash
+   git clone <repository-url>
+   cd SiteSage
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   pip install -e .
+   ```
+
+3. **Configure environment**
+
+   ```bash
+   cp .env.sample .env
+   # Edit .env and add your API keys
+   ```
+
+   Required API keys:
+
+   - `OPENAI_API_KEY` - OpenAI API for LLM agents
+   - `GOOGLE_MAPS_API_KEY` - Google Maps (for Western locations)
+   - `AMAP_API_KEY` - AMap/高德 (for Chinese locations)
+
+   See [docs/INSTALLATION.md](docs/INSTALLATION.md) for detailed setup instructions.
+
+### Running the Application
 
 ```bash
-python -c "import sitesage_frontend as f; f.main()"
+cd src
+python sitesage_frontend.py
 ```
 
-2. Open the app in a browser
+Then open http://127.0.0.1:8000 in your browser.
 
-- http://127.0.0.1:8000
+### Example Usage
 
-3. In the left panel:
-
-- Select language (EN/中文)
-- Enter a prompt (example below)
-- Click “Run Analysis”
-
-Example prompt:
+Enter a prompt like:
 
 ```
-Open a boutique coffee shop with a cozy vibe targeting young professionals and students.
-Strong morning traffic is desired. The location is near 南京东路300号, 黄浦区, 上海.
+Open a boutique coffee shop targeting young professionals near Times Square, New York City.
 ```
 
-4. Explore results
+Or in Chinese:
 
-- Right pane shows an interactive map first.
-- The “Artifacts” list (bottom-left) will populate with step-wise markdown reports and the “Final Report.” Click to view in the right pane.
+```
+在南京东路300号附近开一家精品咖啡店，目标客户是年轻白领和学生。
+```
 
----
+The system will analyze:
+
+- ✅ Customer demographics and population density
+- ✅ Transit accessibility and parking availability
+- ✅ Competitor landscape and market saturation
+- ✅ Overall location suitability (0-10 score)
+
+Results include interactive maps, detailed reports, and actionable recommendations.
 
 ## Architecture
 
-- Orchestrated 7-step agentic pipeline with sequential data flow (LLM + tools):
-
-  - UnderstandingAgent → tool_get_place_info, tool_build_static_map
-  - CustomerAgent → tool_get_population_stats → markdown report
-  - TrafficAgent (receives customer report) → tool_get_nearby_places, tool_get_distances → markdown report
-  - CompetitionAgent (receives customer + traffic reports) → tool_get_nearby_places, tool_get_distances → markdown report
-  - WeightingAgent → no tools; determines domain weights
-  - EvaluationAgent → no tools; scores analyses using rubrics (customer_rubric.md, traffic_rubric.md, competition_rubric.md)
-  - FinalReportAgent → no tools; synthesizes with scores into polished markdown report
-
-- Data sources:
-
-  - **Google Maps Platform** (US/Western) or **AMap** (China) - geocoding, POIs, distance
-  - WorldPop rasters (population/age composition) - global coverage
-  - OpenStreetMap tiles (frontend map)
-
-- Design highlights:
-  - Sequential data flow: each analysis agent receives and considers previous reports
-  - Rubric-based evaluation: objective scoring (0-10) using detailed criteria
-  - Separation of analysis and scoring: analysis agents produce reports, evaluation agent scores them
-  - Iterative tool-calling within each agent (LLM can adjust parameters like radius/pages)
-  - Robust tool wrappers (accept flexible parameter names: types vs descriptive_types, pages vs num_pages, lat/lng vs lon)
-  - Step artifacts saved as markdown under save/<session_id>/
-
----
-
-## Requirements
-
-### For US/Western Locations (Google Maps)
-
-📍 **See [GOOGLE_MAPS_SETUP.md](GOOGLE_MAPS_SETUP.md) for complete Google Maps setup guide!**
-
-- Python 3.9+ (tested on 3.12)
-- Packages:
-  - railtracks
-  - ddgs
-  - fastapi
-  - uvicorn
-- API keys:
-  - OpenAI (for railtracks LLM): `OPENAI_API_KEY`
-  - **Google Maps Platform**: `GOOGLE_MAPS_API_KEY` (for US/Western)
-  - WorldPop rasters for your region
-
-### For Chinese Locations (AMap)
-
-- Same Python packages as above
-- API keys:
-  - OpenAI: `OPENAI_API_KEY`
-  - **AMap (高德)**: `AMAP_API_KEY` (for China)
-  - WorldPop rasters for China
-
-Install dependencies:
-
-```bash
-pip install railtracks ddgs fastapi uvicorn
-```
-
-Environment variables:
-
-```bash
-# Linux/macOS
-export OPENAI_API_KEY="your-openai-key"
-
-# Windows PowerShell
-$env:OPENAI_API_KEY="your-openai-key"
-```
-
----
-
-## Setup
-
-Place files as follows (example):
+SiteSage uses a **sequential agentic pipeline** where each stage builds on previous analyses:
 
 ```
-project/
-├─ sitesage_backend.py
-├─ sitesage_frontend.py
-├─ frontend/
-│  └─ index.html
-└─ tools/
-   ├─ map_rt.py                # wraps your MapTool (AMap-based)
-   └─ demographics_rt.py       # wraps your DemographicsTool (WorldPop)
+Understanding → Customer → Traffic → Competition → Weighting → Evaluation → Final Report
+     ↓            ↓          ↓           ↓             ↓            ↓            ↓
+   Store Info  Pop Data   Transit    Competitors   Weights     Scores      Summary
 ```
 
-Ensure `tools/map_rt.py` and `tools/demographics_rt.py` import correctly and are configured for your environment.
+![Architecture Diagram](docs/media/SiteSage-Software-Structure-nov17.png)
 
----
+Each agent uses:
 
-## Run the Frontend
+- **LLM reasoning** (GPT-4) for analysis and synthesis
+- **Specialized tools** for data retrieval (maps, demographics)
+- **Rubric-based evaluation** for objective scoring
 
-Start the server:
+See [docs/DESIGN.md](docs/DESIGN.md) for detailed architecture documentation.
 
-```bash
-python -c "import sitesage_frontend as f; f.main()"
-```
+## Documentation
 
-Then open:
-
-- http://127.0.0.1:8000
-
-The server prints clear console logs:
-
-- System start
-- GET /
-- POST /api/run -> request in
-- POST /api/run -> returned (final score and elapsed)
-
----
-
-## Run Backend Demo Only
-
-You can run the backend demo without the frontend:
-
-```bash
-python -c "import sitesage_backend as b; b.main()"
-```
-
-It will:
-
-- Execute a demo prompt (in Chinese by default)
-- Save artifacts under save/demo_session/
-- Print a console summary (final score, weights, report path)
-
----
-
-## API Usage
-
-The frontend uses a simple REST endpoint.
-
-- POST /api/run
-  - Body (JSON):
-    - session_id (optional): string. If omitted, server generates one from timestamp.
-    - prompt: string (required)
-    - language: "en" | "zh" (default: "en")
-  - Response: a JSON document described in [Result Schema](#result-schema)
-
-Example cURL:
-
-```bash
-curl -X POST http://127.0.0.1:8000/api/run \
-  -H "Content-Type: application/json" \
-  -d '{
-        "prompt": "Open a boutique coffee shop with a cozy vibe targeting young professionals and students. Strong morning traffic is desired. The location is near 南京东路300号, 黄浦区, 上海.",
-        "language": "zh"
-      }'
-```
-
----
-
-## Result Schema
-
-The backend returns a dict with the following keys:
-
-- session_id (str)
-- input (dict)
-  - prompt (str)
-  - language (str)
-- store_info (dict)
-  - store_type (str)
-  - business_description (str)
-  - service_mode (str)
-  - target_customers (List[str])
-  - price_level (str)
-  - time_window (str)
-  - location_query (str)
-- place (dict)
-  - Provider place payload (opaque)
-  - Normalized coordinates included when available: lat (float), lng (float), lon (float)
-- features (dict)
-  - customer (dict): {radius_m: float, population_total: float|None, age_buckets: object|None, notes: str|None}
-  - traffic (dict): {nearby_counts: object, distances: object, nearest_transit: object, notes: str|None}
-  - competition (dict): {competitor_counts: object, nearest_competitor: object, notes: str|None}
-- scores (dict)
-  - customer (float): score 0-10 from evaluation agent
-  - traffic (float): score 0-10 from evaluation agent
-  - competition (float): score 0-10 from evaluation agent
-- weights (dict)
-  - customer (float)
-  - traffic (float)
-  - competition (float)
-  - justification (str)
-- final_score (float)
-- final_report (dict)
-  - title (str)
-  - recommendation (str)
-  - highlights (List[str])
-  - report_path (str) → the saved markdown
-- assets (dict)
-  - reports (dict): step_name → path to saved markdown file
-  - map_image_url (str) (fallback; the frontend uses Leaflet live map)
-- errors (List[str])
-- timestamps (dict): {started_at: str, ended_at: str}
-
-All step-wise reports (including the Final Report) are saved to `save/<session_id>/`.
-
----
+- 📘 [Installation Guide](docs/INSTALLATION.md) - Setup and configuration
+- 📗 [API Reference](docs/API.md) - REST API documentation and examples
+- 📙 [Design Document](docs/DESIGN.md) - Architecture and implementation details
+- 📕 [AMap Setup](docs/AMAP_API.md) - Chinese location setup guide
+- 🔧 [Troubleshooting](docs/TROUBLESHOOTING.md) - Common issues and solutions
 
 ## Project Structure
 
-Key files:
+```
+SiteSage/
+├── src/
+│   ├── sitesage_frontend.py      # FastAPI web server
+│   ├── sitesage_backend.py       # Analysis pipeline
+│   ├── tools/                    # Map and demographics tools
+│   ├── prompts/                  # Agent system prompts
+│   ├── rubrics/                  # Evaluation criteria
+│   └── frontend/                 # Web UI (HTML/JS)
+├── docs/                         # Documentation
+├── tests/                        # Test suite
+├── pyproject.toml               # Dependencies
+└── .env.sample                  # Environment template
+```
 
-- `sitesage_backend.py`: Agentic pipeline and tools. Produces all analysis and writes reports.
-- `sitesage_frontend.py`: FastAPI server serving the UI and endpoint `/api/run`.
-- `frontend/index.html`: Golden/royal-styled SPA. Left panel for input/config and artifacts; right panel is a live map or markdown viewer.
-- `tools/map_rt.py`: Thin wrapper over your MapTool (AMap).
-- `tools/demographics_rt.py`: Thin wrapper over your DemographicsTool (WorldPop).
+## Technology Stack
 
-Generated:
+- **Backend**: Python 3.9+, FastAPI, uvicorn
+- **AI/LLM**: OpenAI GPT-4, railtracks orchestration
+- **Maps**: Google Maps Platform, AMap/高德地图
+- **Demographics**: WorldPop rasters (global coverage)
+- **Frontend**: HTML/CSS/JS, Leaflet maps, Marked markdown
 
-- `save/<session_id>/`
-  - `01_understanding.md` - Extracted store info and location
-  - `02_customer.md` - Customer analysis report
-  - `03_traffic.md` - Traffic & accessibility report
-  - `04_competition.md` - Competition analysis report
-  - `05_weighting.md` - Weight determination
-  - `05_evaluation.md` - Evaluation scores with justifications
-  - `07_final_report.md` ← the final executive report with all scores
-  - (other files or logs as your tools may create)
+## Sample Output
 
-Rubric files (project root):
+The system generates:
 
-- `rubrics/customer_rubric.md` - Customer analysis scoring criteria
-- `rubrics/traffic_rubric.md` - Traffic analysis scoring criteria
-- `rubrics/competition_rubric.md` - Competition analysis scoring criteria
+1. **Interactive map** with location marker
+2. **Step-by-step reports** for each analysis stage
+3. **Evaluation scores** (0-10 scale) with justifications
+4. **Final executive summary** with recommendations
 
----
+Example scores:
 
-## Artifacts and Logs
+- Customer: 8.5/10 - Dense young professional population
+- Traffic: 9.0/10 - Excellent transit access
+- Competition: 6.5/10 - High competition but proven demand
+- **Overall: 7.95/10** - Recommended with differentiation strategy
 
-- Artifacts: markdown files under `save/<session_id>/` and accessible via `http://127.0.0.1:8000/save/<session_id>/...`
-- Logs:
-  - Frontend prints high-signal logs to the terminal (system start, request in, returned).
-  - Tool-specific logs appear in the terminal depending on your environment.
+See [docs/sample_run/](docs/sample_run/) for complete example outputs.
 
----
+## Development
 
-## Troubleshooting
+```bash
+# Install with dev dependencies
+pip install -e ".[dev]"
 
-- ERROR “asyncio.run() cannot be called from a running event loop”
+# Run tests
+pytest
 
-  - Fixed. The frontend awaits `run_sitesage_session_async` instead of calling the sync wrapper.
-
-- Map not rendering / DNS issues (static image)
-
-  - The UI now uses Leaflet live map with OSM tiles, including a fallback tile provider.
-
-- AMap/coordinates mismatch (lon vs lng)
-
-  - Tools normalize coordinates and include both `lng` and `lon`. If your provider response schema differs, check `save/<session_id>/` artifacts and adjust the wrappers.
-
-- Missing provider data or API keys
-
-  - Ensure AMap and demographic tools are configured and reachable. Set `OPENAI_API_KEY` for LLM.
-
-- Large artifacts not showing in UI
-  - The UI renders markdown using Marked. Verify the links under “Artifacts” point to `/save/...`.
-
----
+# Type checking
+pyright
+```
 
 ## Limitations
 
-- Prototype scope:
-  - Geography: Shanghai, China
-  - Domain: Coffee shops
-  - Focus: Customer traffic; costs not modeled
-- Open data reliance and potential drift (internet/API changes)
-- LLM variability; no long-term caching implemented
+- Prototype focused on coffee shops (extensible to other retail)
+- Best results for urban/dense areas with good data coverage
+- Requires API keys for full functionality
+- LLM outputs may vary between runs
 
----
+## Contributing
 
-## Extending
+This is an academic project. For questions or issues, please open a GitHub issue.
 
-- Add more categories:
-  - Expand `suggested_types`/`descriptive_types` for Traffic/Competition agents.
-- More geographies:
-  - Update your `tools/` to support different providers or coordinate systems.
-- Extra steps:
-  - Add agents for pricing, real-estate availability, or custom KPIs.
-- UI:
-  - Add a “Preview Final Report” auto-open behavior after analysis.
-  - Add export (PDF) with a server-side renderer.
+## Acknowledgments
 
----
+### Sponsored by Railtracks
 
-## Credits
+This project is **proudly sponsored by [Railtracks](https://github.com/RailtownAI/railtracks)**, a powerful open-source agentic framework that makes building AI applications vibeable. The LLM facing in-code documentation saves me from the debugging nightmare of other framework, 100% recommend.
 
-- Maps: Leaflet + OpenStreetMap tiles
-- Markdown rendering: Marked
-- LLM orchestration: railtracks
-- Web search: ddgs (DuckDuckGo Search)
-- Data sources: AMap LBS, WorldPop
+**Features Used in SiteSage:**
 
----
+1. **Multi-Agent Orchestration**: all 7 specialized agents working in sequence with data flow and connections.
+2. **Function Tools**: Custom tools for maps (Google Maps/AMap) and demographics (WorldPop)
+3. **State Persistence**: All agent states saved for debugging and audit trails
+4. **LLM Integration**: Seamless integration with all models, we use gpt, gemini and deepseek.
+5. **Tool Call Iteration**: Agents can make multiple tool calls with parameter adjustments
+6. **Error Recovery**: Graceful handling of API failures and partial results
+
+**Learn More:**
+- GitHub: [https://github.com/RailtownAI/railtracks](https://github.com/RailtownAI/railtracks)
+
 
 ## License
 
-Prototype code for academic/project purposes. Ensure you comply with the terms of the external APIs and data sources you use.
+Academic/research use. Please comply with API provider terms of service.
+
+---
+
+**Built with ☕ from Railtracks**

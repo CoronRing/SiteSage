@@ -73,13 +73,13 @@ class Demographics:
         self,
         origin: Tuple[float, float],
         radius_m: float = 500.0,
-        coord_ref: str = "GCJ-02",
+        coord_ref: str = "WGS84",
     ) -> PopulationStats:
         """Return summed population and age composition within the radius.
         Args:
             origin: (lat, lon), the location
             radius_m (float): default 500, the radius to check the statistics.
-            coord_ref (str): default GCJ-02, the coordinate reference for AMap and Tencent.
+            coord_ref (str): default WGS84 (international standard). Use GCJ-02 for Chinese maps (AMap).
         """
         lat, lon = origin
         lon, lat = self._to_wgs84(lon, lat, coord_ref)

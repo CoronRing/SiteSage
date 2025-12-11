@@ -1,4 +1,4 @@
-# SiteSage — System Design Document (Royal Edition)
+# SiteSage — System Design Document (Royal)
 
 Version: 1.0  
 Last updated: 2025-11-15  

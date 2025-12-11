@@ -89,6 +89,9 @@ class GoogleMaps(MapAPI):
         "bike": "bicycling",
         "bicycle": "bicycling",
     }
+    
+    # Class-level warning message
+    _api_key_warning: Optional[str] = None
 
     def __init__(
         self,
@@ -98,13 +101,26 @@ class GoogleMaps(MapAPI):
         timeout: float = 10.0,
     ) -> None:
         self.api_key = api_key or os.getenv("GOOGLE_MAPS_API_KEY") or os.getenv("GOOGLE_API_KEY")
+        self.has_valid_api_key = True
         if not self.api_key:
-            raise ValueError(
-                "Google Maps API key is required. Set GOOGLE_MAPS_API_KEY/GOOGLE_API_KEY or pass api_key."
+            warning_msg = (
+                "Google Maps API key is missing! "
+                "Set GOOGLE_MAPS_API_KEY/GOOGLE_API_KEY environment variable or pass api_key. "
+                "Google Maps functionality will be limited. This may be acceptable for Asia/China regions using AMap."
             )
+            logger.warning(warning_msg)
+            print(f"\n{'='*80}\n⚠️  WARNING: {warning_msg}\n{'='*80}\n", flush=True)
+            GoogleMaps._api_key_warning = warning_msg
+            self.api_key = "MISSING_API_KEY"  # Set placeholder to avoid None errors
+            self.has_valid_api_key = False
         self.session = session or requests.Session()
         self.timeout = timeout
         super().__init__("google_maps")
+    
+    @classmethod
+    def get_api_key_warning(cls) -> Optional[str]:
+        """Get the API key warning if one was generated."""
+        return cls._api_key_warning
 
     def getPlaceInfo(
         self,

@@ -80,7 +80,7 @@ def create_app() -> FastAPI:
     @app.post("/api/run", response_class=JSONResponse)
     async def api_run(req: Request) -> JSONResponse:
         """
-        Accept JSON: {session_id: str (optional), prompt: str, language: str="en"}.
+        Accept JSON: {session_id: str (optional), prompt: str, language: str="en", region: str="north_america"}.
         Uses backend.run_sitesage_session_async to avoid nested event loop issues.
         """
         try:
@@ -97,13 +97,14 @@ def create_app() -> FastAPI:
 
         prompt = str(body.get("prompt") or "").strip()
         language = str(body.get("language") or "en")
+        region = str(body.get("region") or "north_america")
 
         if not prompt:
             raise HTTPException(status_code=400, detail="prompt is required")
 
         logger.info(
-            "POST /api/run -> request in: session_id=%s, language=%s, prompt_len=%d",
-            session_id, language, len(prompt),
+            "POST /api/run -> request in: session_id=%s, language=%s, region=%s, prompt_len=%d",
+            session_id, language, region, len(prompt),
         )
         t0 = time.time()
         try:
@@ -112,6 +113,7 @@ def create_app() -> FastAPI:
                     session_id=session_id,
                     prompt=prompt,
                     language=language,
+                    region=region,
                 )
             else:
                 # Fallback to sync, but not recommended inside async servers
@@ -119,6 +121,7 @@ def create_app() -> FastAPI:
                     session_id=session_id,
                     prompt=prompt,
                     language=language,
+                    region=region,
                 )
         except Exception as e:
             logger.exception("POST /api/run -> backend error for session=%s", session_id)

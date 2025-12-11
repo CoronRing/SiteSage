@@ -32,7 +32,7 @@ class DemographicsTool:
         location: Mapping[str, Any],
         *,
         radius_m: float = 500.0,
-        coord_ref: str = "GCJ-02",
+        coord_ref: str = "WGS84",
     ) -> Mapping[str, Any]:
         lat = location.get("lat")
         lng = location.get("lng")
@@ -92,9 +92,9 @@ class DemographicsTool:
                             "type": "string",
                             "description": (
                                 "Coordinate reference of the provided lat/lng. Supported: "
-                                "GCJ-02 (default) or WGS84."
+                                "WGS84 (default, international standard) or GCJ-02 (Chinese maps)."
                             ),
-                            "default": "GCJ-02",
+                            "default": "WGS84",
                         },
                     },
                     "required": ["location"],

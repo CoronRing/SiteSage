@@ -461,11 +461,34 @@ async def run_sitesage_session_async(
     prompt: str,
     *,
     language: str = "en",
+    region: str = "north_america",
 ) -> Dict[str, Any]:
+    """
+    Run SiteSage analysis session.
+    
+    Args:
+        session_id: Unique session identifier
+        prompt: User's business description and location
+        language: Response language (en/zh)
+        region: Geographic region - determines map provider
+                "north_america" or "europe" -> Google Maps
+                "asia" -> AMap (China)
+    """
     started_at = datetime.now(timezone.utc).isoformat()
     session_dir = ensure_session_dir(session_id)
     errors: List[str] = []
     assets: Dict[str, Any] = {"reports": {}}
+    
+    # Determine map provider based on region
+    map_provider = "google_maps" if region in ("north_america", "europe") else "amap"
+    logger.info(f"Session {session_id}: region={region}, map_provider={map_provider}")
+    
+    # Set map provider for tools
+    from tools.map_rt import set_map_provider, get_map_api_warnings
+    set_map_provider(map_provider)
+    
+    # Get any warnings from map API initialization
+    map_warning = get_map_api_warnings()
 
     # clean map cache
     clean_map_cache()
@@ -714,7 +737,7 @@ async def run_sitesage_session_async(
     }
 
     ended_at = datetime.now(timezone.utc).isoformat()
-    return {
+    result = {
         "session_id": session_id,
         "input": {"prompt": prompt, "language": language},
         "store_info": store_info,
@@ -736,10 +759,16 @@ async def run_sitesage_session_async(
         "errors": errors,
         "timestamps": {"started_at": started_at, "ended_at": ended_at},
     }
+    
+    # Add warning if map API key is missing
+    if map_warning:
+        result["warning"] = map_warning
+    
+    return result
 
 
-def run_sitesage_session(session_id: str, prompt: str, *, language: str = "en") -> Dict[str, Any]:
-    return asyncio.run(run_sitesage_session_async(session_id, prompt, language=language))
+def run_sitesage_session(session_id: str, prompt: str, *, language: str = "en", region: str = "north_america") -> Dict[str, Any]:
+    return asyncio.run(run_sitesage_session_async(session_id, prompt, language=language, region=region))
 
 
 def main() -> None:
@@ -747,10 +776,10 @@ def main() -> None:
     Example run for the SiteSage agentic backend with final report.
     """
     example_prompt = (
-        "Open a boutique coffee shop with a cozy vibe targeting young professionals and students. "
-        "Strong morning traffic is desired. The location is near 南京东路300号, 黄浦区, 上海."
+        "Open a specialty coffee shop with a modern, welcoming atmosphere targeting young professionals and students. "
+        "Strong morning and lunch traffic is desired. The location is 580 Hornby St, Vancouver, BC, Canada."
     )
-    res = run_sitesage_session("demo_session", example_prompt, language="zh")
+    res = run_sitesage_session("demo_session", example_prompt, language="en", region="north_america")
 
     print("\n=== SiteSage Agentic Summary ===")
     print(f"Session: {res['session_id']}")

@@ -1,10 +1,54 @@
-AGENTS.md
-data
+# Python
+__pycache__/
 */__pycache__
-__pycache__
-.railtracks
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment variables
+.env
 src/.env
-.python-version
-pytest.ini
-src/logs/*
 tests/.env
+
+# Project specific
+data/
+.railtracks/
+src/logs/*
+src/save/*
+logs/
+AGENTS.md
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Build
+*.egg-info/
+dist/
+build/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python version
+.python-version
+
+# Config
+pytest.ini
+pyrightconfig.json

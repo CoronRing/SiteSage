@@ -7,21 +7,33 @@ from typing import Any, Dict, Iterable, Mapping, MutableMapping, Optional, Seque
 
 from tools.map import MapTool
 from tools.vlm_rt import tool_static_map_image_understand
-
-import csv
-from io import StringIO
+from map_apis.google_maps import GoogleMaps
 
 place_keys = ["name", "lat", "lng", "distance", "type"]
 map_nearby_places_cache = set()
 
-map_tool = MapTool()
+# Global map tool instance - defaults to Google Maps (North America)
+map_tool = MapTool(map_choice="google_maps")
 
+def set_map_provider(provider: str = "google_maps"):
+    """
+    Set the map provider for all map operations.
+    Args:
+        provider: "google_maps" (North America/Europe) or "amap" (Asia/China)
+    """
+    global map_tool
+    map_tool = MapTool(map_choice=provider)
+    
 def clean_map_cache():
     global map_nearby_places_cache
     map_nearby_places_cache = set()
 
 def get_map_cache():
     return '\n'.join(['\t'.join(place_keys)] + list(map_nearby_places_cache))
+
+def get_map_api_warnings() -> Optional[str]:
+    """Get any warnings from the map API initialization."""
+    return GoogleMaps.get_api_key_warning()
 
 def postprocess_nearby_place(place: Mapping[str, Any]) -> Mapping[str, Any]:
     return {k: place[k] for k in place_keys}
