@@ -1,1 +1,0 @@
-The new coffee shop is located at 建国西路481号, in the 徐汇区 district of 上海市, 中国. The geographical coordinates are approximately 31.202949°N latitude and 121.451316°E longitude. You can view its location on the map [here](https://staticmap.openstreetmap.de/staticmap.php?center=31.202949,121.451316&zoom=16&size=600x400&markers=31.202949,121.451316,lightblue1).
